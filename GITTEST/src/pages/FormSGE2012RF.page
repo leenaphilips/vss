@@ -1,0 +1,795 @@
+<apex:page id="SGE2012RF" showHeader="false" standardStyleSheets="false" 
+    action="{!initializeSession}" controller="FormSGE2012RF" cache="false" expires="0">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <title>SGE Refrigerator Rebate Form</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+        <script src="{!URLFOR($Resource.SGE2012, 'js/jquery.tooltip.js')}" type="text/javascript" language="javascript"></script>
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <!-- 
+        <link href="{!URLFOR($Resource.SGE2012, 'css/style.css')}" rel="stylesheet" type="text/css" />
+         -->        
+        <style type="text/css" media="all">
+            body { font-family:Arial, Helvetica, sans-serif;  color:#333; background-color:#333; margin:0px; }
+            div {  }
+            h1 { font-size:20px; font-weight:bold; color:#fff; border-top:33px #f58025 solid; margin-top:20px;  }
+            h1 span { display:block; margin-top:-28px; padding-left: 40px; }
+            h1 img { display:none; padding-left:30px;  }
+            h2 { font-size:14px;  }
+            p { margin:0px 0px 5px 0px; }
+            .orange { color:#f58025; font-weight:bold; }
+            .orange .normal { font-weight:normal; color:#000; display:inline; }
+            #container { width:895px; margin:0px auto; padding:0px 0px; background-color:#fff;  }
+            .header { height:195px; padding-top:25px; position:relative; color:#fff; font-family:Helvetica, Arial, sans-serif;   }
+            .header-title { width:715px; height:90px; background-color:#8dc63f; font-weight:bold; padding:15px 20px 15px 40px;
+            	border-radius:0px 5px 5px 0px; -webkit-border-radius:0px 5px 5px 0px;  -moz-border-radius:0px 5px 5px 0px;   }
+          	.header-title h1 { font-size:39px; margin:0px; border:none; display:inline-block; vertical-align:bottom; margin-bottom:-4px; }
+            .header-title .logo { display:inline-block; margin-right:10px; }
+            .header-logo { border:4px #8dc63f solid; border-right:none; position:absolute; top:65px; right:0px; background-color:#fff; 
+            	padding:5px 20px; border-radius:10px 0px 0px 10px; -webkit-border-radius:10px 0px 0px 10px; -moz-border-radius:10px 0px 0px 10px; }
+            .header-logo img { height:100px; }
+            .header-rebate { background-color:#f18138; padding:10px; margin-left:20px; font-size:20px; width:655px; 
+            	border-radius:0px 0px 10px 10px; -webkit-border-radius:0px 0px 10px 10px; -moz-border-radius:0px 0px 10px 10px;   }
+            .header-rebate span.large { font-size:39px; }
+            .SGE-header {  }
+            .efi-logo { float:right; height:95px; padding-top:20px; background-color:#fff; }
+            .efi-logo img {width: 50%; }
+            .SGE-header .text { margin:20px 40px;  }
+            #main {  }
+            #content-top { color:#000; font-size:12px; position:relative;   }
+            #content-top .highlight { background-color:#fae62e; padding:5px; color:#333; margin:5px 0px; }
+            #content-top .image { float:left; padding-right:20px; }
+            #content-top .text { margin:20px 40px; }
+            #content-top .mailto { margin-top:10px; }
+            #content-top .left { float:left; }
+            #content-top .mailto.right { margin-left:300px; }
+            #content-main  { margin:20px 40px; background-color:#fff; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;
+                border-radius: 5px 5px 5px 5px; clear:both; }
+            #content-main div { margin:0px 0px; }
+            /* form elements */
+            form { font-size:.875em; }
+            .formtable { width:100%; font-size:1em; border-left:1px #f58025 solid;  }
+            .formtable th { background-color:#f58025; color:#fff; font-size:13px; text-transform:uppercase; text-align:left; padding:2px 5px 0px 5px; border-top:25px #f58025 solid; }
+            .formtable th img { display:none; }
+            .formtable th span { display:block; margin-top:-21px; }
+            .formtable td { padding:3px 5px; border-bottom:1px #f58025 solid; border-right:1px #f58025 solid; vertical-align:top; }
+            .formtable td.nopadding { padding:0px; }
+            .formtable table td { border:none; }
+            .rounded-top { border-radius:7px 7px 0px 0px; -webkit-border-radius:7px 7px 0px 0px; -moz-border-radius:7px 7px 0px 0px; }
+            fieldset { border:none; padding:15px 0px 15px 0px; border-top:0px #2fb457 solid; margin:0px; }
+            label { display:inline-block; width:auto; vertical-align:inherit; text-align:left; padding-right:10px; }
+            label.autowidth { width:auto; }
+            form span { display:inline-block; border-bottom:0px #333 solid;  }
+            form span.noborder, form span .noborder, form .noborder span, form .noborder, td.noborder { border-width:0px; }
+            td.noborder.right { border-right-width:1px; }
+            input { font-family:"Courier New", Courier, monospace; }
+            input, select { color:#1f5995; }
+            input[type="submit"] { font-family:Arial, Helvetica, sans-serif; }
+            input[type="text"] {  border:none; border-bottom:0px #333 solid; font-size:1em; width:auto; background-color:#e6edfb; font-weight:bold;  }
+            select, select option { font-weight:bold; background-color:#FFFFFC;  }
+            input:focus { background-color:#ccc; }
+            .longtext, .longtext input[type="text"] { width:28em; }
+            .mediumtext, .mediumtext input[type="text"] { width:18em; }
+            .mediumshorttext, .mediumshorttext input[type="text"] { width:8em; }
+            .shorttext, .shorttext input[type="text"] { width:3em; }
+            .button  { -moz-border-radius: 3px 3px 3px 3px; background-color: #E8E8E9; border-color: #B5B5B5 #B5B5B5 #7F7F7F; border-style: solid; border-width: 1px; color: #333333;
+                font-size: 0.9em; font-weight: bold; margin: 1px; padding: 2px 3px; text-decoration: none; }
+            #tooltip { position: absolute;  z-index: 3000; border: 1px solid #111; background-color: #EEEEEB; padding: 5px; opacity: 0.85; font-size:11px;  }
+            #tooltip h3 { font-size:11px; margin:0px; }
+            .error-icon { visibility:visible; position:absolute; margin:3px 0px 0px 3px; }
+            .question-icon { visibility:visible; position:absolute; cursor:pointer; margin-left:20px; }
+            .alwaysblack {color: black; }
+            .printonly { display:none; }
+            .small { font-size:10px; }
+            .shaded td { background-color:#ffefe1; }
+            /*
+            #content-main .submitbutton { margin:20px 0px; padding:5px; font-weight:bold; text-align:center; color:white; background-color:green; width:300px;}
+            */
+            #content-main .submitbutton { 
+                background: #296737; /* for non-css3 browsers */
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8DC63F', endColorstr='#527424'); /* for IE */
+                background: -webkit-gradient(linear, left top, left bottom, from(#8DC63F), to(#527424)); /* for webkit browsers */
+                background: -moz-linear-gradient(top,  #8DC63F,  #527424); /* for firefox 3.6+ */ 
+                width:300px; text-align:center; padding:7px; margin:20px 0px;
+                color:#fff; text-decoration:none; font-size:18px; font-weight:normal; z-index:3; display:block;
+                border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;
+                border: 1px solid #527424;
+                cursor:pointer;
+                -moz-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+                -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+                box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+                position:relative;
+                text-shadow: 0px -1px 1px #000;
+                
+            }
+            #content-main .submitbutton::after {
+                background: none;
+                border: 3px solid #E2E6CF;
+                -moz-border-radius: 15px;
+                -webkit-border-radius: 15px;
+                border-radius: 15px;
+                content: "";
+                position: absolute;
+                top: -4px;
+                right: -4px;
+                bottom: -4px;
+                left: -4px;
+            }
+            #content-main .submitbutton:hover { background:#527424; }
+            #content-main .submitbutton.disabled, #content-main .submitbutton.disabled:hover { background:#999; cursor:text; border-color:#999; text-shadow:none; }
+            input.address-field { color:#999; font-weight:normal; font-style:italic; }
+            input.address-field.entered { color:#1f5995; font-weight:bold; font-style:normal; }
+            .shaded .screenonly { color:#999; font-style:italic }
+            .inline { display:inline-block; }
+            #selstorediv div, #manstorediv div { padding:2px 0px; }
+            #need-help { position:absolute; padding:5px; top:28px; right:25px; background-color:#1783C5; font-weight:bold; color:#fff; 
+            	font-style:italic; border:none; cursor:pointer; font-size:12px; }
+            .sge-dialog { display:none; }
+            .ui-dialog-titlebar { background-color:#8DC63F; background-image:none; color:#fff; border-color:#8DC63F }
+            .ui-dialog-content { padding:1em; }
+            .printonly { display:none; }
+            .ui-widget-overlay { opacity:.8; filter:Alpha(Opacity=80); }
+            #footer { background-color:#fff; margin:0px; padding-bottom:20px; text-align:right; }        
+            #footer #efi-logo { display:inline-block; margin-right:40px; }        
+        </style>
+        <style media="print">
+            body { background-color:#fff; }
+            #container .header { display:none; }
+            .formtable { border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; }
+            .formtable th img { display:block; margin-top:-20px;  }
+            .formtable th span, h1 span { display:none; }
+            .printonly { display:block !important; }
+            .pagebreak-after { page-break-after:always; }
+            .pagebreak-before { page-break-before:always; }
+            #checklist { width:600px; margin:2em auto; }
+            #checklist .text { margin:20px; }
+            #checklist p { margin-bottom: 10px; }
+            #checklist li { list-style:none; margin-bottom:4px; }
+            #checklist .SGE-header { width: 400px; }
+            .error-icon, .question-icon, .button { display:none !important; }
+            #need-help { display:none; }
+            input[type="text"] { background-color:#fff; }
+            .screenonly { display:none; }
+            h1, h2, #content-main, #content-top .text, .SGE-header { margin: 0px; padding:0px; }
+            h1 img { display:block; margin-top: -28px; }
+            h1 { margin-bottom:5px; }
+            input.address-field { visibility:hidden }
+            input.address-field.entered { visibility:visible; }
+            #footer { margin-top:20px; }
+        </style>
+
+        <script>
+            $(function() {
+                $( ".datefield" ).datepicker();
+            });
+            $(document).ready(function(){ 
+                $('.error-icon').tooltip({
+                    track: true,
+                    delay: 0,
+                    showURL: false,
+                    showBody: " - ",
+                    fade: 250
+                });
+            });
+        </script>
+        <script>
+            function checkMe() {
+                // be careful in defining local tests - FDC runs rampant on form as written
+                // so DOM ids and structure may be different from expected
+                // transfer purchase date to FDC field
+                if (document.getElementById("SGE2012RF:rebateForm:frmReadOnly").value == 'yes') return false;
+                document.getElementById("SGE2012RF:rebateForm:frmPurchDate").value = document.getElementById("purchase_date").value
+                submitButton();
+                return true;
+            }
+            function runOnLoad() {
+                // if 'Other' status, redirect
+                var sobj = document.getElementById("SGE2012RF:rebateForm:frmStatus");
+                if (sobj.value == 'Other') {
+                    var nurl = window.location.href;
+                    window.location.href = nurl.replace("?Rebate","_Status?Rebate")+'&FormCode=SGERF2012';
+                }
+                // determine if there is any message to display (e.g. AJAX result)
+                var obj = document.getElementById("SGE2012RF:rebateForm:frmLoadMessage");
+                if (obj.value.length > 0) alert(obj.value);
+                // replace visible date from value exchanged w/server
+                document.getElementById("purchase_date").value = document.getElementById("SGE2012RF:rebateForm:frmPurchDate").value;
+
+                if (document.getElementById("SGE2012RF:rebateForm:manualStore").value == "Y") {
+                    storeCheck(true);
+                    document.getElementById("manualstorecb").checked = true;
+                } else {
+                    storeCheck(false);
+                    document.getElementById("manualstorecb").checked = false;
+                }
+                
+                if (document.getElementById("SGE2012RF:rebateForm:manualModel").value == "Y") {
+                    modelCheck(true);
+                    document.getElementById("manualmodelcb").checked = true;
+                } else {
+                    modelCheck(false);
+                    document.getElementById("manualmodelcb").checked = false;
+                }
+                    
+                var rn = document.getElementById("SGE2012RF:rebateForm:frmRebateNum").innerHTML;
+                if (rn.length < 2) {
+                    document.getElementById("refnumdiv").style.display = "none";
+                } else {
+                    document.getElementById("refnumdiv").style.display = "block";
+                }
+                if (document.getElementById("SGE2012RF:rebateForm:frmReadOnly").value == "yes") {
+                    document.getElementById("purchase_date").disabled = true;
+                    document.getElementById("manualstorecb").disabled = true;
+                    document.getElementById("manualmodelcb").disabled = true;
+                    jQuery('.submitbutton').addClass('disabled');
+                    // document.getElementById("mailsamecb").disabled = true;   
+                }
+                
+               
+                if (document.getElementById('SGE2012RF:rebateForm:frmAcctAddress1').value == '') { document.getElementById('SGE2012RF:rebateForm:frmAcctAddress1').value = 'Line 1'; } else if (document.getElementById('SGE2012RF:rebateForm:frmAcctAddress1').value != 'Line 1') { $('.address-field.frmAcctAddress1').addClass('entered'); }
+                if (document.getElementById('SGE2012RF:rebateForm:frmAcctAddress2').value == '') { document.getElementById('SGE2012RF:rebateForm:frmAcctAddress2').value = 'Line 2'; } else if (document.getElementById('SGE2012RF:rebateForm:frmAcctAddress2').value != 'Line 2') { $('.address-field.frmAcctAddress2').addClass('entered'); }
+                if (document.getElementById('SGE2012RF:rebateForm:frmMailAddress1').value == '') { document.getElementById('SGE2012RF:rebateForm:frmMailAddress1').value = 'Line 1'; } else if (document.getElementById('SGE2012RF:rebateForm:frmMailAddress1').value != 'Line 1') { $('.address-field.frmMailAddress1').addClass('entered'); }
+                if (document.getElementById('SGE2012RF:rebateForm:frmMailAddress2').value == '') { document.getElementById('SGE2012RF:rebateForm:frmMailAddress2').value = 'Line 2'; } else if (document.getElementById('SGE2012RF:rebateForm:frmMailAddress2').value != 'Line 2') { $('.address-field.frmMailAddress2').addClass('entered'); }
+                if (document.getElementById('SGE2012RF:rebateForm:frmStoreAddress1').value == '') { document.getElementById('SGE2012RF:rebateForm:frmStoreAddress1').value = 'Line 1'; } else if (document.getElementById('SGE2012RF:rebateForm:frmStoreAddress1').value != 'Line 1') { $('.address-field.frmStoreAddress1').addClass('entered'); }
+                if (document.getElementById('SGE2012RF:rebateForm:frmStoreAddress2').value == '') { document.getElementById('SGE2012RF:rebateForm:frmStoreAddress2').value = 'Line 2'; } else if (document.getElementById('SGE2012RF:rebateForm:frmStoreAddress2').value != 'Line 2') { $('.address-field.frmStoreAddress2').addClass('entered'); }
+               
+            }
+            function modelCheck(ischecked) {
+                // alert(ischecked);
+                var obj = document.getElementById("SGE2012RF:rebateForm:manualModel");
+                if (ischecked) {
+                    document.getElementById("selmandiv").style.display = "none";
+                    document.getElementById("selmoddiv").style.display = "none";
+                    document.getElementById("manmandiv").style.display = "block";
+                    document.getElementById("manmoddiv").style.display = "block";
+                    obj.value = "Y";
+                } else {
+                    document.getElementById("selmandiv").style.display = "block";
+                    document.getElementById("selmoddiv").style.display = "block";
+                    document.getElementById("manmandiv").style.display = "none";
+                    document.getElementById("manmoddiv").style.display = "none";
+                    obj.value = "N";
+                }
+            }
+            function storeCheck(ischecked) {
+                // alert(ischecked);
+                var obj = document.getElementById("SGE2012RF:rebateForm:manualStore");
+                if (ischecked) {
+                    jQuery('#mandp').append( $('#date-purchased') );
+                    document.getElementById("selstorediv").style.display = "none";
+                    document.getElementById("manstorediv").style.display = "block";
+                    obj.value = "Y";
+                } else {
+                    jQuery('#seldp').append( $('#date-purchased') );
+                    document.getElementById("selstorediv").style.display = "block";
+                    document.getElementById("manstorediv").style.display = "none";
+                    obj.value = "N";
+                }
+            }
+            function hcCheck(ischecked) {
+                var obj = document.getElementById("SGE2012RF:rebateForm:manualHC");
+                // alert(ischecked);
+                if (ischecked) {
+                    document.getElementById("selhcdiv").style.display = "none";
+                    document.getElementById("manhcdiv").style.display = "block";
+                    obj.value = "Y";
+                }
+                else {
+                    document.getElementById("selhcdiv").style.display = "block";
+                    document.getElementById("manhcdiv").style.display = "none";
+                    obj.value = "N";
+                }
+            }
+                        
+            function focusValue(id,val) {
+                if (document.getElementById("SGE2012RF:rebateForm:"+id).value == val) { 
+                    document.getElementById("SGE2012RF:rebateForm:"+id).value = ''; 
+                    $('.'+id).addClass('entered'); 
+                }
+                
+            }
+            
+            function blurValue(id,val) {
+                if (document.getElementById("SGE2012RF:rebateForm:"+id).value == '') { 
+                    document.getElementById("SGE2012RF:rebateForm:"+id).value = val; 
+                    $('.'+id).removeClass('entered'); 
+                }
+                
+            }
+            
+            function fieldEntered(id,val) {
+                if (document.getElementById("SGE2012RF:rebateForm:"+id).value != '' && document.getElementById("SGE2012RF:rebateForm:"+id).value != val) {
+                    $('.'+id).addClass('entered');
+                }
+                else { 
+                    $('.'+id).removeClass('entered');
+                }
+            }
+            
+            jQuery(document).ready(function($) {
+                jQuery('#need-help').click(function() {
+                    $('#help-dialog').dialog( { modal:true, width:500, });
+                });
+                jQuery('#seldp').append( $('#date-purchased') );
+                jQuery('.question-icon').click(function() {
+                    $('#frmAcctNumExampleDialog').dialog( { modal:true, width:750, });
+                });
+            });
+            
+
+            
+        </script>
+    </head>
+    <body onload="runOnLoad();">
+        <div class="printonly pagebreak-after" id="checklist">
+            <div class="header">
+                <div class="SGE-header">
+                    <div class="logo"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_logo.png')}" alt="SG&E Light" style="float:left;" /></div>
+                </div>
+            </div>
+            <div class="text">
+                <p>Thank you for submitting your SGE 2012 refrigerator rebate online.</p>
+                <p>Have you...</p>
+                <ul>
+                    <li><input type="checkbox" readonly="readonly" /> signed the printed application form?</li>
+                    <li><input type="checkbox" readonly="readonly" /> attached a copy of your itemized receipt showing the rebated item? </li>
+                    <li><input type="checkbox" readonly="readonly" /> submitted your application no later than ninety (90) days from your purchase date.</li>
+                    <li><input type="checkbox" readonly="readonly" /> Make sure you've provided the required serial number for your new refrigerator</li>
+                </ul>
+                <p>Mail to:</p>
+                <p>EFI &mdash; SG&amp;E RF Rebate<br />
+                40 Washington St., Suite 2000<br />
+                Westborough, MA 01581</p>   
+            </div>
+        </div>
+        <div id="container">
+            <div class="header">
+            	<div class="header-title">
+                    <div class="logo"><img src="{!URLFOR($Resource.SGE2012, 'images/fridge_logo.png')}" alt="Refrigerator Rebate" /></div>
+					<h1>Refrigerator Rebate</h1>
+           		</div>
+           		<div class="header-logo">
+					<div class="logo"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_logo.png')}" alt="SG&E Light" /></div>
+           		</div>
+           		<div class="header-rebate">
+           			Get a <span class="large">$75</span> rebate on a qualified model.
+           		</div>
+				<div id="need-help" class="screenonly">Need help?</div>
+				<div id="help-dialog" class="sge-dialog" title="Need help?">For additional information or assistance in completing this online application, please contact our customer care center at (888) 555-1212. We are open from 8 AM to 8 PM, Monday through Friday, and 8 AM to 5 PM on Saturdays.</div>
+            </div>
+            <div class="printonly" style="margin-bottom:20px;"><img src="{!URLFOR($Resource.SGE2012, 'images/fridge_rebate_header.gif')}" alt="Refrigerator Rebate" /></div>
+            <div id="main">
+                <div id="content-top">
+                    <!-- 
+                    <div class="text">
+                        <h2 class="orange">To apply, follow these steps:</h2>
+                        <ol class="orange">
+                            <li><span class="normal"><strong>Your new refrigerator must be purchased between January 1, 2012 and December 31, 2012.</strong> Read the Terms and Conditions below 
+                            to ensure you qualify.</span></li>
+                            <li><span class="normal">Complete the rebate request application and attach a <strong>copy</strong> of itemized receipt. Receipt must include name of retailer, retailer 
+                            address, phone number, purchase date, price, product manufacturer and model number.</span></li>
+                            <li><span class="normal">Sign and date the rebate form and send the completed form with itemized receipt postmarked <strong>within 90 days of purchase date</strong> to:
+                            </span></li>
+                            <div class = "normal">
+                                <div class="mailto left">
+                                    <p><span class="orange">Mail</span><br />
+                                    EFI &mdash; SG&amp;E RF Rebate<br />
+                                    40 Washington St., Suite 2000<br />
+                                    Westborough, MA 01581</p>
+                                </div>
+                                <div class="mailto right">
+                                    <p><span class="orange">For more information:</span><br />
+                                    Email: SouthboroughAppliances@efi.org<br />
+                                    Website: sge.gov/appliances<br />
+                                    Questions? Call 1-888-555-1212</p>
+                                </div>
+                            </div>
+                        </ol>
+                    </div>
+                     -->
+                </div>
+                <div id="content-main">
+                	<!-- 
+                    <h2>All information below is REQUIRED for processing. Please print in block letters.</h2>
+                	 -->
+                    <apex:form id="rebateForm">
+                        <apex:actionFunction name="submitButton" action="{!actionCheckMe}" />
+                        <apex:inputHidden id="frmLoadMessage" value="{!frmLoadMessage}" />
+                        <apex:inputHidden id="frmReadOnly" value="{!frmReadOnly}" />
+                        <apex:inputHidden id="frmStatus" value="{!frmStatus}" />
+                        <div id="refnumdiv" style="font-weight:bold;">
+                            <label>Reference #: </label>
+                            <span class="mediumshorttext noborder">
+                                <apex:outputText id="frmRebateNum" value="{!frmRebateNum}" styleClass="noborder"/>
+                            </span>
+                        </div>
+                        <table class="formtable rounded-top"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr><th colspan="3" class="rounded-top"><span class="text">Customer Information</span><img src="{!URLFOR($Resource.SGE2012, 'images/cust_info.png')}" alt="customer information" /></th></tr>
+                            <tr>
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="70%" style="border-right:1px #f58025 solid;">
+                                                <label>First</label>
+                                                <span  style="margin-right:20px;"><apex:inputText id="frmFirstName" value="{!frmFirstName}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="1" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmFirstNameMsg}" styleClass="error-icon" id="frmFirstNameErr" style="{!frmFirstNameMsgStyle}" />
+                                                <label>Last</label>
+                                                <span ><apex:inputText id="frmLastName" value="{!frmLastName}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="2" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!frmLastNameMsg}" styleClass="error-icon" id="frmLastNameErr" style="{!frmLastNameMsgStyle}" />
+                                            </td>
+                                            <td width="30%">
+                                                <label>Daytime Phone: </label>
+                                                <span><apex:inputText id="frmHomePhone" value="{!frmHomePhone}" disabled="{!disableDE}" 
+                                                maxlength="12" size="12" tabindex="3"  /></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Account/Installation Address: </label>
+                                    <span><apex:inputText id="frmAcctAddress1" value="{!frmAcctAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="4" styleClass="address-field frmAcctAddress1" onfocus="focusValue('frmAcctAddress1','Line 1')" onblur="blurValue('frmAcctAddress1','Line 1')" onchange="fieldEntered('frmAcctAddress1','Line 1')" /></span>
+                                    <span><apex:inputText id="frmAcctAddress2" value="{!frmAcctAddress2}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="5" styleClass="address-field frmAcctAddress2" onfocus="focusValue('frmAcctAddress2','Line 2')" onblur="blurValue('frmAcctAddress2','Line 2')" onchange="fieldEntered('frmAcctAddress2','Line 2')" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>City: </label>
+                                    <span ><apex:inputText id="frmAcctCity" value="{!frmAcctCity}" disabled="{!disableDE}" 
+                                    maxlength="25" size="25" tabindex="6" /></span>
+                                </td>
+                                <td width="25%">
+                                    <label>State:</label>
+                                    <span><apex:inputText id="frmAcctState" value="{!frmAcctState}" disabled="{!disableDE}" 
+                                    maxlength="2" size="2" tabindex="7" /></span>
+                                </td>
+                                <td width="25%">
+                                    <label> Zip:</label>
+                                    <span><apex:inputText id="frmAcctZip" value="{!frmAcctZip}" disabled="{!disableDE}" 
+                                    maxlength="10" size="10" tabindex="8" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Mailing Address (if different): </label>
+                                    <span><apex:inputText id="frmMailAddress1" value="{!frmMailAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="9" styleClass="address-field frmMailAddress1" onfocus="focusValue('frmMailAddress1','Line 1')" onblur="blurValue('frmMailAddress1','Line 1')" onchange="fieldEntered('frmMailAddress1','Line 1')"  /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailAddress1Msg}" styleClass="error-icon" id="frmMailAddress1Err" style="{!frmMailAddress1MsgStyle}" />
+                                    <span><apex:inputText id="frmMailAddress2" value="{!frmMailAddress2}" disabled="{!disableDE}"  maxlength="25" size="25" tabindex="10" styleClass="address-field frmMailAddress2" onfocus="focusValue('frmMailAddress2','Line 2')" onblur="blurValue('frmMailAddress2','Line 2')" onchange="fieldEntered('frmMailAddress2','Line 2')"   /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>City: </label>
+                                    <span><apex:inputText id="frmMailCity" value="{!frmMailCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="11" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailCityMsg}" styleClass="error-icon" id="frmMailCityErr" style="{!frmMailCityMsgStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label>State:</label>
+                                    <span><apex:inputText id="frmMailState" value="{!frmMailState}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="12" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailStateMsg}" styleClass="error-icon" id="frmMailStateErr" style="{!frmMailStateMsgStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label> Zip:</label>
+                                    <span><apex:inputText id="frmMailZip" value="{!frmMailZip}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="13" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailZipMsg}" styleClass="error-icon" id="frmMailZipErr" style="{!frmMailZipMsgStyle}" />
+                                </td>
+                             </tr>
+                             <tr>
+                                <td colspan="3">
+                                    <p>Your email address is required to receive rebate submission verification and status updates.</p>
+                                    <label style="clear:both">Email Address:</label>
+                                    <span><apex:inputText id="frmEmail"  value="{!frmEmail}" disabled="{!disableDE}" maxlength="50" size="50" tabindex="14" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmEmailMsg}" styleClass="error-icon" id="frmEmailErr" style="{!frmEmailMsgStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!frmEmailMsgRed}" styleClass="error-icon" id="frmEmailErrRed" style="{!frmEmailMsgStyleRed}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>SG&amp;E Account Number:</label>
+                                    <span>
+                                        <apex:inputText id="frmAcctNum" value="{!frmAcctNum}" disabled="{!disableDE}" maxlength="14" size="14" tabindex="16" />
+                                    </span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/question-mark-off.png')}" alt="question" title="Click to view account number location in sample bill." styleClass="error-icon question-icon" id="frmAcctNumExample"  />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmAcctNumMsg}" styleClass="error-icon" id="frmAcctNumErr" style="{!frmAcctNumMsgStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!frmAcctNumMsgRed}" styleClass="error-icon" id="frmAcctNumErrRed" style="{!frmAcctNumMsgStyleRed}" />
+                                    <div id="frmAcctNumExampleDialog" class="sge-dialog" title="Account Number Example"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_bill.jpg')}" alt="SGE Bill" /></div>
+                                </td>
+                            </tr>
+                            <tr><th colspan="3"><span class="text">New Refrigerator Information</span><img src="{!URLFOR($Resource.SGE2012, 'images/new_fridge_info.png')}" alt="New Refrigerator Information" /></th></tr>
+                            
+                            <tr>
+                                <td colspan="3">
+                                    <p>Choose the state, then enter the city and choose the store from the list below: 
+                                    <input type="checkbox" id="manualstorecb" onclick="storeCheck(this.checked)" tabindex="17" style="display:inline-block; margin-left:10px;" /> If unlisted, check box to enter manually.
+                                    <apex:inputHidden id="manualStore" value="{!manualStore}" />
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div id="selstorediv">
+                                        <div style="float:left">
+                                            <label>Store State: </label>
+                                            <span>
+                                                <apex:selectList id="selState" value="{!selState}" disabled="{!disableDE}"  size="1" tabindex="18" >
+                                                    <apex:selectOptions value="{!stateList}" />
+                                                    <apex:actionSupport action="{!makeStoreList}" event="onchange" rerender="selStoreId" status="stateStatus"/>
+                                                </apex:selectList>
+                                            </span>
+                                            <span><apex:actionStatus id="stateStatus" styleClass="noborder" startText=" updating store list ..." stopText="" /></span>                              
+                                        </div>
+                                        <div style="margin-left:420px;">
+                                            <apex:actionRegion >
+                                                <label>Store City: </label>
+                                                <span>
+                                                    <apex:inputText id="selCity" value="{!selCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="19">
+                                                        <apex:actionSupport action="{!makeStoreList}" rerender="selStoreId,selCityErr" event="onchange" status="stateStatus" />
+                                                    </apex:inputText>
+                                                </span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selCityMsg}" styleClass="error-icon" id="selCityErr" style="{!selCityMsgStyle}" />
+                                            </apex:actionRegion>
+                                        </div>
+                                        <div style="float:left; margin-right:20px; clear:both">
+                                            <label>Select Store: </label>
+                                            <span>
+                                                <apex:selectList id="selStoreId" value="{!selStoreId}" disabled="{!disableDE}"  size="1" tabindex="20" style="width: 300px;;">
+                                                    <apex:selectOptions value="{!storeList}" />
+                                                </apex:selectList>
+                                            </span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selStoreIDMsg}" styleClass="error-icon" id="selStoreIdErr" style="{!selStoreIDMsgStyle}" />
+                                        </div>
+                                        <div id="seldp" style="margin-left:420px;">
+                                            
+                                        </div>
+                                    </div>
+                                    <div id="manstorediv" style="display:none;">
+                                        <div style="float:left">
+                                            <label>Store Name: </label>
+                                            <span ><apex:inputText id="frmStoreName" value="{!frmStoreName}" disabled="{!disableDE}"  maxlength="30" size="30" tabindex="21" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreNameMsg}" styleClass="error-icon" id="frmStoreNameErr" style="{!frmStoreNameMsgStyle}" />
+                                        </div>
+                                        <div id="mandp" style="margin-left:420px;">
+                                            
+                                        </div>
+                                        <div>
+                                            <label>Store Address: </label>
+                                            <span><apex:inputText id="frmStoreAddress1" value="{!frmStoreAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="22" styleClass="address-field frmStoreAddress1" onfocus="focusValue('frmStoreAddress1','Line 1')" onblur="blurValue('frmStoreAddress1','Line 1')" onchange="fieldEntered('frmStoreAddress1','Line 1')" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreAddress1Msg}" styleClass="error-icon" id="frmStoreAddress1Err" style="{!frmStoreAddress1MsgStyle}" />
+                                            <span><apex:inputText id="frmStoreAddress2" value="{!frmStoreAddress2}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="23" styleClass="address-field frmStoreAddress2" onfocus="focusValue('frmStoreAddress2','Line 2')" onblur="blurValue('frmStoreAddress2','Line 2')" onchange="fieldEntered('frmStoreAddress2','Line 2')" /></span>
+                                        </div>
+                                        
+                                        <div style="float:left; clear:both">
+                                            <label>City: </label>
+                                            <span><apex:inputText id="frmStoreCity" value="{!frmStoreCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="24" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreCityMsg}" styleClass="error-icon" id="frmStoreCityErr" style="{!frmStoreCityMsgStyle}" />
+                                        </div>
+                                        <div style="margin-left:420px;">
+                                            <label>State:</label>
+                                            <span><apex:inputText id="frmStoreState" value="{!frmStoreState}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="25" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreStateMsg}" styleClass="error-icon" id="frmStoreStateErr" style="{!frmStoreStateMsgStyle}" />
+                                            <label> Zip:</label>
+                                            <span><apex:inputText id="frmStoreZip" value="{!frmStoreZip}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="26" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreZipMsg}" styleClass="error-icon" id="frmStoreZipErr" style="{!frmStoreZipMsgStyle}" />
+                                        </div>
+                                    </div>
+                                    <div id="date-purchased">
+                                        <label>Date Purchased:</label>
+                                        <span><input type="text" name="purchase_date" id="purchase_date" class="datefield" maxlength="10" size="10" tabindex="27" /></span>
+                                        <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!frmPurchDateMsg}" styleClass="error-icon" id="frmPurchDateErr" style="{!frmPurchDateMsgStyle}" />
+                                        <apex:inputHidden id="frmPurchDate" value="{!frmPurchDate}" />                                        
+                                    </div>
+                                    <div id="price-purchased">
+                                        <label>Purchase Price: </label>
+                                        <span>$<apex:inputText id="frmPaidAmt" value="{!frmPaidAmt}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="35" /></span>
+                                        <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmPaidAmtMsg}" styleClass="error-icon" id="frmPaidAmtErr" style="{!frmPaidAmtMsgStyle}" />
+                                        <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!frmPaidAmtMsgRed}" styleClass="error-icon" id="frmPaidAmtErrRed" style="{!frmPaidAmtMsgStyleRed}" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Choose the manufacturer and model from the lists below:</label>
+                                    <input type="checkbox" id="manualmodelcb" onclick="modelCheck(this.checked)" tabindex="28" />
+                                    If unlisted, check box to enter manually.
+                                    <apex:inputHidden id="manualModel" value="{!manualModel}" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    
+                                    <div id="selmandiv" style="float:left; padding-right:40px;">
+                                        <label style="display:block">Manufacturer: </label>
+                                        <span>
+                                        <apex:selectList id="selBrand" value="{!selBrand}" disabled="{!disableDE}" size="1" tabindex="29" >
+                                            <apex:selectOptions value="{!brandList}" />
+                                            <apex:actionSupport event="onchange" rerender="selModelId" status="modelStatus"/>
+                                        </apex:selectList>
+                                        </span>
+                                        <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selBrandMsg}" styleClass="error-icon" id="SelBrandErr" style="{!selBrandMsgStyle}" />
+                                        <span style="display:inline-block; margin-left:40px;">
+                                            <apex:actionStatus id="modelStatus" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                        </span>
+                                    </div>
+                         
+                                    <div id="manmandiv" style="display:none; float:left">
+                                        <label style="display:block">Manufacturer: </label>
+                                        <span><apex:inputText id="frmBrand" value="{!frmBrand}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="30" /></span>
+                                        <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmBrandMsg}" styleClass="error-icon" id="frmBrandErr" style="{!frmBrandMsgStyle}" />
+                                    </div>
+                                    
+                                </td>
+                                <td>
+                                    <div id="selmoddiv">
+                                        <label>Model Number: </label>
+                                        <span>
+                                        <apex:selectList id="selModelId" value="{!selModelId}" disabled="{!disableDE}" size="1" tabindex="31" >
+                                            <apex:selectOptions value="{!modelList}" />
+                                        </apex:selectList>
+                                        </span>
+                                        <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selModelIDMsg}" styleClass="error-icon" id="selModelIDErr" style="{!selModelIDMsgStyle}" />
+                                    </div>
+                                    <div id="manmoddiv" style="display:none;">
+                                        <label>Model Number: </label>
+                                        <span class="mediumshorttext"><apex:inputText id="frmModel" value="{!frmModel}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="32" /></span>
+                                        <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmModelMsg}" styleClass="error-icon" id="frmModelErr" style="{!frmModelMsgStyle}" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <label>Serial Number: </label>
+                                    <span><apex:inputText id="frmSerialNum" value="{!frmSerialNum}" disabled="{!disableDE}" maxlength="20" size="20" tabindex="33" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmSerialNumMsg}" styleClass="error-icon" id="frmSerialNumErr" style="{!frmSerialNumMsgStyle}" />
+                                </td>
+                            </tr>
+                            <tr><th colspan="3"><span class="text">Additional Information</span><img src="{!URLFOR($Resource.SGE2012, 'images/additional_information.png')}" alt="Additional Information" /></th></tr>
+                            <tr>
+                                <td colspan="3" class="noborder right">
+                                    <label>I have the following appliance(s) in my home:</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="noborder">
+                                    <label >Water Heater Fuel Type:</label>
+                                    <span>
+                                        <apex:selectList id="frmWHFuel" value="{!frmWHFuel}" disabled="{!disableDE}" size="1" tabindex="18" >
+                                            <apex:selectOption itemValue="BLK" itemLabel="None" />
+                                            <apex:selectOption itemValue="ELEC" itemLabel="Electric" />
+                                            <apex:selectOption itemValue="NGAS" itemLabel="Natural Gas" />
+                                            <apex:selectOption itemValue="OIL" itemLabel="Oil" />
+                                            <apex:selectOption itemValue="OTHR" itemLabel="Other" />
+                                        </apex:selectList>
+                                    </span>
+                                </td>
+                                <td colspan="2" class="noborder right">
+                                    <label>Clothes Washer Fuel Type:</label>
+                                    <span>
+                                        <apex:selectList id="frmCWFuel" value="{!frmCWFuel}" disabled="{!disableDE}" size="1" tabindex="19" >
+                                            <apex:selectOption itemValue="BLK" itemLabel="None" />
+                                            <apex:selectOption itemValue="ELEC" itemLabel="Electric" />
+                                            <apex:selectOption itemValue="NGAS" itemLabel="Natural Gas" />
+                                            <apex:selectOption itemValue="OIL" itemLabel="Oil" />
+                                            <apex:selectOption itemValue="OTHR" itemLabel="Other" />
+                                        </apex:selectList>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="noborder">
+                                    <label>Own/Rent:</label>
+                                    <span>
+                                        <apex:selectList id="frmOwnRent" value="{!frmOwnRent}" disabled="{!disableDE}" size="1" tabindex="20" >
+                                            <apex:selectOption itemValue="BLK" itemLabel="Select" />
+                                            <apex:selectOption itemValue="OWN" itemLabel="Own" />
+                                            <apex:selectOption itemValue="RENT" itemLabel="Rent" />
+                                        </apex:selectList>
+                                    </span>
+                                </td>
+                                <td colspan="2" class="noborder right">
+                                    <label>House Type: </label>
+                                    <span>
+                                        <apex:selectList id="frmHouseType" value="{!frmHouseType}" disabled="{!disableDE}" size="1" tabindex="21" >
+                                            <apex:selectOption itemValue="BLK" itemLabel="Select" />
+                                            <apex:selectOption itemValue="SF" itemLabel="Single Family" />
+                                            <apex:selectOption itemValue="CT" itemLabel="Condo/Townhouse" />
+                                            <apex:selectOption itemValue="MULT" itemLabel="Multi Family" />
+                                        </apex:selectList>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="noborder">
+                                    <label>Primary Residence or <br />Vacation Home:</label>
+                                    <span>
+                                        <apex:selectList id="frmPriVac" value="{!frmPriVac}" disabled="{!disableDE}" size="1" tabindex="22" >
+                                            <apex:selectOption itemValue="BLK" itemLabel="Select" />
+                                            <apex:selectOption itemValue="PRIM" itemLabel="Primary Residence" />
+                                            <apex:selectOption itemValue="VAC" itemLabel="Vacation Home" />
+                                        </apex:selectList>
+                                    </span>
+                                </td>
+                                <td colspan="2" class="noborder right">
+                                    <label>Number Of Units: </label>
+                                    <span class="shorttext">
+                                        <apex:inputText id="frmHouseUnits" value="{!frmHouseUnits}" disabled="{!disableDE}" maxlength="5" size="5" tabindex="23" />
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <table class="formtable" cellpadding="0" cellspacing="0" border="0">
+                            <tr><th colspan="3"><span class="text">Acceptance of Terms &amp; Conditions</span><img src="{!URLFOR($Resource.SGE2012, 'images/acceptance.png')}" alt="Acceptance of Terms and Conditions" /></th></tr>
+                            <tr>
+                                <td colspan="3"><label class="small">I hereby certify that all information provided herein is true and correct. I have read all terms and conditions on the reverse side of this form and acknowledge
+                                and accept SG&amp;E’s right to inspect the installed refrigerator product listed on the attached receipt. I acknowledge that the SG&amp;E sponsored
+                                rebate program is a limited offer and subject to the availability of funds, and that rebate amounts may be subject to change without notice.</label>
+                                </td>
+                            </tr>
+                            <tr class="shaded">
+                                <td colspan="2">
+                                    <label class="small" style="width:125px;">Customer Signature:</label>
+                                    <span class="screenonly">Signature required on printed hard copy.</span>
+                                </td>
+                                <td>
+                                    <label class="small">Date:</label>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <div class="submitbutton" onclick="checkMe()">
+                            <!-- 
+                            <apex:CommandButton action="{!actionCheckMe}" value="{!frmButtonLabel}" disabled="{!disableDE}" styleClass="button" onclick="return checkMe();" />
+                             -->
+                             {!frmButtonLabel}
+                        </div>
+                        <table cellspacing="0" cellpadding="0" border="0" class="formtable pagebreak-before rounded-top">
+                            <tr><th class="rounded-top"><span class="text">Terms And Conditions</span><img src="{!URLFOR($Resource.SGE2012, 'images/terms_conditions.png')}" alt="Terms and Conditions" /></th></tr>
+                            <tr>
+                                <td>
+                                <p>Please refer to the following terms and conditions prior to signing acceptance on previous page:</p>
+                                <ul class="orange">
+                                    <li><span class="normal">You must be a customer of SG&amp;E and the installation address is in the SG&amp;E service area.</span></li>
+                                    <li><span class="normal">One rebate per household please.</span></li>
+                                    <li><span class="normal">This rebate request application must be postmarked within 90 days of the refrigerator purchase date.</span></li>
+                                    <li><span class="normal">The installed refrigerator must meet the following qualifications:</span>
+                                    <ul>
+                                        <li><span class="normal">New refrigerator must be purchased between Jan. 1, 2012 and Dec. 31, 2012.</span></li>
+                                        <li><span class="normal">ENERGY STAR rated</span></li>
+                                        <li><span class="normal">Minimum of 9 cubic feet (compact refrigerators are not eligible).</span></li>
+                                    </ul>
+                                    </li>
+                                    <li><span class="normal">All information must be complete, and a <strong>copy</strong> of itemized purchase receipt
+                                    must be enclosed to be considered for payment.</span></li>
+                                    <li><span class="normal">This rebate may not be combined with SG&amp;E’s $30 refrigerator recycling rebate.</span></li>                           
+                                </ul>
+                                <p class="small">
+                                SG&amp;E (“SGE”) will review the rebate request application (“Request”) and determine whether the purchased refrigerator 
+                                product qualifies for the rebate. If the product qualifies, SGE will mail the appropriate rebate within (60) days of SGE’s 
+                                receipt of the Request. Only one rebate is available per home. By signing this Request and accepting any rebate, Owner (1) 
+                                represents and warrants that the refrigerator product has been installed in compliance with all applicable federal, state and
+                                local laws, codes, and ordinances, including all building energy and accessibility codes and in compliance with the procedures
+                                specified by SGE; and (2) acknowledges and agrees that: (a) SGE is a sponsor of the rebate program only and has not and does
+                                not make any representations or promises with respect to the refrigerator product, the energy consumption, and/or energy 
+                                savings from the installed refrigerator product; and (b) that SGE MAKES NO IMPLIED OR EXPRESS WARRANTIES REGARDING THIS 
+                                PROGRAM, ITS POLICIES, PROCEDURES, INSPECTIONS AND/OR ANY OWNER INSTALLED REFRIGERATOR PRODUCT, AND SPECIFICALLY DISCLAIMS
+                                ANY WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+                                </p>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </apex:form>
+                </div>
+            </div>
+            <div id="footer">
+                <img src="{!URLFOR($Resource.EFIStandard, 'images/powered_by_efi_sm.png')}" id="efi-logo" alt="Powered by EFI"/>
+            </div>
+        </div>
+    </body>
+</apex:page>

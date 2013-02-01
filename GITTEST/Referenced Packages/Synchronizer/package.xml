@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Synchronizer</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <description>Synchronizer is a Microsoft Access database that helps you automate data tasks in Salesforce.</description>
+    <namespacePrefix>Synchronizer</namespacePrefix>
+    <types>
+        <members>ctlrAboutSynchronizer</members>
+        <members>tstAboutSynchronizer</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>About_Synchronizer</members>
+        <name>ApexPage</name>
+    </types>
+    <types>
+        <members>Synchronizer</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>About_Synchronizer</members>
+        <members>How_to_Use_Synchronizer</members>
+        <members>Synchronizer_FAQ</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>Graphics</members>
+        <members>Synchronizer</members>
+        <name>Document</name>
+    </types>
+    <version>26.0</version>
+</Package>

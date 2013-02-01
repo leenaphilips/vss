@@ -1,0 +1,247 @@
+<apex:page id="LIPA2012RF" showHeader="false" standardStyleSheets="false" 
+    controller="FormStatusControllerMM" cache="false" expires="0">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>LIPA Refrigerator Rebate Status Check</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+        <script src="js/jquery.tooltip.js" type="text/javascript" language="javascript"></script>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <link href="{!URLFOR($Resource.LIPA2012, 'css/style.css')}" rel="stylesheet" type="text/css" />
+        <style type="text/css" media="all">
+            .display {color: #333}
+            .display span{ color: #666; border-bottom:1px solid #666; }
+            .instructions {
+                margin-left:10px;
+                margin-bottom:10px;
+                font-weight:bold;
+                border:none;
+            }
+            .error {padding:10px; padding-bottom:20px; color:#C00; border:none;}
+        </style>
+        <script type="text/javascript">
+            $(document).ready( function(){
+                $('#LIPA2012RF\\:rebateForm\\:FormCode').val('LIRF2012')
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container" style="width:800px">
+            <div id="header">
+                <img src="{!URLFOR($Resource.LIPA2012, 'images/lipa.gif')}" alt="LIPA" style="float:left;" />
+            </div>
+            <div id="main">
+                <div id="content-top">
+                    <h1>The ENERGY STAR $75-$100 MAIL-IN REBATE</h1>
+                    <apex:outputPanel rendered="{! RebateStatus == 'eSubmit' }" styleClass="text">
+                    <div id="mailto">
+                        <p><span style="font-weight:bold">Mail to:</span><br />
+                           <apex:outputText escape="false" value="{!MailingAddress}" /></p>
+                    </div>
+                    </apex:outputPanel>
+                </div>
+                <div id="content-main">
+                    <style type="text/css" media="all">
+                    
+                        td.label {
+                            text-align:right;
+                            color: #1f5995;
+                        }
+                        
+                        td.data {
+                            text-align:left;
+                        }
+                        
+                        table.detail {
+                            width:760px;
+                            margin-left:20px;
+                            font-size:12px;
+                            border-spacing:0px 0px;
+                            text-align:center;
+                            margin-top:10px;
+                        }
+                        table.detail th {
+                            font-weight:bold;
+                            color:#000;
+                            padding:0px 0px 5px;
+                            border-bottom:1px solid black
+                        }
+                        table.detail td {
+                            padding:5px 0px;
+                            border-bottom:1px solid #ccc;
+                        }
+                        
+                        table.rebate {
+                            border-spacing:0px 0px;
+                            width:100%;
+                            padding:0px 5px 15px  5px;
+                            font-size:14px;
+                            font-weight:bold;
+                        }
+                        
+                        td.summary{
+                            font-size:12px;
+                            font-weight:normal;
+                            text-align:left;
+                            padding-top:2px;
+                        }
+                        
+                        .sectionLabel {
+                            font-weight:bold;
+                            color: #1f5995;
+                            font-size:14px;
+                            padding-left:5px;
+                        }
+                        
+                        .subSectionLabel {
+                            font-size:12px;
+                            font-style:italic;
+                            padding-bottom:10px;
+                            color: #1f5995;
+                        }
+                        
+                        .status {
+                            padding-left:20px;
+                            width:760px;
+                            padding-top:25px;
+                            font-size:12px;
+                        }
+                        
+                        .status td {
+                            vertical-align:top;
+                        }
+                        
+                        .status td.label {
+                            padding-right:10px;
+                            padding-top:2px;
+                        }
+						#footer { width:880px; background-color:#fff; margin:0px auto; padding:20px 0px; text-align:right;  }		
+                    </style>
+                    <apex:variable var="details" value="{!detailStatuses}"/>
+                    <apex:outputPanel rendered="{! NOT(ISBLANK(RebateStatus))}">
+                        
+                        <table class="rebate">
+                        <tbody>
+                            <tr>
+                                <td class="label" width="400" style="text-align:left">
+                                    Rebate # <apex:outputText value="{!RebateNumber}"/> submitted on&nbsp;
+
+                                          <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                            <apex:param value="{!RebateDate}" /> 
+                                          </apex:outputText>
+                                </td>
+                                <td class="label">
+                                    Total Rebate Amount: <span style="color:black"><apex:outputText value="${!TEXT(RebateAmount)}"/></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </apex:outputPanel>
+                    <!--
+                     <apex:outputPanel rendered="{! NOT(ISNULL(STATUS)) }" style="border:1px solid #CCC">
+                            <fieldset class="display">
+                                <div>
+                                    <span style="margin-left:20px; margin-right:10px; margin-bottom:10px; text-align:center; border:none">
+                                        <apex:outputText escape="false" value="{!Description}"/></span>
+                                </div>
+                                <div>
+                                    <label>Rebate Status:</label>
+                                    <span class="mediumshorttext"><apex:outputText value="{!Status}"/></span>
+                                    <label style="width:8em;">Rebate Amount</label>
+                                    <span class="mediumshorttext"><apex:outputText value="${!TEXT(RebateAmount)}"/></span>
+                                </div>
+                            </fieldset>
+                        </apex:outputPanel>
+                    -->
+                    <apex:outputPanel rendered="{! NOT(ISNULL(details)) }">
+                        <div class="sectionLabel">Line Items</div>
+                        <table class="detail">
+                            <tr>
+                                <th>Category</th>
+                                <th>Product</th>
+                                <th>Status</th>
+                                <th>Rebate Amount</th>
+                                <th>Qty.</th>
+                                <th>Ext. Amount</th>
+                                <th>Paid Date</th>
+                            </tr>
+                            <apex:repeat var="d" value="{!details}">
+                                <tr>
+                                    <td>{!d.MeasureCategory}</td>
+                                    <td>
+                                        <apex:outputPanel rendered="{!ISBLANK(d.Manufacturer)}">
+                                            <span style='font-style:italic;font-size:85%'>unspecified manufacturer&nbsp;</span>
+                                        </apex:outputPanel>
+                                        <apex:outputText rendered="{!NOT(ISBLANK(d.Manufacturer))}" escape="false" value="{!d.Manufacturer}&nbsp;" />
+                                        
+                                        <apex:outputPanel rendered="{!ISBLANK(d.ModelNumber)}">
+                                            <span style='font-style:italic;font-size:85%'>unspecified model</span>
+                                        </apex:outputPanel>
+                                        <apex:outputText rendered="{!NOT(ISBLANK(d.ModelNumber))}" value="{!d.ModelNumber}" />
+                                    </td>
+                                    <td>{!d.Status}</td>
+                                    <td><apex:outputText value="${!TEXT(d.PayableMeasureAmount)}" /></td>
+                                    <td><apex:outputText value="{!TEXT(d.Quantity)}" /></td>
+                                    <td><apex:outputText value="${!TEXT(d.PayableAmount)}" /></td>
+                                    <td>
+                                        <apex:outputPanel rendered="{! 'paid' == d.Status }">
+                                          <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                            <apex:param value="{!d.CheckMailDate}" /> 
+                                          </apex:outputText>
+                                        </apex:outputPanel>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                        <div style="clear:both;"></div>
+                        
+                        <div class="status">
+                          <div class="subSectionLabel">Status Definitions</div>
+                          <table>
+                            <apex:repeat var="sc" value="{!statusCodes}">
+                              <tr>
+                                <apex:outputPanel rendered="{! NumStatusCodes > 1 }">
+                                  <td class="label" style="color:#000">
+                                    <apex:outputText value="{!sc}" />
+                                  </td>
+                                </apex:outputPanel>
+                                <td class="summary">
+                                  <apex:outputText value="{!statusMessages[sc]}" escape="false"/>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                          </table>        
+                        </div>
+                        <div style="clear:both;"></div>
+                        <div style="margin:30px 0px 20px;border-bottom:2px solid #2FB457"></div>
+                    </apex:outputPanel>
+                    
+                    <apex:form id="rebateForm">
+                        <apex:inputHidden value="{!FormCode}" id="FormCode"/>
+                        <fieldset style="border:none;">
+                            <span class="instructions">Enter your existing rebate number as is shown on your printed copy of your rebate along with your zipcode of your mailing address</span>
+                            <apex:messages style="color:red"/>
+                            <apex:outputText value="{!NoResultsText}" rendered="{! NoResultsReturned }" escape="false" styleClass="error" />
+                            <div>
+                                <label>Rebate Number: </label>
+                                <span class="mediumtext"><apex:inputText id="rebateNumberTxt" value="{!RebateNumber}" maxlength="14" size="14" tabindex="1" /></span>
+                                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="Please enter your Rebate Application Number" styleClass="error-icon" id="rebateNumberTxtErr" style="padding-left:10px;{!StyleRebateNumber}" />
+                            </div>
+                            <div>
+                                <label>Mailing Zipcode: </label>  
+                                <span class="mediumtext"><apex:inputText id="zipCodeTxt" value="{!PostalCode}" maxlength="10" size="14" tabindex="2" /></span>
+                                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="Please enter your Mailing Zipcode" styleClass="error-icon" id="zipCodeTxtErr" style="padding-left:10px;{!StylePostalCode}" />
+                            </div>
+                        </fieldset>
+                        <div>
+                            <apex:CommandButton action="{!findRebate}" value="Find Rebate" styleclass="button" />
+                        </div>
+                    </apex:form>
+                </div>
+            </div>
+        </div>
+	    <div id="footer">
+			<img src="{!URLFOR($Resource.EFIStandard, 'images/powered_by_efi_sm.png')}" id="efi-logo" alt="Powered by EFI"/>
+        </div>
+    </body>
+</apex:page>

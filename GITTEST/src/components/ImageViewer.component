@@ -1,0 +1,9 @@
+<apex:component >
+  <apex:attribute name="URL" description="Image URL" type="String"  />
+  <style>
+  	.viewer-img{
+  		max-width:800px;
+  	}
+  </style>
+  <img src="{!URL}" class="viewer-img"/>
+</apex:component>

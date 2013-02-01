@@ -1,0 +1,47 @@
+<apex:component controller="Email_AllRebates" access="Global">
+  <apex:attribute name="contact" description="The contact that submitted the rebate" type="Contact"  />
+  <apex:attribute name="contactId" type="String" description="abc" assignTo="{!contactId}"/>
+  <apex:attribute name="clientCode" type="String" description="clientCode" assignTo="{!clientCode}"/>
+  
+  <table width="100%" bgcolor="white" style="padding:10px">
+    <tr><td width="100%" align="left"><img src="{!LogoUrl}" alt="{!ClientCode}" /></td></tr>
+    <tr><td colspan="2">
+    
+        <div style="font-size:20px; font-weight:bold; color:#fff; background-color:{!primaryColor}; padding:5px;margin-top:10px">Your Requested Rebates</div>
+        <div style="padding-left:10px;padding-right:10px;">
+            <p>Hello {!FirstName},</p>
+            
+            <p>You have received this email because you requested that we send you information regarding your electronic rebate application with 
+            {!ClientName}. If you did not make this request, please ignore this email.</p>
+        
+            <p>You may click on the 'Check Status' link to view the current status of your rebate. </p>
+            <p>For rebates which you have not yet mailed in, you may also click on the 'Reprint Form' link, which will provide you with your 
+                original electronic rebate application so that you may print it and mail it in.</p>
+                
+            <apex:outputPanel rendered="{!hasRebates}">
+            <table width="100%">
+              <apex:repeat value="{!rebates}" var="r">
+                <tr>
+                  <td style="font-weight:bolder">Rebate Application {!r.RebateNumber}&nbsp;(
+                    <apex:outputText value="{0,date,MM'/'dd'/'yyyy}"> <apex:param value="{!r.CreatedDate}" /> </apex:outputText>)</td>
+                  <td><a href="{!r.statusURL}">Check Status</a></td>
+                  <td><apex:outputPanel rendered="{!NOT(r.isReceived) }">
+                    <a href="{!r.formURL}">Reprint Form</a>
+                  </apex:outputPanel></td>
+                </tr>
+              </apex:repeat>
+            </table>
+          </apex:outputPanel>
+          
+          <apex:outputPanel rendered="{! NOT(hasRebates) }" style="font-weight:bolder">
+            We do not have any rebates associated with your email address.
+          </apex:outputPanel>
+
+         <c:Email_showFooter ClientCode="{!ClientCode}" />
+      </div>
+    </td></tr>
+    <tr><td width="100%" align="right">
+        <img style="padding-right:10px" src="http://c.na12.content.force.com/servlet/servlet.ImageServer?id=015U0000000RHAf&oid=00DU0000000KIG0&lastMod=1336575602000" alt="EFI" />
+    </td></tr>
+  </table>
+</apex:component>

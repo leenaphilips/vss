@@ -1,0 +1,1736 @@
+<apex:page id="SGE2012HE" showHeader="false" standardStyleSheets="false" 
+    action="{!initializeSession}" controller="FormSGE2012HE" cache="false" expires="0">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <title>Testing Heating Rebate Form</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+        <script src="{!URLFOR($Resource.SGE2012, 'js/jquery.tooltip.js')}" type="text/javascript" language="javascript"></script>
+        <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <!-- 
+        <link href="{!URLFOR($Resource.SGE2012, 'css/style.css')}" rel="stylesheet" type="text/css" />
+         -->        
+        <style type="text/css" media="all">
+            body { font-family:Arial, Helvetica, sans-serif;  color:#333; background-color:#333; margin:0px; }
+            div {  }
+            h1 { font-size:20px; font-weight:bold; color:#fff; border-top-width:33px; border-top-style:solid; margin-top:20px;  }
+            h1 span { display:block; margin-top:-28px; padding-left: 40px; }
+            h1 img { display:none; padding-left:30px;  }
+            h2 { font-size:14px;  }
+            p { margin:0px 0px 5px 0px; }
+            .normal { font-weight:normal; color:#000; display:inline; }
+            
+            .header { padding-top:25px; position:relative; color:#fff; font-family:Helvetica, Arial, sans-serif;   }
+            .header img { display:inline-block; vertical-align:top  }
+            .header-title { width:715px; height:0px; border-top:120px #666 solid; font-weight:bold; padding:0px;
+                border-radius:0px 5px 5px 0px; -webkit-border-radius:0px 5px 5px 0px;  -moz-border-radius:0px 5px 5px 0px;   }
+            .header-title h1 { font-size:39px; margin:0px; border:none; display:inline-block; margin-top:-120px; margin-left:10px; height:60px; padding-top:55px; vertical-align:top; }
+            .header-title .logo { margin-left:35px; }
+            .header-title img { margin-top:-120px;  }
+            .header-logo { border-width:4px; border-style:solid; border-right:none; position:absolute; top:65px; right:0px; background-color:#fff; 
+                padding:5px 20px; border-radius:10px 0px 0px 10px; -webkit-border-radius:10px 0px 0px 10px; -moz-border-radius:10px 0px 0px 10px; }
+            .header-logo img { height:100px; }
+            .header-rebate { width:655px; border-top:65px #999 solid; border-bottom:10px #999 solid; margin-left:25px;
+                border-radius:0px 0px 10px 10px; -webkit-border-radius:0px 0px 10px 10px; -moz-border-radius:0px 0px 10px 10px;   }
+            .header-rebate .text { height:50px; padding-top:25px; margin-top:-75px; margin-left:15px; vertical-align:bottom; font-size:20px; }
+            .header-rebate .text span.large { font-size:39px;  }
+            .header-rebate img { margin-top:-75px; margin-left:15px;  }
+                        
+            #container { width:895px; margin:0px auto; padding:0px 0px; background-color:#fff;  }
+            .SGE-header .text { margin:20px 40px;  }
+            .efi-logo { float:right; height:95px; padding-top:20px; background-color:#fff; }
+            .efi-logo img {width: 50%; }
+            #main {  }
+            #content-top { color:#000; font-size:12px; position:relative;   }
+            #content-top .highlight { background-color:#fae62e; padding:5px; color:#333; margin:5px 0px; }
+            #content-top .image { float:left; padding-right:20px; }
+            #content-top .text { margin:20px 40px; }
+            #content-top .mailto { margin-top:10px; }
+            #content-top .left { float:left; }
+            #content-top .mailto.right { margin-left:300px; }
+            #content-main  { margin:20px 40px; background-color:#fff; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;
+                border-radius: 5px 5px 5px 5px; clear:both; }
+            #content-main div { margin:0px 0px; }
+            /* form elements */
+            form { font-size:.875em; }
+            .formtable { width:100%; font-size:1em; border-left-width:1px; border-left-style:solid;  }
+            .formtable th { color:#fff; font-size:13px; text-transform:uppercase; text-align:left; padding:2px 5px 0px 5px; border-top-width:25px; border-top-style:solid; }
+            .formtable th img { display:none; }
+            .formtable th span { display:block; margin-top:-21px; }
+            .formtable td { padding:3px 5px; border-bottom-width:1px; border-bottom-style:solid; border-right-width:1px; border-right-style:solid; vertical-align:top; }
+            .formtable td.nopadding { padding:0px; }
+            .formtable table td { border:none; }
+            .rounded-top { border-radius:7px 7px 0px 0px; -webkit-border-radius:7px 7px 0px 0px; -moz-border-radius:7px 7px 0px 0px; }
+            .measureheader {  }
+            fieldset { border:none; padding:15px 0px 15px 0px; border-top:0px #2fb457 solid; margin:0px; }
+            label { display:inline-block; width:auto; vertical-align:inherit; text-align:left; padding-right:6px; }
+            label.autowidth { width:auto; }
+            form span { display:inline-block; border-bottom:0px #333 solid;  }
+            form span.noborder, form span .noborder, form .noborder span, form .noborder, td.noborder { border-width:0px; }
+            td.noborder.right { border-right-width:1px; }
+            input { font-family:"Courier New", Courier, monospace; }
+            input, select { color:#1f5995; }
+            input[type="submit"] { font-family:Arial, Helvetica, sans-serif; }
+            input[type="text"] {  border:none; font-size:1em; width:auto; background-color:#e6edfb; font-weight:bold;  }
+            select, select option { font-weight:bold; background-color:#FFFFFC;  }
+            input:focus { background-color:#ccc; }
+            .longtext, .longtext input[type="text"] { width:28em; }
+            .mediumtext, .mediumtext input[type="text"] { width:18em; }
+            .mediumshorttext, .mediumshorttext input[type="text"] { width:8em; }
+            .shorttext, .shorttext input[type="text"] { width:3em; }
+            #tooltip { position: absolute;  z-index: 3000; border: 1px solid #111; background-color: #EEEEEB; padding: 5px; opacity: 0.85; font-size:11px;  }
+            #tooltip h3 { font-size:11px; margin:0px; }
+            .error-icon { visibility:visible; position:absolute; margin:3px 0px 0px 3px; }
+            .question-icon { visibility:visible; position:absolute; cursor:pointer; margin-left:20px; }
+            .alwaysblack {color: black; }
+            .printonly, .header .printonly { display:none; }
+            .small { font-size:10px; }
+            .shaded td { background-color:#efefef; }
+            #content-main .roundedbutton {
+                background: #cccccc; /* for non-css3 browsers */
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#333333'); /* for IE */
+                background: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333)); /* for webkit browsers */
+                background: -moz-linear-gradient(top,  #666666,  #333333); /* for firefox 3.6+ */ 
+                text-align:center; padding:7px; display:inline-block; margin:10px 5px;
+                color:#fff; text-decoration:none; font-weight:normal; 
+                border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px; 
+                border: 1px solid #333333;
+                cursor:pointer;
+                -moz-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+                -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+                box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+                position:relative;
+                text-shadow: 0px -1px 1px #000;
+            }
+            
+            #content-main .roundedbutton:after {
+                background: none;
+                border: 3px solid #cccccc;
+                -moz-border-radius: 15px;
+                -webkit-border-radius: 15px;
+                border-radius: 15px;
+                content: "";
+                position: absolute;
+                top: -4px;
+                right: -4px;
+                bottom: -4px;
+                left: -4px;
+            }
+            #content-main .submitbutton { 
+                width:300px; 
+                margin:20px 0px;
+                font-size:18px;
+                display:block;
+                cursor:pointer;
+            }
+            #content-main .roundedbutton:hover { background:#333333; }
+            #content-main .submitbutton.disabled, #content-main .submitbutton.disabled:hover { background:#999; cursor:text; border-color:#999; text-shadow:none; }
+            input.address-field { color:#999; font-weight:normal; font-style:italic; }
+            input.address-field.entered { color:#1f5995; font-weight:bold; font-style:normal; }
+            .shaded .screenonly { color:#999; font-style:italic }
+            .inline { display:inline-block; }
+            #selstorediv div, #manstorediv div { padding:2px 0px; }
+            #need-help { position:absolute; padding:5px; top:28px; right:25px; font-weight:bold; color:#fff; 
+                font-style:italic; border:none; cursor:pointer; font-size:12px; }
+            .sge-dialog { display:none; }
+            .ui-dialog-content { padding:1em; }
+            .printonly { display:none; }
+            .ui-widget-overlay { opacity:.8; filter:Alpha(Opacity=80); }
+            #footer { background-color:#fff; margin:0px; padding-bottom:20px; text-align:right; }        
+            #footer #efi-logo { display:inline-block; margin-right:40px; }
+            .msgcontent { background-color:#333; font-weight:bold; padding:0px 3px; color:#fff; }
+            .msgbutton { min-width:100px;  }
+            iframe { }
+            input[type="text"].hardstop, select.hardstop { border-left: 2px solid #a2282a; border-right: 2px solid #a2282a; }
+            input[type="text"].softstop, select.softstop { border-left: 2px solid #F1BB27; border-right: 2px solid #F1BB27; }
+        </style>
+        <style media="print">
+            body { background-color:#fff; }
+            .header-title h1, .header-rebate .text { display:none; }
+            .header .printonly { display:inline-block !important; }
+            .header { margin-bottom:20px; }
+            .formtable { border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; }
+            .formtable th img { display:block; margin-top:-23px;  }
+            .formtable th span, h1 span { display:none; }
+            .printonly { display:block !important; }
+            .pagebreak-after { page-break-after:always; }
+            .pagebreak-before { page-break-before:always; }
+            #checklist { width:600px; margin:2em auto; }
+            #checklist .text { margin:20px; }
+            #checklist p { margin-bottom: 10px; }
+            #checklist li { list-style:none; margin-bottom:4px; }
+            #checklist .SGE-header { width: 400px; }
+            .error-icon, .question-icon, .button { display:none !important; }
+            #need-help { display:none; }
+            input[type="text"] { background-color:#fff; }
+            .screenonly { display:none; }
+            h1, h2, #content-main, #content-top .text, .SGE-header { margin: 0px; padding:0px; }
+            h1 img { display:block; margin-top: -28px; }
+            h1 { margin-bottom:5px; }
+            input.address-field { visibility:hidden }
+            input.address-field.entered { visibility:visible; }
+            #footer { margin-top:20px; }
+            #content-main .msgbutton, #content-main .submitbutton { display:none; visibility:hidden; }
+            
+        </style>
+
+        <script>
+            // functions and variables for controlling the display of primary and secondary colors
+            var frmColor1 = "{!frmColor1}"
+            var frmColor2 = "{!frmColor2}"
+            var frmColor3 = "{!frmColor3}"
+            var frmColor1Dark = changeColor(frmColor1,'dark',.5);
+            var frmColor1Light = changeColor(frmColor1,'light',.9);
+            var frmColor2Dark = changeColor(frmColor2,'dark',.5);
+            var frmColor2Light = changeColor(frmColor2,'light',.9);
+            var colorStyling = ' .pcolor { color:'+frmColor1+'; } .scolor { color:'+frmColor2+'; } ' +
+                ' .pcolorbk { background-color:'+frmColor1+'; } .scolorbk { background-color:'+frmColor2+'; }   ' +
+                ' .pcolorbr { border-color:'+frmColor1+'; } .scolorbr { border-color:'+frmColor2+'; } ' +
+                ' .tcolor { background-color:'+frmColor3+'; } .tcolorbk { background-color:'+frmColor3+'; } .tcolorbr { border-color:'+frmColor3+'; } ' +
+                ' .formtable { border-color:'+frmColor1+'; } ' +
+                ' .formtable th { background-color:'+frmColor1+'; border-color:'+frmColor1+'; } .formtable td { border-bottom-color:'+frmColor1+'; border-right-color:'+frmColor1+'; } ' +
+                ' .shaded td {  } ' +
+                ' #content-main .roundedbutton { filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="'+frmColor2+'", endColorstr="'+frmColor2Dark+'"); ' +
+                    ' background: -webkit-gradient(linear, left top, left bottom, from('+frmColor2+'), to('+frmColor2Dark+')); ' +
+                    ' background: -moz-linear-gradient(top,  '+frmColor2+',  '+frmColor2Dark+'); ' +
+                    ' border-color:'+frmColor2Dark+'; } ' +
+                ' #content-main .roundedbutton::after {  } ' +
+                ' #content-main .roundedbutton:hover { background:'+frmColor2Dark+'; } ';
+            document.write ('<style>' + colorStyling + '</style>');
+            
+            // functions for lightening and darkening primary and secondary colors for gradients, shading, etc.
+            function lightenRgb(r,g,b,n) {
+                var n2 = 1 + n;
+                var rgb = Array();
+                rgb[0] = r*n2 < 255 ? Math.round(r*n2) : 255;
+                rgb[1] = g*n2 < 255 ? Math.round(g*n2) : 255;
+                rgb[2] = b*n2 < 255 ? Math.round(b*n2) : 255;
+                return rgb;
+            }
+            function darkenRgb(r,g,b,n) {
+                var rgb = Array();
+                rgb[0] = Math.round(r * n);
+                rgb[1] = Math.round(g * n);
+                rgb[2] = Math.round(b * n);
+                return rgb;
+            }
+            function hexToRgb(hex) {
+                var rgb = Array();
+                var htr_result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                rgb[0] = parseInt(htr_result[1], 16);
+                rgb[1] = parseInt(htr_result[2], 16);
+                rgb[2] = parseInt(htr_result[3], 16);
+                return rgb;
+            }
+            function componentToHex(c) {
+                var hex = c.toString(16);
+                return hex.length == 1 ? "0" + hex : hex;
+            }
+            function rgbToHex(r, g, b) {
+                return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+            }
+            function changeColor(hex,dir,pct) {
+                var rgb = hexToRgb(hex);
+                var rgb2 = dir == 'dark' ? darkenRgb(rgb[0],rgb[1],rgb[2],pct) : lightenRgb(rgb[0],rgb[1],rgb[2],pct);
+                var hex2 = rgbToHex(rgb2[0],rgb2[1],rgb2[2]);
+                return hex2;
+            }
+             
+            $(function() {
+                $( ".datefield" ).datepicker();
+            });
+            $(document).ready(function(){ 
+                $('.error-icon').tooltip({
+                    track: true,
+                    delay: 0,
+                    showURL: false,
+                    showBody: " - ",
+                    fade: 250
+                });
+            });
+        </script>
+        <script>
+            var documentCount = 0;
+            function checkMe() {
+                // be careful in defining local tests - FDC runs rampant on form as written
+                // so DOM ids and structure may be different from expected
+                // transfer purchase date to FDC field
+                if (document.getElementById("SGE2012HE:rebateForm:frmReadOnly").value == 'yes') return false;
+                document.getElementById("SGE2012HE:rebateForm:documentCount").value = documentCount+""; // convert to string
+                document.getElementById("SGE2012HE:rebateForm:frmInstallDateFRN").value = document.getElementById("install_dateFRN").value
+                document.getElementById("SGE2012HE:rebateForm:frmInstallDateFRNECM").value = document.getElementById("install_dateFRNECM").value
+                document.getElementById("SGE2012HE:rebateForm:frmInstallDateBOILHW").value = document.getElementById("install_dateBOILHW").value
+                document.getElementById("SGE2012HE:rebateForm:frmInstallDateBOILST").value = document.getElementById("install_dateBOILST").value
+                document.getElementById("SGE2012HE:rebateForm:frmInstallDatePTSTAT").value = document.getElementById("install_datePTSTAT").value
+                document.getElementById("SGE2012HE:rebateForm:frmInstallDateWHTRI").value = document.getElementById("install_dateWHTRI").value
+                submitButton();
+                return true;
+            }
+            function runOnLoad() {
+                var sobj = document.getElementById("SGE2012HE:rebateForm:frmStatus");
+                if (sobj.value == 'Other') {
+                    var nurl = window.location.href;
+                    window.location.href = nurl.replace("?Rebate","_Status?Rebate")+'&FormCode=SGEHE2012';
+                }
+                // determine if there is any message to display (e.g. AJAX result)
+                var mobj = document.getElementById("SGE2012HE:rebateForm:frmLoadMessage");
+                if (mobj.value.length > 0) {
+                	alert(mobj.value);
+                	useOptions();  // result of submit will have a message (change logic in future)
+               	} else {
+               		changeOptions(); // initial display
+               	}
+               	//alert('a');
+                // determine if there is any debug text to display (e.g. AJAX result)
+                var obj = document.getElementById("SGE2012HE:rebateForm:debugText");
+                if (obj.value.length > 0) alert(obj.value);
+                // determine if there is a hard error to display
+                var heobj = document.getElementById("SGE2012HE:rebateForm:hardStopMessage");
+                // alert(heobj.innerHTML.length);
+                if (heobj.innerHTML.length > 0) { document.getElementById("harderror").style.display = "table-row"; }
+                else { document.getElementById("harderror").style.display = "none"; } 
+                /*
+                // determine if there is an account number error/warning, show dialog
+                var eobj = document.getElementById("SGE2012HE:rebateForm:frmShowInvoice");
+                if (eobj.value == 'Yes') {
+                    $('#frmAcctNumExampleDialog').dialog( { modal:true, width:750, });
+                }
+                */
+                // set rebate/reservation and submission type areas
+                doSubmitVia(document.getElementById("SGE2012HE:rebateForm:submitVia").value);  // do first!
+                doSubmitAs(document.getElementById("SGE2012HE:rebateForm:submitAs").value);
+                // changeOptions(); // present the options first (moved above)
+                $('.blankstophardres').addClass('hardstop'); // show stops regardless of SubmitAs value
+                $('.blankstopsoftres').addClass('softstop'); 
+               	//alert('b');
+                if (document.getElementById("SGE2012HE:rebateForm:frmReadOnly").value == 'yes') {
+                    document.getElementById("suboptrow").style.display = "none";
+                    document.getElementById("subasrow").style.display = "none";
+                    document.getElementById("subviarow").style.display = "none";
+                    document.getElementById("emailreqrow").style.display = "none";
+                    document.getElementById("changebutton").style.display = "none";
+                    document.getElementById("suptdochrow").style.display = "none";
+                    document.getElementById("suptdocrow").style.display = "none";
+                }
+                if (document.getElementById("SGE2012HE:rebateForm:formOpen").value == 'false') {
+                    if (document.getElementById("SGE2012HE:rebateForm:existingType").value == '') {
+                        // if new form ...
+                        document.getElementById("subwarnrow").style.display = "table-row";
+                        document.getElementById("subclosedrow").style.display = "table-row";
+                    } else if (document.getElementById("SGE2012HE:rebateForm:existingType").value == 'Reservation') {
+                        // if existing reservation
+                        document.getElementById("subwarnrow").style.display = "table-row";
+                        document.getElementById("sublimitedrow").style.display = "table-row";
+                        doSubmitAs('Rebate');
+                        document.getElementById("subasrow").style.display = "none"; // no longer have choice
+                    }
+                }
+               	//alert('c');
+                // replace visible date from value exchanged w/server
+                document.getElementById("install_dateFRN").value = document.getElementById("SGE2012HE:rebateForm:frmInstallDateFRN").value;
+                document.getElementById("install_dateFRNECM").value = document.getElementById("SGE2012HE:rebateForm:frmInstallDateFRNECM").value;
+                document.getElementById("install_dateBOILHW").value = document.getElementById("SGE2012HE:rebateForm:frmInstallDateBOILHW").value;
+                document.getElementById("install_dateBOILST").value = document.getElementById("SGE2012HE:rebateForm:frmInstallDateBOILST").value;
+                document.getElementById("install_datePTSTAT").value = document.getElementById("SGE2012HE:rebateForm:frmInstallDatePTSTAT").value;
+                document.getElementById("install_dateWHTRI").value = document.getElementById("SGE2012HE:rebateForm:frmInstallDateWHTRI").value;
+                // new approach is simpler (only one field on page and controller)
+                //storeCheck(document.getElementById("SGE2012HE:rebateForm:manualStore").checked); // set visible, invisible fields
+                
+                modelCheck("FRN", document.getElementById("SGE2012HE:rebateForm:manualModelFRN").checked);
+                modelCheck("FRNECM", document.getElementById("SGE2012HE:rebateForm:manualModelFRNECM").checked);
+                modelCheck("BOILHW", document.getElementById("SGE2012HE:rebateForm:manualModelBOILHW").checked);
+                modelCheck("BOILST", document.getElementById("SGE2012HE:rebateForm:manualModelBOILST").checked);
+                modelCheck("PTSTAT", document.getElementById("SGE2012HE:rebateForm:manualModelPTSTAT").checked);
+                modelCheck("WHTRI", document.getElementById("SGE2012HE:rebateForm:manualModelWHTRI").checked);
+                //alert('here');
+
+                sectionCheck("FRN", document.getElementById("SGE2012HE:rebateForm:hasFRN").checked);
+                sectionCheck("FRNECM", document.getElementById("SGE2012HE:rebateForm:hasFRNECM").checked);
+                sectionCheck("BOILHW", document.getElementById("SGE2012HE:rebateForm:hasBOILHW").checked);
+                sectionCheck("BOILST", document.getElementById("SGE2012HE:rebateForm:hasBOILST").checked);
+                sectionCheck("PTSTAT", document.getElementById("SGE2012HE:rebateForm:hasPTSTAT").checked);
+                sectionCheck("WHTRI", document.getElementById("SGE2012HE:rebateForm:hasWHTRI").checked);
+               	//alert('d');
+                
+                fuelconv(document.getElementById("SGE2012HE:rebateForm:frmFuelCnv:1").checked);
+
+                var rn = document.getElementById("SGE2012HE:rebateForm:frmRebateNum").innerHTML; // empty span if no value
+                if (rn.length < 2) {
+                    document.getElementById("refnumdiv").style.display = "none";
+                } else {
+                    document.getElementById("refnumdiv").style.display = "block";
+                }
+               	//alert('e');
+                
+                if (document.getElementById("SGE2012HE:rebateForm:frmReadOnly").value == "yes") {
+                    document.getElementById("install_dateFRN").disabled = true;
+                    document.getElementById("install_dateFRNECM").disabled = true;
+                    document.getElementById("install_dateBOILHW").disabled = true;
+                    document.getElementById("install_dateBOILST").disabled = true;
+                    document.getElementById("install_datePTSTAT").disabled = true;
+                    document.getElementById("install_dateWHTRI").disabled = true;
+                   jQuery('.submitbutton').addClass('disabled');
+                    
+                }
+               
+                if (document.getElementById('SGE2012HE:rebateForm:frmAcctAddress1').value == '') { document.getElementById('SGE2012HE:rebateForm:frmAcctAddress1').value = 'Line 1'; } else if (document.getElementById('SGE2012HE:rebateForm:frmAcctAddress1').value != 'Line 1') { $('.address-field.frmAcctAddress1').addClass('entered'); }
+                if (document.getElementById('SGE2012HE:rebateForm:frmAcctAddress2').value == '') { document.getElementById('SGE2012HE:rebateForm:frmAcctAddress2').value = 'Line 2'; } else if (document.getElementById('SGE2012HE:rebateForm:frmAcctAddress2').value != 'Line 2') { $('.address-field.frmAcctAddress2').addClass('entered'); }
+                if (document.getElementById('SGE2012HE:rebateForm:frmMailAddress1').value == '') { document.getElementById('SGE2012HE:rebateForm:frmMailAddress1').value = 'Line 1'; } else if (document.getElementById('SGE2012HE:rebateForm:frmMailAddress1').value != 'Line 1') { $('.address-field.frmMailAddress1').addClass('entered'); }
+                if (document.getElementById('SGE2012HE:rebateForm:frmMailAddress2').value == '') { document.getElementById('SGE2012HE:rebateForm:frmMailAddress2').value = 'Line 2'; } else if (document.getElementById('SGE2012HE:rebateForm:frmMailAddress2').value != 'Line 2') { $('.address-field.frmMailAddress2').addClass('entered'); }
+                if (document.getElementById('SGE2012HE:rebateForm:frmStoreAddress1').value == '') { document.getElementById('SGE2012HE:rebateForm:frmStoreAddress1').value = 'Line 1'; } else if (document.getElementById('SGE2012HE:rebateForm:frmStoreAddress1').value != 'Line 1') { $('.address-field.frmStoreAddress1').addClass('entered'); }
+                if (document.getElementById('SGE2012HE:rebateForm:frmStoreAddress2').value == '') { document.getElementById('SGE2012HE:rebateForm:frmStoreAddress2').value = 'Line 2'; } else if (document.getElementById('SGE2012HE:rebateForm:frmStoreAddress2').value != 'Line 2') { $('.address-field.frmStoreAddress2').addClass('entered'); }
+               	//alert('f');
+
+                if (mobj.value.length > 0) { // moved to end, so correct form is visible
+                	// alert(mobj.value);  // didn't work down here, need to diagnose later
+				}               
+            }
+            function fuelconv(choice) {
+                // alert(choice);
+                // Y applies to interactive use, true applies to form load for reprint
+                if (choice == true || choice == "Y") {
+                    document.getElementById("fueltype").style.visibility = "visible";
+                } else {
+                    document.getElementById("fueltype").style.visibility = "hidden";
+                }
+            }
+            function modelCheck(prod, ischecked) {
+                if (ischecked) {
+                    document.getElementById("selmandiv"+prod).style.display = "none";
+                    document.getElementById("selmoddiv"+prod).style.display = "none";
+                    document.getElementById("manmandiv"+prod).style.display = "block";
+                    document.getElementById("manmoddiv"+prod).style.display = "block";
+                } else {
+                    document.getElementById("selmandiv"+prod).style.display = "block";
+                    document.getElementById("selmoddiv"+prod).style.display = "block";
+                    document.getElementById("manmandiv"+prod).style.display = "none";
+                    document.getElementById("manmoddiv"+prod).style.display = "none";
+                }
+            }
+            function sectionCheck(prod, ischecked) {
+                if (ischecked) {
+                    document.getElementById("section"+prod).style.display = "table-row";
+                } else {
+                    document.getElementById("section"+prod).style.display = "none";
+                }
+            }
+            function storeCheck(ischecked) {
+                // alert(ischecked);
+                var obj = document.getElementById("SGE2012HE:rebateForm:manualStore");
+                if (ischecked) {
+                    document.getElementById("selstorediv").style.display = "none";
+                    document.getElementById("manstorediv").style.display = "block";
+                    // obj.value = "Y";
+                } else {
+                    document.getElementById("selstorediv").style.display = "block";
+                    document.getElementById("manstorediv").style.display = "none";
+                    // obj.value = "N";
+                }
+            }
+            
+            function doSubmitAs(opt) {
+                // alert(opt);
+                if (opt == 'Reservation') {
+                    document.getElementById("as_app").checked = false;
+                    document.getElementById("as_res").checked = true;
+                    document.getElementById("subviarow").style.display = "none";
+                    document.getElementById("emailreqrow").style.display = "none";
+                    document.getElementById("suptdochrow").style.display = "none";
+                    document.getElementById("suptdocrow").style.display = "none";
+                    $('.blankstophard').removeClass('hardstop'); 
+                    $('.blankstopsoft').removeClass('softstop'); 
+                } else {
+                    document.getElementById("as_app").checked = true;
+                    document.getElementById("as_res").checked = false;
+                    document.getElementById("subviarow").style.display = "table-row";
+                    doSubmitVia(document.getElementById("SGE2012HE:rebateForm:submitVia").value);
+                    $('.blankstophard').addClass('hardstop'); 
+                    $('.blankstopsoft').addClass('softstop'); 
+                }
+                document.getElementById("SGE2012HE:rebateForm:submitAs").value = opt;
+                updateMessage();
+            }
+
+            function doSubmitVia(opt) {
+                // alert(opt);
+                if (opt == 'Electronic') {
+                    document.getElementById("via_mail").checked = false;
+                    document.getElementById("via_elect").checked = true;
+                    document.getElementById("SGE2012HE:rebateForm:emailRequest").checked = false; // initialize
+                    if (documentCount == 0) {
+                        document.getElementById("emailreqrow").style.display = "table-row";
+                    }
+                    document.getElementById("suptdochrow").style.display = "table-row";
+                    document.getElementById("suptdocrow").style.display = "table-row";
+                } else {
+                    document.getElementById("via_mail").checked = true;
+                    document.getElementById("via_elect").checked = false;
+                    document.getElementById("SGE2012HE:rebateForm:emailRequest").checked = false; // clear it
+                    document.getElementById("emailreqrow").style.display = "none";
+                    document.getElementById("suptdochrow").style.display = "none";
+                    document.getElementById("suptdocrow").style.display = "none";
+                }
+                document.getElementById("SGE2012HE:rebateForm:submitVia").value = opt;
+                updateMessage();
+            }
+            
+            function useOptions() {
+                // alert("use");
+                document.getElementById("opttable").style.display = "none";
+                document.getElementById("seltable").style.display = "table";
+                document.getElementById("formtable").style.display = "table";
+                document.getElementById("tctable").style.display = "table";
+                document.getElementById("submitbutton").style.display = "block";
+                document.getElementById("termsconditions").style.display = "table";
+            }
+            
+            function changeOptions() {
+                // alert("change");
+                document.getElementById("opttable").style.display = "table";
+                document.getElementById("seltable").style.display = "none";
+                document.getElementById("formtable").style.display = "none";
+                document.getElementById("tctable").style.display = "none";
+                document.getElementById("submitbutton").style.display = "none";
+                document.getElementById("termsconditions").style.display = "none";
+            }
+            
+            function updateMessage() {
+                var msg;
+                msg = "You are submitting a <span class='msgcontent tcolorbk'>"+document.getElementById("SGE2012HE:rebateForm:submitAs").value+"</span>";
+                if (document.getElementById("SGE2012HE:rebateForm:submitAs").value == 'Rebate') {
+                    msg = msg +"; and submitting via <span class='msgcontent tcolorbk'>"+
+                    document.getElementById("SGE2012HE:rebateForm:submitVia").value+"</span>";
+                }
+                // alert(msg);
+                document.getElementById("messagediv").innerHTML = msg;
+            }
+            
+            function updateDocumentCount(n) {
+                // the upload area is visible if this was called
+                documentCount = n; // if needed later
+                if (n > 0) {
+                    document.getElementById("emailreqrow").style.display = "none";
+                    document.getElementById("SGE2012HE:rebateForm:emailRequest").checked = false; // just in case
+                } else {
+                    document.getElementById("emailreqrow").style.display = "table-row";
+                }
+            }
+            
+            function requestEmailCheck(ischecked) {
+                if (ischecked) {
+                    document.getElementById("suptdochrow").style.display = "none";
+                    document.getElementById("suptdocrow").style.display = "none";
+                } else {
+                    document.getElementById("suptdochrow").style.display = "table-row";
+                    document.getElementById("suptdocrow").style.display = "table-row";
+                }
+            }
+            
+                        
+            function focusValue(id,val) {
+                if (document.getElementById("SGE2012HE:rebateForm:"+id).value == val) { 
+                    document.getElementById("SGE2012HE:rebateForm:"+id).value = ''; 
+                    $('.'+id).addClass('entered'); 
+                }
+                
+            }
+            
+            function blurValue(id,val) {
+                if (document.getElementById("SGE2012HE:rebateForm:"+id).value == '') { 
+                    document.getElementById("SGE2012HE:rebateForm:"+id).value = val; 
+                    $('.'+id).removeClass('entered'); 
+                }
+                
+            }
+            
+            function fieldEntered(id,val) {
+                if (document.getElementById("SGE2012HE:rebateForm:"+id).value != '' && document.getElementById("SGE2012HE:rebateForm:"+id).value != val) {
+                    $('.'+id).addClass('entered');
+                }
+                else { 
+                    $('.'+id).removeClass('entered');
+                }
+            }
+            
+            jQuery(document).ready(function($) {
+                jQuery('#need-help').click(function() {
+                    $('#help-dialog').dialog( { modal:true, width:500, });
+                });
+                jQuery('.question-icon').click(function() {
+                    $('#frmAcctNumExampleDialog').dialog( { modal:true, width:750, });
+                });
+            });
+            
+        </script>
+    </head>
+    <body onload="runOnLoad();">
+        <div class="printonly pagebreak-after" id="checklist">
+            <div class="header">
+                <div class="SGE-header">
+                    <div class="logo"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_logo.png')}" alt="SG&E Light" style="float:left;" /></div>
+                </div>
+            </div>
+            <div class="text" style="clear:both">
+            	<apex:outputText value="{!checklistContent}" escape="false" />
+            	<!-- 
+                <p>Thank you for submitting your SGE 2012 heating rebate online.</p>
+                <p>Have you...</p>
+                <ul>
+                    <li><input type="checkbox" readonly="readonly" /> signed the printed application form?</li>
+                    <li><input type="checkbox" readonly="readonly" /> attached a copy of your itemized receipt showing the rebated item? </li>
+                    <li><input type="checkbox" readonly="readonly" /> submitted your application no later than ninety (90) days from your purchase date.</li>
+                </ul>
+                <p>Mail to:</p>
+                <p>EFI &mdash; SG&amp;E Heating Rebate<br />
+                40 Washington St., Suite 2000<br />
+                Westborough, MA 01581</p>   
+            	 -->
+            </div>
+        </div>
+        <div id="container">
+            <div class="header">
+                <div class="header-title scolorbr">
+                    <img class="logo" src="{!URLFOR($Resource.SGE2012, 'images/heating_rebate_icon.png')}" alt="Heater Rebate" />
+                    <h1>Heating Equipment Rebate</h1>
+                    <img src="{!URLFOR($Resource.SGE2012, 'images/heating_rebate_header.png')}" alt="Heating Equipment Rebate" class="printonly" />
+                </div>
+                <div class="header-logo scolorbr">
+                    <div class="logo"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_logo.png')}" alt="SG&E Light" /></div>
+                </div>
+                <div class="header-rebate pcolorbr">
+                    <div class="text">Get a <span class="large">$25</span> to <span class="large">$350</span> rebate on a qualified model.</div>
+                    <img src="{!URLFOR($Resource.SGE2012, 'images/get_25_350_rebate_header.png')}" alt="Heating Equipment Rebate" class="printonly" />
+                </div>
+                <div id="need-help" class="screenonly tcolorbk">Need help?</div>
+                <div id="help-dialog" class="sge-dialog" title="Need help?">For additional information or assistance in completing this online application, please contact our customer care center at (888) 555-1212. We are open from 8 AM to 8 PM, Monday through Friday, and 8 AM to 5 PM on Saturdays.</div>
+            </div>
+            <div id="main">
+                <div id="content-top">
+                    <!-- 
+                    <div class="text">
+                        <h2 class="orange">To apply, follow these steps:</h2>
+                    </div> 
+                     -->
+                </div>
+                <div id="content-main">
+                    <!-- 
+                    <h2>All information below is REQUIRED for processing. Please print in block letters.</h2>
+                     -->
+                    <apex:form id="rebateForm">
+                        <apex:actionFunction name="submitButton" action="{!actionCheckMe}" />
+                        <apex:inputHidden id="frmLoadMessage" value="{!frmLoadMessage}" />
+                        <apex:inputHidden id="frmReadOnly" value="{!frmReadOnly}" />
+                        <apex:inputHidden id="frmShowInvoice" value="{!frmShowInvoice}" />
+                        <apex:inputHidden id="frmStatus" value="{!frmStatus}" />
+                        <apex:inputHidden id="debugText" value="{!debugText}" />
+                        <apex:inputHidden id="formOpen" value="{!formOpen}" />
+                        <apex:inputHidden id="existingType" value="{!existingType}" />
+						<apex:inputHidden id="documentCount" value="{!documentCount}" />
+                        <apex:inputHidden id="submitAs" value="{!formFields['Rebate__c.SubmitAs'].stringValue}" />
+                        <apex:inputHidden id="submitVia" value="{!formFields['Rebate__c.SubmitVia__c'].stringValue}" />
+                        <div id="refnumdiv" style="font-weight:bold">
+                            <apex:outputText value="{!existingType}" />
+                            <label>Reference #: </label>
+                            <span class="mediumshorttext noborder">
+                                <apex:outputText id="frmRebateNum" value="{!frmRebateNum}" styleClass="noborder"/>
+                            </span>
+                            <label>Total amount: </label>
+                            <apex:outputText value="{!totalAmountSaved}" />
+                        </div>
+                        <table class="formtable rounded-top pcolorbr"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody> 
+                            <tr><th colspan="3" class="rounded-top"><span class="text">Submission Options</span><img src="{!URLFOR($Resource.SGE2012, 'images/subm_opt.png')}" alt="submission options" /></th></tr>
+                        </tbody>
+                        </table>  
+                        <table id="opttable" style="display:none" class="formtable"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody> 
+                            <tr id="subasrow">
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="5%"><input id="as_res" type="checkbox" onclick="doSubmitAs('Reservation')"/>
+                                            </td>
+                                            <td width="95%">
+                                                <label for="as_res"><apex:outputText value="{!resLabel}" escape="false" /></label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><input id="as_app" type="checkbox" onclick="doSubmitAs('Rebate')"/>
+                                            </td>
+                                            <td width="95%">
+                                                <label for="as_app"><apex:outputText value="{!appLabel}" escape="false"/></label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr id="subviarow">
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="5%"><input id="via_elect" type="checkbox" onclick="doSubmitVia('Electronic')"/>
+                                            </td>
+                                            <td width="95%">
+                                                <label for="via_elect"><apex:outputText value="{!viaElectLabel}" escape="false" /></label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="5%"><input id="via_mail" type="checkbox" onclick="doSubmitVia('Mail')"/>
+                                            </td>
+                                            <td width="95%">
+                                                <label for="via_mail"><apex:outputText value="{!viaMailLabel}" escape="false"/></label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr id="emailreqrow">
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="5%">
+                                                <apex:inputCheckbox id="emailRequest" value="{!formFields['Rebate__c.EmailRequest__c'].booleanValue}" onclick="requestEmailCheck(this.checked)"/>
+                                            </td>
+                                            <td width="95%">
+                                                <apex:outputLabel for="emailRequest" value="{!formFields['Rebate__c.EmailRequest__c'].fieldLabel}" escape="false" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr id="subwarnrow" style="display:none;">
+                                <th colspan="3"><span class="text">Warning: Program is now closed</span></th>
+                            </tr>
+                            <tr id="sublimitedrow" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <br />
+                                    <apex:outputText value="{!frmLimitedRebate}" />
+                                    <br /><br />
+                                </td>
+                            </tr>
+                            <tr id="subclosedrow" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <br />
+                                    <apex:outputText value="{!frmMessageClosed}" />
+                                    <br /><br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="nopadding">
+                                    <div class="roundedbutton msgbutton" onclick="useOptions();">Proceed</div>
+                                </td>
+                            </tr> 
+                        </tbody>
+                        </table>
+                        <table id="seltable" style="display:none" class="formtable"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr>
+                                <td colspan="3">
+                                    <div id="messagediv">You are submitting a Rebate, via Electronic.</div> 
+                                    <div id="changebutton" class="roundedbutton msgbutton" onclick="changeOptions();">Change</div>
+                                </td>
+                            </tr>
+                            <tr id="harderror" style="height:30px; display:none;">
+                            	<td colspan="3">
+                                	<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="Hard error" styleClass="error-icon"/>
+									<apex:outputText id="hardStopMessage" style="margin-left:40px;" value="{!hardStopMessage}" />
+                            	</td>
+                            </tr> 
+                        </tbody>
+                        </table>
+                        <table id="formtable" style="display:none" class="formtable"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr><th colspan="3"><span class="text">Customer Information</span><img src="{!URLFOR($Resource.SGE2012, 'images/cust_info.png')}" alt="customer information" /></th></tr>
+                            <tr>
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="70%" style="border-right-width:1px; border-right-style:solid;" class="pcolorbr">
+                                                <label><apex:outputText value="{!formFields['Contact.FirstName'].fieldLabel}" /></label> 
+                                                <span><apex:inputText id="frmFirstName" value="{!formFields['Contact.FirstName'].stringValue}" styleClass="blankstop{!formFields['Contact.FirstName'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="1" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.FirstName'].warnMsg}" styleClass="error-icon" id="frmFirstNameWarn" style="{!formFields['Contact.FirstName'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.FirstName'].errorMsg}" styleClass="error-icon" id="frmFirstNameErr" style="{!formFields['Contact.FirstName'].errorStyle}" />
+                                                <label style="margin-left:20px;"><apex:outputText value="{!formFields['Contact.LastName'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmLastName" value="{!formFields['Contact.LastName'].stringValue}" styleClass="blankstop{!formFields['Contact.LastName'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="2" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.LastName'].warnMsg}" styleClass="error-icon" id="frmLastNameWarn" style="{!formFields['Contact.LastName'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.LastName'].errorMsg}" styleClass="error-icon" id="frmLastNameErr" style="{!formFields['Contact.LastName'].errorStyle}" />
+                                            </td>
+                                            <td width="30%">
+                                                <label><apex:outputText value="{!formFields['Contact.HomePhone'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmHomePhone" value="{!formFields['Contact.HomePhone'].stringValue}" styleClass="blankstop{!formFields['Contact.HomePhone'].blankStop}" disabled="{!disableDE}" 
+                                                maxlength="12" size="12" tabindex="3"  /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.HomePhone'].warnMsg}" styleClass="error-icon" id="frmHomePhoneWarn" style="{!formFields['Contact.HomePhone'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.HomePhone'].errorMsg}" styleClass="error-icon" id="frmHomePhoneErr" style="{!formFields['Contact.HomePhone'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label><apex:outputText value="{!formFields['Contact.ServiceAddress1__c'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmAcctAddress1" value="{!formFields['Contact.ServiceAddress1__c'].stringValue}"  disabled="{!disableDE}" maxlength="25" size="25" tabindex="4" styleClass="blankstop{!formFields['Contact.ServiceAddress1__c'].blankStop} address-field frmAcctAddress1" onfocus="focusValue('frmAcctAddress1','Line 1')" onblur="blurValue('frmAcctAddress1','Line 1')" onchange="fieldEntered('frmAcctAddress1','Line 1')" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.ServiceAddress1__c'].warnMsg}" styleClass="error-icon" id="frmServiceAddress1__cWarn" style="{!formFields['Contact.ServiceAddress1__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceAddress1__c'].errorMsg}" styleClass="error-icon" id="frmServiceAddress1__cErr" style="{!formFields['Contact.ServiceAddress1__c'].errorStyle}" />
+                                    <span style="margin-left:20px;"><apex:inputText id="frmAcctAddress2" value="{!formFields['Contact.ServiceAddress2__c'].stringValue}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="5" styleClass="blankstop{!formFields['Contact.ServiceAddress2__c'].blankStop} address-field frmAcctAddress2" onfocus="focusValue('frmAcctAddress2','Line 2')" onblur="blurValue('frmAcctAddress2','Line 2')" onchange="fieldEntered('frmAcctAddress2','Line 2')" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.ServiceAddress2__c'].warnMsg}" styleClass="error-icon" id="frmServiceAddress2__cWarn" style="{!formFields['Contact.ServiceAddress2__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceAddress2__c'].errorMsg}" styleClass="error-icon" id="frmServiceAddress2__cErr" style="{!formFields['Contact.ServiceAddress2__c'].errorStyle}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label><apex:outputText value="{!formFields['Contact.ServiceCity__c'].fieldLabel}" /></label>
+                                    <span ><apex:inputText id="frmAcctCity" value="{!formFields['Contact.ServiceCity__c'].stringValue}" styleClass="blankstop{!formFields['Contact.ServiceCity__c'].blankStop}" disabled="{!disableDE}" 
+                                    maxlength="25" size="25" tabindex="6" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.ServiceCity__c'].warnMsg}" styleClass="error-icon" id="frmServiceCity__cWarn" style="{!formFields['Contact.ServiceCity__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceCity__c'].errorMsg}" styleClass="error-icon" id="frmServiceCity__cErr" style="{!formFields['Contact.ServiceCity__c'].errorStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label><apex:outputText value="{!formFields['Contact.ServiceState__c'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmAcctState" value="{!formFields['Contact.ServiceState__c'].stringValue}" styleClass="blankstop{!formFields['Contact.ServiceState__c'].blankStop}" disabled="{!disableDE}" 
+                                    maxlength="2" size="2" tabindex="7" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.ServiceState__c'].warnMsg}" styleClass="error-icon" id="frmServiceState__cWarn" style="{!formFields['Contact.ServiceState__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceState__c'].errorMsg}" styleClass="error-icon" id="frmServiceState__cErr" style="{!formFields['Contact.ServiceState__c'].errorStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label><apex:outputText value="{!formFields['Contact.ServiceZipcode__c'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmAcctZip" value="{!formFields['Contact.ServiceZipcode__c'].stringValue}" styleClass="blankstop{!formFields['Contact.ServiceZipcode__c'].blankStop}" disabled="{!disableDE}" 
+                                    maxlength="10" size="10" tabindex="8" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.ServiceZipcode__c'].warnMsg}" styleClass="error-icon" id="frmServiceZipcode__cWarn" style="{!formFields['Contact.ServiceZipcode__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceZipcode__c'].errorMsg}" styleClass="error-icon" id="frmServiceZipcode__cErr" style="{!formFields['Contact.ServiceZipcode__c'].errorStyle}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="100%">
+                                                <label><apex:outputText value="{!formFields['Rebate__c.MailingFirstName__c'].fieldLabel}" /></label> 
+                                                <span><apex:inputText id="frmMailFirstName" value="{!formFields['Rebate__c.MailingFirstName__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.MailingFirstName__c'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="10" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailingFirstName__c'].warnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingFirstName__c'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingFirstName__c'].errorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingFirstName__c'].errorStyle}" />
+                                                <label style="margin-left:20px;"><apex:outputText value="{!formFields['Rebate__c.MailingLastName__c'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmMailLastName" value="{!formFields['Rebate__c.MailingLastName__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.MailingLastName__c'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="11" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailingLastName__c'].warnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingLastName__c'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingLastName__c'].errorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingLastName__c'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label><apex:outputText value="{!formFields['Rebate__c.MailingAddress1__c'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmMailAddress1" value="{!formFields['Rebate__c.MailingAddress1__c'].stringValue}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="12" styleClass="blankstop{!formFields['Rebate__c.MailingAddress1__c'].blankStop} address-field frmMailAddress1" onfocus="focusValue('frmMailAddress1','Line 1')" onblur="blurValue('frmMailAddress1','Line 1')" onchange="fieldEntered('frmMailAddress1','Line 1')"  /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailingAddress1__c'].warnMsg}" styleClass="error-icon" id="frmMailingAddress1__cWarn" style="{!formFields['Rebate__c.MailingAddress1__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingAddress1__c'].errorMsg}" styleClass="error-icon" id="frmMailingAddress1__cErr" style="{!formFields['Rebate__c.MailingAddress1__c'].errorStyle}" />
+                                    <span style="margin-left:20px;"><apex:inputText id="frmMailAddress2" value="{!formFields['Rebate__c.MailingAddress2__c'].stringValue}" disabled="{!disableDE}"  maxlength="25" size="25" tabindex="13" styleClass="blankstop{!formFields['Rebate__c.MailingAddress2__c'].blankStop} address-field frmMailAddress2" onfocus="focusValue('frmMailAddress2','Line 2')" onblur="blurValue('frmMailAddress2','Line 2')" onchange="fieldEntered('frmMailAddress2','Line 2')"   /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailingAddress2__c'].warnMsg}" styleClass="error-icon" id="frmMailingAddress2__cWarn" style="{!formFields['Rebate__c.MailingAddress2__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingAddress2__c'].errorMsg}" styleClass="error-icon" id="frmMailingAddress2__cErr" style="{!formFields['Rebate__c.MailingAddress2__c'].errorStyle}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label><apex:outputText value="{!formFields['Rebate__c.MailingCity__c'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmMailCity" value="{!formFields['Rebate__c.MailingCity__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.MailingCity__c'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="14" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailingCity__c'].warnMsg}" styleClass="error-icon" id="frmMailingCity__cWarn" style="{!formFields['Rebate__c.MailingCity__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingCity__c'].errorMsg}" styleClass="error-icon" id="frmMailingCity__cErr" style="{!formFields['Rebate__c.MailingCity__c'].errorStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label><apex:outputText value="{!formFields['Rebate__c.MailingState__c'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmMailState" value="{!formFields['Rebate__c.MailingState__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.MailingState__c'].blankStop}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="15" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailingState__c'].warnMsg}" styleClass="error-icon" id="frmMailingState__cWarn" style="{!formFields['Rebate__c.MailingState__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingState__c'].errorMsg}" styleClass="error-icon" id="frmMailingState__cErr" style="{!formFields['Rebate__c.MailingState__c'].errorStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label><apex:outputText value="{!formFields['Rebate__c.MailingZipcode__c'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmMailZip" value="{!formFields['Rebate__c.MailingZipcode__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.MailingZipcode__c'].blankStop}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="16" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailingZipcode__c'].warnMsg}" styleClass="error-icon" id="frmMailingZipcode__cWarn" style="{!formFields['Rebate__c.MailingZipcode__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingZipcode__c'].errorMsg}" styleClass="error-icon" id="frmMailingZipcode__cErr" style="{!formFields['Rebate__c.MailingZipcode__c'].errorStyle}" />
+                                </td>
+                             </tr>
+                             <tr>
+                                <td colspan="3">
+                                    <p>Your email address is required to receive rebate submission verification and status updates.</p>
+                                    <label style="clear:both"><apex:outputText value="{!formFields['Contact.Email'].fieldLabel}" /></label>
+                                    <span><apex:inputText id="frmEmail"  value="{!formFields['Contact.Email'].stringValue}" styleClass="blankstop{!formFields['Contact.Email'].blankStop}" disabled="{!disableDE}" maxlength="50" size="50" tabindex="17" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.Email'].warnMsg}" styleClass="error-icon" id="frmEmailWarn" style="{!formFields['Contact.Email'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.Email'].errorMsg}" styleClass="error-icon" id="frmEmailErr" style="{!formFields['Contact.Email'].errorStyle}" />
+                                    <br />
+                                    <apex:outputText value="{!formFields['Contact.ReceiveEmail__c'].fieldLabel}" />  
+                                    <apex:inputCheckbox id="frmRecvEmail" value="{!formFields['Contact.ReceiveEmail__c'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="18" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.ReceiveEmail__c'].warnMsg}" styleClass="error-icon" id="frmReceiveEmailWarn" style="{!formFields['Contact.ReceiveEmail__c'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ReceiveEmail__c'].errorMsg}" styleClass="error-icon" id="frmReceiveEmailErr" style="{!formFields['Contact.ReceiveEmail__c'].errorStyle}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label><apex:outputText value="{!formFields['Contact.AccountNumber__c'].fieldLabel}" /></label>
+                                    <apex:inputText id="frmAcctNum" value="{!formFields['Contact.AccountNumber__c'].stringValue}" styleClass="blankstop{!formFields['Contact.AccountNumber__c'].blankStop}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="19" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/question-mark-off.png')}" alt="question" title="Click to view account number location in sample bill." styleClass="error-icon question-icon" id="frmAcctNumExample"  />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.AccountNumber__c'].WarnMsg}" styleClass="error-icon" id="frmAcctNumErr" style="{!formFields['Contact.AccountNumber__c'].WarnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['Contact.AccountNumber__c'].ErrorMsg}" styleClass="error-icon" id="frmAcctNumErrRed" style="{!formFields['Contact.AccountNumber__c'].ErrorStyle}" />
+                                    <div id="frmAcctNumExampleDialog" class="sge-dialog" title="Account Number Example"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_bill.jpg')}" alt="SGE Bill" /></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label class="autowidth"><apex:outputText value="{!formFields['RebateSurvey__c.Rental Property'].fieldLabel}" style="margin-right:30px;" /> <i>Note: Rental property owners <u>are not</u> required to provide tenant's gas acccount number.</i></label>
+                                    <apex:selectRadio id="frmRentalProperty" value="{!formFields['RebateSurvey__c.Rental Property'].stringValue}" disabled="{!disableDE}" tabindex="20" styleClass="input-radio" >
+                                        <apex:selectOptions value="{!radioYesNo}" />
+                                    </apex:selectRadio>                         
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="25%">
+                                                <label class="autowidth"><apex:outputText value="{!formFields['RebateSurvey__c.Fuel_Cnv'].fieldLabel}" /></label>
+                                                <apex:selectRadio id="frmFuelCnv" value="{!formFields['RebateSurvey__c.Fuel_Cnv'].stringValue}" disabled="{!disableDE}" tabindex="21" styleClass="input-radio" onclick="fuelconv(this.value);">
+                                                    <apex:selectOptions value="{!radioYesNo}" />
+                                                </apex:selectRadio>                         
+                                            </td>
+                                            <td width="75%" id="fueltype" style="visibility:hidden;">
+                                                <label class="autowidth"><apex:outputText value="{!formFields['RebateSurvey__c.Fuel_Type'].fieldLabel}" /></label>
+                                                <apex:selectList id="frmFuelType" value="{!formFields['RebateSurvey__c.Fuel_Type'].stringValue}" styleClass="blankstop{!formFields['RebateSurvey__c.Fuel_Type'].blankStop}" size="1" disabled="{!disableDE}" tabindex="22">
+                                                    <apex:selectOptions value="{!dropFuelType}" />
+                                                </apex:selectList>                          
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Fuel_Type'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Fuel_Type'].WarnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Fuel_Type'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Fuel_Type'].ErrorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><th colspan="3"><span class="text">Contractor Information</span><img src="{!URLFOR($Resource.SGE2012, 'images/contr_info.png')}" alt="contractor information" /></th></tr>
+                            <!-- no need for checkbox ... only manual entry of contractor (store) for now. 
+                            <tr>
+                                <td colspan="3">
+                                    <p><apex:outputText value="{!formFields['Rebate__c.ManualStoreFlag'].fieldLabel}" />
+                                    <apex:inputCheckbox id="manualStore" value="{!formFields['Rebate__c.ManualStoreFlag'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="17" onclick="storeCheck(this.checked)" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.ManualStoreFlag'].warnMsg}" styleClass="error-icon" id="frmManualStoreWarn" style="{!formFields['Rebate__c.ManualStoreFlag'].warnStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.ManualStoreFlag'].errorMsg}" styleClass="error-icon" id="frmManualStoreErr" style="{!formFields['Rebate__c.ManualStoreFlag'].errorStyle}" />
+                                     If unlisted, check box to enter manually.
+                                    </p>
+                                </td>
+                            </tr>
+                             -->
+                            <tr>
+                                <td colspan="3">
+                                    <!-- no need for lookup store section
+                                    <div id="selstorediv">
+                                        <div style="float:left">
+                                            <label><apex:outputText value="{!formFields['Rebate__c.SelStoreState'].fieldLabel}" /></label>
+                                            <span>
+                                                <apex:selectList id="selState" value="{!formFields['Rebate__c.SelStoreState'].stringValue}" disabled="{!disableDE}"  size="1" tabindex="18" >
+                                                    <apex:selectOptions value="{!stateList}" />
+                                                    <apex:actionSupport action="{!makeStoreList}" event="onchange" rerender="selStoreId" status="stateStatus"/>
+                                                </apex:selectList>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.SelStoreState'].warnMsg}" styleClass="error-icon" id="frmselStoreStateWarn" style="{!formFields['Rebate__c.SelStoreState'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.SelStoreState'].errorMsg}" styleClass="error-icon" id="frmselStoreStateErr" style="{!formFields['Rebate__c.SelStoreState'].errorStyle}" />
+                                            </span>
+                                            <span><apex:actionStatus id="stateStatus" styleClass="noborder" startText=" updating store list ..." stopText="" /></span>                              
+                                        </div>
+                                        <div style="margin-left:420px;">
+                                            <apex:actionRegion >
+                                                <label><apex:outputText value="{!formFields['Rebate__c.SelStoreCity'].fieldLabel}" /></label>
+                                                <span>
+                                                    <apex:inputText id="selCity" value="{!formFields['Rebate__c.SelStoreCity'].stringValue}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="19">
+                                                        <apex:actionSupport action="{!makeStoreList}" rerender="selStoreId,selCityErr" event="onchange" status="stateStatus" />
+                                                    </apex:inputText>
+                                                </span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.SelStoreCity'].warnMsg}" styleClass="error-icon" id="frmselStoreCityWarn" style="{!formFields['Rebate__c.SelStoreCity'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.SelStoreCity'].errorMsg}" styleClass="error-icon" id="frmselStoreCityErr" style="{!formFields['Rebate__c.SelStoreCity'].errorStyle}" />
+                                            </apex:actionRegion>
+                                        </div>
+                                        <div style="float:left; margin-right:20px; clear:both">
+                                            <label><apex:outputText value="{!formFields['Rebate__c.StoreID__c'].fieldLabel}" /></label>
+                                            <span>
+                                                <apex:selectList id="selStoreId" value="{!formFields['Rebate__c.StoreID__c'].stringValue}" disabled="{!disableDE}"  size="1" tabindex="20" style="width: 300px;;">
+                                                    <apex:selectOptions value="{!storeList}" />
+                                                </apex:selectList>
+                                            </span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreID__c'].warnMsg}" styleClass="error-icon" id="frmStoreID__cWarn" style="{!formFields['Rebate__c.StoreID__c'].warnStyle}" />
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreID__c'].errorMsg}" styleClass="error-icon" id="frmStoreID__cErr" style="{!formFields['Rebate__c.StoreID__c'].errorStyle}" />
+                                        </div>
+                                    </div>
+                                    -->
+                                    <div id="manstorediv">
+                                        <div style="float:left">
+                                            <label><apex:outputText value="{!formFields['Rebate__c.StoreName__c'].fieldLabel}" /></label>
+                                            <span ><apex:inputText id="frmStoreName" value="{!formFields['Rebate__c.StoreName__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.StoreName__c'].blankStop}" disabled="{!disableDE}"  maxlength="30" size="30" tabindex="23" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreName__c'].warnMsg}" styleClass="error-icon" id="frmStoreName__cWarn" style="{!formFields['Rebate__c.StoreName__c'].warnStyle}" />
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreName__c'].errorMsg}" styleClass="error-icon" id="frmStoreName__cErr" style="{!formFields['Rebate__c.StoreName__c'].errorStyle}" />
+                                        </div>
+                                        <br />
+                                        <div style="float:left; clear:both">
+                                            <label><apex:outputText value="{!formFields['Rebate__c.StoreAddress1__c'].fieldLabel}" /></label>
+                                            <span><apex:inputText id="frmStoreAddress1" value="{!formFields['Rebate__c.StoreAddress1__c'].stringValue}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="24" styleClass="blankstop{!formFields['Rebate__c.StoreAddress1__c'].blankStop} address-field frmStoreAddress1" onfocus="focusValue('frmStoreAddress1','Line 1')" onblur="blurValue('frmStoreAddress1','Line 1')" onchange="fieldEntered('frmStoreAddress1','Line 1')" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreAddress1__c'].warnMsg}" styleClass="error-icon" id="frmStoreAddress1__cWarn" style="{!formFields['Rebate__c.StoreAddress1__c'].warnStyle}" />
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreAddress1__c'].errorMsg}" styleClass="error-icon" id="frmStoreAddress1__cErr" style="{!formFields['Rebate__c.StoreAddress1__c'].errorStyle}" />
+                                            <span style="margin-left:20px;"><apex:inputText id="frmStoreAddress2" value="{!formFields['Rebate__c.StoreAddress2__c'].stringValue}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="25" styleClass="blankstop{!formFields['Rebate__c.StoreAddress2__c'].blankStop} address-field frmStoreAddress2" onfocus="focusValue('frmStoreAddress2','Line 2')" onblur="blurValue('frmStoreAddress2','Line 2')" onchange="fieldEntered('frmStoreAddress2','Line 2')" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreAddress2__c'].warnMsg}" styleClass="error-icon" id="frmStoreAddress2__cWarn" style="{!formFields['Rebate__c.StoreAddress2__c'].warnStyle}" />
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreAddress2__c'].errorMsg}" styleClass="error-icon" id="frmStoreAddress2__cErr" style="{!formFields['Rebate__c.StoreAddress2__c'].errorStyle}" />
+                                        </div>
+                                        <div style="float:left; clear:both">
+                                            <label><apex:outputText value="{!formFields['Rebate__c.StoreCity__c'].fieldLabel}" /></label>
+                                            <span><apex:inputText id="frmStoreCity" value="{!formFields['Rebate__c.StoreCity__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.StoreCity__c'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="26" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreCity__c'].warnMsg}" styleClass="error-icon" id="frmStoreCity__cWarn" style="{!formFields['Rebate__c.StoreCity__c'].warnStyle}" />
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreCity__c'].errorMsg}" styleClass="error-icon" id="frmStoreCity__cErr" style="{!formFields['Rebate__c.StoreCity__c'].errorStyle}" />
+                                            <label><apex:outputText value="{!formFields['Rebate__c.StoreState__c'].fieldLabel}" /></label>
+                                            <span><apex:inputText id="frmStoreState" value="{!formFields['Rebate__c.StoreState__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.StoreState__c'].blankStop}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="27" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreState__c'].warnMsg}" styleClass="error-icon" id="frmStoreState__cWarn" style="{!formFields['Rebate__c.StoreState__c'].warnStyle}" />
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreState__c'].errorMsg}" styleClass="error-icon" id="frmStoreState__cErr" style="{!formFields['Rebate__c.StoreState__c'].errorStyle}" />
+                                            <label style="margin-left:20px;"><apex:outputText value="{!formFields['Rebate__c.StoreZipcode__c'].fieldLabel}" /></label>
+                                            <span><apex:inputText id="frmStoreZip" value="{!formFields['Rebate__c.StoreZipcode__c'].stringValue}" styleClass="blankstop{!formFields['Rebate__c.StoreZipcode__c'].blankStop}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="28" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreZipcode__c'].warnMsg}" styleClass="error-icon" id="frmStoreZipcode__cWarn" style="{!formFields['Rebate__c.StoreZipcode__c'].warnStyle}" />
+                                            <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreZipcode__c'].errorMsg}" styleClass="error-icon" id="frmStoreZipcode__cErr" style="{!formFields['Rebate__c.StoreZipcode__c'].errorStyle}" />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><th colspan="3"><span class="text">Products purchased</span><img src="{!URLFOR($Resource.SGE2012, 'images/prod_purch.png')}" alt="products purchased" /></th></tr>
+                            <tr class="scolorbk" >
+                                <!--  
+                                <td colspan="3">
+                                    <apex:inputCheckbox id="hasFRN" value="{!formFields['RebateDetail__c.MeasureSelected.FRN'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('FRN', this.checked)"  />
+                                    <apex:outputLabel value="{!formFields['RebateDetail__c.MeasureSelected.FRN'].fieldLabel}" for="hasFRN" escape="false" />
+                                </td>
+                                -->
+                                <td colspan = "3" style="padding-left:0;">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td>
+                                                <apex:inputCheckbox id="hasFRN" value="{!formFields['RebateDetail__c.MeasureSelected.FRN'].booleanValue}" disabled="{!disableDE}" tabindex="30"  onclick="sectionCheck('FRN', this.checked)"  />
+                                                <apex:outputLabel value="Forced Air Furnace ($250)" for="hasFRN" escape="false" /> 
+                                            </td> 
+                                            <td>
+                                                <apex:inputCheckbox id="hasFRNECM" value="{!formFields['RebateDetail__c.MeasureSelected.FRNECM'].booleanValue}" disabled="{!disableDE}" tabindex="31"  onclick="sectionCheck('FRNECM', this.checked)" />
+                                                <apex:outputLabel value="Forced Air Furnace with ECM ($350)" for="hasFRNECM" escape="false" /> 
+                                            </td> 
+                                            <td>
+                                                <apex:inputCheckbox id="hasPTSTAT" value="{!formFields['RebateDetail__c.MeasureSelected.PTSTAT'].booleanValue}" disabled="{!disableDE}" tabindex="32"  onclick="sectionCheck('PTSTAT', this.checked)" />
+                                                <apex:outputLabel value="Programable Thermostat ($25)" for="hasPTSTAT" escape="false" />
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <apex:inputCheckbox id="hasBOILHW" value="{!formFields['RebateDetail__c.MeasureSelected.BOILHW'].booleanValue}" disabled="{!disableDE}" tabindex="33"  onclick="sectionCheck('BOILHW', this.checked)"  />
+                                                <apex:outputLabel value="Hot Water Boiler ($350)" for="hasBOILHW" escape="false" /> 
+                                            </td>
+                                            <td>
+                                                <apex:inputCheckbox id="hasBOILST" value="{!formFields['RebateDetail__c.MeasureSelected.BOILST'].booleanValue}" disabled="{!disableDE}" tabindex="34"  onclick="sectionCheck('BOILST', this.checked)" />
+                                                <apex:outputLabel value="Steam Boiler ($200)" for="hasBOILST" escape="false" /> 
+                                            </td>
+                                            <td>
+                                                <apex:inputCheckbox id="hasWHTRI" value="{!formFields['RebateDetail__c.MeasureSelected.WHTRI'].booleanValue}" disabled="{!disableDE}" tabindex="35"  onclick="sectionCheck('WHTRI', this.checked)" />
+                                                <apex:outputLabel value="Indirect Water Heater ($250)" for="hasWHTRI" escape="false" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <!-- Steve's original version
+                                <td colspan="3">
+                                    <apex:inputCheckbox style="margin-left:30px" id="hasFRN" value="{!formFields['RebateDetail__c.MeasureSelected.FRN'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('FRN', this.checked)"  />
+                                    <apex:outputLabel style="margin-right:30px;font-weight:normal" value="Forced Air Furnace($250)" for="hasFRN" escape="false" /> 
+
+                                    <apex:inputCheckbox id="hasFRNECM" value="{!formFields['RebateDetail__c.MeasureSelected.FRNECM'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('FRNECM', this.checked)" />
+                                    <apex:outputLabel style="margin-right:30px;font-weight:normal" value="Forced Air Furnace with ECM($350)" for="hasFRNECM" escape="false" /> 
+
+                                    <apex:inputCheckbox id="hasPTSTAT" value="{!formFields['RebateDetail__c.MeasureSelected.PTSTAT'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('PTSTAT', this.checked)" />
+                                    <apex:outputLabel style="font-weight:normal" value="Programable Thermostat($25)" for="hasPTSTAT" escape="false" /> <br> </br>
+
+                                    <apex:inputCheckbox style="margin-left:30px" id="hasBOILHW" value="{!formFields['RebateDetail__c.MeasureSelected.BOILHW'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('BOILHW', this.checked)"  />
+                                    <apex:outputLabel style="margin-right:50px;font-weight:normal" value="Hot Water Boiler($350)" for="hasBOILHW" escape="false" /> 
+ 
+                                    <apex:inputCheckbox id="hasBOILST" value="{!formFields['RebateDetail__c.MeasureSelected.BOILST'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('BOILST', this.checked)" />
+                                    <apex:outputLabel style="margin-right:135px;font-weight:normal" value="Steam Boiler($200)" for="hasBOILST" escape="false" /> 
+
+                                    <apex:inputCheckbox id="hasWHTRI" value="{!formFields['RebateDetail__c.MeasureSelected.WHTRI'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('WHTRI', this.checked)" />
+                                    <apex:outputLabel style="font-weight:normal" value="Indirect Water Heater($250)" for="hasWHTRI" escape="false" />
+                                </td> 
+                                 -->
+                            </tr>
+                            <tr id="sectionFRN" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <table class="formtable" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <th colspan="3"><apex:outputText value="{!formFields['RebateDetail__c.MeasureSelected.FRN'].fieldLabel}" styleClass="measureheader" escape="false" /></th>
+                                        <tr>
+                                            <td colspan="3" width="100%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ManualModelFlag.FRN'].fieldLabel}" /></label>
+                                                <apex:inputCheckbox id="manualModelFRN" value="{!formFields['RebateDetail__c.ManualModelFlag.FRN'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="40" onclick="modelCheck('FRN', this.checked)" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ManualModelFlag.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.FRN'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ManualModelFlag.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.FRN'].errorStyle}" />
+                                                If unlisted, check box to enter manually.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <div id="selmandivFRN" style="float:left; padding-right:40px;">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.SelManufacturer.FRN'].fieldLabel}" /></label>
+                                                    <span>
+                                                    <apex:selectList id="selBrandFRN" value="{!formFields['RebateDetail__c.SelManufacturer.FRN'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.SelManufacturer.FRN'].blankStop}" disabled="{!disableDE}" size="1" tabindex="41" >
+                                                        <!--  <apex:selectOptions value="{!FRNmanufacturerList}" /> -->
+                                                        <!--  replace mfrList['FRN'] with details['FRN'].mfrList -->
+                                                        <apex:selectOptions value="{!details['FRN'].mfrList}" />
+                                                        <apex:actionSupport action="{!makeModelList}" event="onchange" rerender="selModelIdFRN" status="modelStatusFRN"/>
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.SelManufacturer.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.FRN'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.SelManufacturer.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.FRN'].errorStyle}" />
+                                                    <span style="display:inline-block; margin-left:40px;">
+                                                        <apex:actionStatus id="modelStatusFRN" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                                    </span>
+                                                </div>
+                                     
+                                                <div id="manmandivFRN" style="display:none; float:left">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.Manufacturer__c.FRN'].fieldLabel}" /></label>
+                                                    <span><apex:inputText id="frmBrandFRN" value="{!formFields['RebateDetail__c.Manufacturer__c.FRN'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Manufacturer__c.FRN'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="42" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Manufacturer__c.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.FRN'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.FRN'].errorStyle}" />
+                                                </div>
+                                                
+                                            </td>
+                                            <td width="35%">
+                                                <div id="selmoddivFRN">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelID__c.FRN'].fieldLabel}" /></label>
+                                                    <br /><span>
+                                                    <apex:selectList id="selModelIdFRN" value="{!formFields['RebateDetail__c.ModelID__c.FRN'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelID__c.FRN'].blankStop}" disabled="{!disableDE}" size="1" tabindex="43" >
+                                                        <!-- <apex:selectOptions value="{!FRNmodelList}" /> -->
+                                                        <apex:selectOptions value="{!details['FRN'].modelList}" />
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelID__c.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.FRN'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelID__c.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.FRN'].errorStyle}" />
+                                                </div>
+                                                <div id="manmoddivFRN" style="display:none;">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelNumber__c.FRN'].fieldLabel}" /></label>
+                                                    <br /><apex:inputText id="frmModelFRN" value="{!formFields['RebateDetail__c.ModelNumber__c.FRN'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelNumber__c.FRN'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="44" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelNumber__c.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.FRN'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.FRN'].errorStyle}" />
+                                                </div>
+                                            </td>
+                                            <td width="15%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.Quantity__c.FRN'].fieldLabel}" /></label>
+                                                <br /><span><apex:inputText id="frmQuantityFRN" value="{!formFields['RebateDetail__c.Quantity__c.FRN'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Quantity__c.FRN'].blankStop}" disabled="{!disableDE}" maxlength="4" size="4" tabindex="45" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Quantity__c.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.FRN'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Quantity__c.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.FRN'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">The following equipment was replaced:</td>
+                                            <td colspan="2">
+                                                    <apex:variable var="install_dateFRN_style" value="blankstop{!formFields['RebateDetail__c.InstallDate__c.FRN'].blankStop}" />
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.InstallDate__c.FRN'].fieldLabel}" /></label>
+                                                    <span><input type="text" name="install_dateFRN" id="install_dateFRN" class="{!install_dateFRN_style} datefield" maxlength="10" size="10" tabindex="46" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.InstallDate__c.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.FRN'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.InstallDate__c.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.FRN'].errorStyle}" />
+                                                    <apex:inputHidden id="frmInstallDateFRN" value="{!formFields['RebateDetail__c.InstallDate__c.FRN'].stringValue}"  />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRN'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplManufFRN" value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRN'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRN'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="47" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRN'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRN'].errorStyle}" />
+                                            </td>
+                                            <td colspan="2">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRN'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplModelFRN" value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRN'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRN'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="48" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRN'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRN'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRN'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRN'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="scolorbk" >
+                                <!--  <td colspan="3">
+                                    <apex:inputCheckbox id="hasFRNECM" value="{!formFields['RebateDetail__c.MeasureSelected.FRNECM'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('FRNECM', this.checked)" />
+                                    <apex:outputLabel value="{!formFields['RebateDetail__c.MeasureSelected.FRNECM'].fieldLabel}" for="hasFRNECM" escape="false" />
+                                </td> -->
+                            </tr>
+                            <tr id="sectionFRNECM" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <table class="formtable" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <th colspan="3"><apex:outputText value="{!formFields['RebateDetail__c.MeasureSelected.FRNECM'].fieldLabel}" styleClass="measureheader" escape="false" /></th>
+                                        <tr>
+                                            <td colspan="3" width="100%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ManualModelFlag.FRNECM'].fieldLabel}" /></label>
+                                                <apex:inputCheckbox id="manualModelFRNECM" value="{!formFields['RebateDetail__c.ManualModelFlag.FRNECM'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="50" onclick="modelCheck('FRNECM', this.checked)" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ManualModelFlag.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.FRNECM'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ManualModelFlag.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.FRNECM'].errorStyle}" />
+                                                If unlisted, check box to enter manually.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <div id="selmandivFRNECM" style="float:left; padding-right:40px;">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.SelManufacturer.FRNECM'].fieldLabel}" /></label>
+                                                    <span>
+                                                    <apex:selectList id="selBrandFRNECM" value="{!formFields['RebateDetail__c.SelManufacturer.FRNECM'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.SelManufacturer.FRNECM'].blankStop}" disabled="{!disableDE}" size="1" tabindex="51" >
+                                                        <!-- <apex:selectOptions value="{!FRNECMmanufacturerList}" /> -->
+                                                        <apex:selectOptions value="{!details['FRNECM'].mfrList}" />
+                                                        <apex:actionSupport action="{!makeModelList}" event="onchange" rerender="selModelIdFRNECM" status="modelStatusFRNECM"/>
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.SelManufacturer.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.FRNECM'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.SelManufacturer.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.FRNECM'].errorStyle}" />
+                                                    <span style="display:inline-block; margin-left:40px;">
+                                                        <apex:actionStatus id="modelStatusFRNECM" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                                    </span>
+                                                </div>
+                                     
+                                                <div id="manmandivFRNECM" style="display:none; float:left">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.Manufacturer__c.FRNECM'].fieldLabel}" /></label>
+                                                    <span><apex:inputText id="frmBrandFRNECM" value="{!formFields['RebateDetail__c.Manufacturer__c.FRNECM'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Manufacturer__c.FRNECM'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="52" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Manufacturer__c.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.FRNECM'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.FRNECM'].errorStyle}" />
+                                                </div>
+                                                
+                                            </td>
+                                            <td width="35%">
+                                                <div id="selmoddivFRNECM">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelID__c.FRNECM'].fieldLabel}" /></label>
+                                                    <br /><span>
+                                                    <apex:selectList id="selModelIdFRNECM" value="{!formFields['RebateDetail__c.ModelID__c.FRNECM'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelID__c.FRNECM'].blankStop}" disabled="{!disableDE}" size="1" tabindex="53" >
+                                                        <apex:selectOptions value="{!details['FRNECM'].modelList}" />
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelID__c.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.FRNECM'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelID__c.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.FRNECM'].errorStyle}" />
+                                                </div>
+                                                <div id="manmoddivFRNECM" style="display:none;">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelNumber__c.FRNECM'].fieldLabel}" /></label>
+                                                    <br /><apex:inputText id="frmModelFRNECM" value="{!formFields['RebateDetail__c.ModelNumber__c.FRNECM'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelNumber__c.FRNECM'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="54" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelNumber__c.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.FRNECM'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.FRNECM'].errorStyle}" />
+                                                </div>
+                                            </td>
+                                            <td width="15%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.Quantity__c.FRNECM'].fieldLabel}" /></label>
+                                                <br /><span><apex:inputText id="frmQuantityFRNECM" value="{!formFields['RebateDetail__c.Quantity__c.FRNECM'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Quantity__c.FRNECM'].blankStop}" disabled="{!disableDE}" maxlength="4" size="4" tabindex="55" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Quantity__c.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.FRNECM'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Quantity__c.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.FRNECM'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">The following equipment was replaced:</td>
+                                            <td colspan="2">
+                                                    <apex:variable var="install_dateFRNECM_style" value="blankstop{!formFields['RebateDetail__c.InstallDate__c.FRNECM'].blankStop}" />
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.InstallDate__c.FRNECM'].fieldLabel}" /></label>
+                                                    <span><input type="text" name="install_dateFRNECM" id="install_dateFRNECM" class="{!install_dateFRNECM_style} datefield" maxlength="10" size="10" tabindex="56" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.InstallDate__c.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.FRNECM'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.InstallDate__c.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.FRNECM'].errorStyle}" />
+                                                    <apex:inputHidden id="frmInstallDateFRNECM" value="{!formFields['RebateDetail__c.InstallDate__c.FRNECM'].stringValue}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRNECM'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplManufFRNECM" value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRNECM'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRNECM'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="57" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRNECM'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.FRNECM'].errorStyle}" />
+                                            </td>
+                                            <td colspan="2">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRNECM'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplModelFRNECM" value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRNECM'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRNECM'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="58" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRNECM'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRNECM'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRNECM'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.FRNECM'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="scolorbk" >
+                                <!--  <td colspan="3">
+                                    <apex:inputCheckbox id="hasBOILHW" value="{!formFields['RebateDetail__c.MeasureSelected.BOILHW'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('BOILHW', this.checked)"  />
+                                    <apex:outputLabel value="{!formFields['RebateDetail__c.MeasureSelected.BOILHW'].fieldLabel}" for="hasBOILHW" escape="false" />
+                                </td> -->
+                            </tr>
+                            <tr id="sectionBOILHW" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <table class="formtable" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <th colspan="3"><apex:outputText value="{!formFields['RebateDetail__c.MeasureSelected.BOILHW'].fieldLabel}" styleClass="measureheader" escape="false" /></th>
+                                        <tr>
+                                            <td colspan="3" width="100%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ManualModelFlag.BOILHW'].fieldLabel}" /></label>
+                                                <apex:inputCheckbox id="manualModelBOILHW" value="{!formFields['RebateDetail__c.ManualModelFlag.BOILHW'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="60" onclick="modelCheck('BOILHW', this.checked)" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ManualModelFlag.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.BOILHW'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ManualModelFlag.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.BOILHW'].errorStyle}" />
+                                                If unlisted, check box to enter manually.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <div id="selmandivBOILHW" style="float:left; padding-right:40px;">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.SelManufacturer.BOILHW'].fieldLabel}" /></label>
+                                                    <span>
+                                                    <apex:selectList id="selBrandBOILHW" value="{!formFields['RebateDetail__c.SelManufacturer.BOILHW'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.SelManufacturer.BOILHW'].blankStop}"  disabled="{!disableDE}" size="1" tabindex="61" >
+                                                        <!-- <apex:selectOptions value="{!BOILHWmanufacturerList}" /> -->
+                                                        <apex:selectOptions value="{!details['BOILHW'].mfrList}" />
+                                                        <apex:actionSupport action="{!makeModelList}" event="onchange" rerender="selModelIdBOILHW" status="modelStatusBOILHW"/>
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.SelManufacturer.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.BOILHW'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.SelManufacturer.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.BOILHW'].errorStyle}" />
+                                                    <span style="display:inline-block; margin-left:40px;">
+                                                        <apex:actionStatus id="modelStatusBOILHW" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                                    </span>
+                                                </div>
+                                     
+                                                <div id="manmandivBOILHW" style="display:none; float:left">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.Manufacturer__c.BOILHW'].fieldLabel}" /></label>
+                                                    <span><apex:inputText id="frmBrandBOILHW" value="{!formFields['RebateDetail__c.Manufacturer__c.BOILHW'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Manufacturer__c.BOILHW'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="62" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Manufacturer__c.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.BOILHW'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.BOILHW'].errorStyle}" />
+                                                </div>
+                                                
+                                            </td>
+                                            <td width="35%">
+                                                <div id="selmoddivBOILHW">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelID__c.BOILHW'].fieldLabel}" /></label>
+                                                    <br /><span>
+                                                    <apex:selectList id="selModelIdBOILHW" value="{!formFields['RebateDetail__c.ModelID__c.BOILHW'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelID__c.BOILHW'].blankStop}" disabled="{!disableDE}" size="1" tabindex="63" >
+                                                        <apex:selectOptions value="{!details['BOILHW'].modelList}" />
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelID__c.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.BOILHW'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelID__c.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.BOILHW'].errorStyle}" />
+                                                </div>
+                                                <div id="manmoddivBOILHW" style="display:none;">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelNumber__c.BOILHW'].fieldLabel}" /></label>
+                                                    <br /><apex:inputText id="frmModelBOILHW" value="{!formFields['RebateDetail__c.ModelNumber__c.BOILHW'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelNumber__c.BOILHW'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="64" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelNumber__c.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.BOILHW'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.BOILHW'].errorStyle}" />
+                                                </div>
+                                            </td>
+                                            <td width="15%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.Quantity__c.BOILHW'].fieldLabel}" /></label>
+                                                <br /><span><apex:inputText id="frmQuantityBOILHW" value="{!formFields['RebateDetail__c.Quantity__c.BOILHW'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Quantity__c.BOILHW'].blankStop}" disabled="{!disableDE}" maxlength="4" size="4" tabindex="65" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Quantity__c.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.BOILHW'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Quantity__c.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.BOILHW'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">The following equipment was replaced:</td>
+                                            <td colspan="2">
+                                                    <apex:variable var="install_dateBOILHW_style" value="blankstop{!formFields['RebateDetail__c.InstallDate__c.BOILHW'].blankStop}" />
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.InstallDate__c.BOILHW'].fieldLabel}" /></label>
+                                                    <span><input type="text" name="install_dateBOILHW" id="install_dateBOILHW" class="{!install_dateBOILHW_style} datefield" maxlength="10" size="10" tabindex="66" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.InstallDate__c.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.BOILHW'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.InstallDate__c.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.BOILHW'].errorStyle}" />
+                                                    <apex:inputHidden id="frmInstallDateBOILHW" value="{!formFields['RebateDetail__c.InstallDate__c.BOILHW'].stringValue}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILHW'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplManufBOILHW" value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILHW'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILHW'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="67" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILHW'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILHW'].errorStyle}" />
+                                            </td>
+                                            <td colspan="2">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILHW'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplModelBOILHW" value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILHW'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILHW'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="68" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILHW'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILHW'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILHW'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILHW'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="scolorbk" >
+                                <!--  <td colspan="3">
+                                    <apex:inputCheckbox id="hasBOILST" value="{!formFields['RebateDetail__c.MeasureSelected.BOILST'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('BOILST', this.checked)" />
+                                    <apex:outputLabel value="{!formFields['RebateDetail__c.MeasureSelected.BOILST'].fieldLabel}" for="hasBOILST" escape="false" />
+                                </td> -->
+                            </tr>
+                            <tr id="sectionBOILST" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <table class="formtable" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <th colspan="3"><apex:outputText value="{!formFields['RebateDetail__c.MeasureSelected.BOILST'].fieldLabel}" styleClass="measureheader" escape="false" /></th>
+                                        <tr>
+                                            <td colspan="3" width="100%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ManualModelFlag.BOILST'].fieldLabel}" /></label>
+                                                <apex:inputCheckbox id="manualModelBOILST" value="{!formFields['RebateDetail__c.ManualModelFlag.BOILST'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="70" onclick="modelCheck('BOILST', this.checked)" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ManualModelFlag.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.BOILST'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ManualModelFlag.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.BOILST'].errorStyle}" />
+                                                If unlisted, check box to enter manually.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <div id="selmandivBOILST" style="float:left; padding-right:40px;">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.SelManufacturer.BOILST'].fieldLabel}" /></label>
+                                                    <span>
+                                                    <apex:selectList id="selBrandBOILST" value="{!formFields['RebateDetail__c.SelManufacturer.BOILST'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.SelManufacturer.BOILST'].blankStop}" disabled="{!disableDE}" size="1" tabindex="71" >
+                                                        <!-- <apex:selectOptions value="{!BOILSTmanufacturerList}" /> -->
+                                                        <apex:selectOptions value="{!details['BOILST'].mfrList}" />
+                                                        <apex:actionSupport action="{!makeModelList}" event="onchange" rerender="selModelIdBOILST" status="modelStatusBOILST"/>
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.SelManufacturer.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.BOILST'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.SelManufacturer.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.BOILST'].errorStyle}" />
+                                                    <span style="display:inline-block; margin-left:40px;">
+                                                        <apex:actionStatus id="modelStatusBOILST" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                                    </span>
+                                                </div>
+                                     
+                                                <div id="manmandivBOILST" style="display:none; float:left">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.Manufacturer__c.BOILST'].fieldLabel}" /></label>
+                                                    <span><apex:inputText id="frmBrandBOILST" value="{!formFields['RebateDetail__c.Manufacturer__c.BOILST'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Manufacturer__c.BOILST'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="72" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Manufacturer__c.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.BOILST'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.BOILST'].errorStyle}" />
+                                                </div>
+                                                
+                                            </td>
+                                            <td width="35%">
+                                                <div id="selmoddivBOILST">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelID__c.BOILST'].fieldLabel}" /></label>
+                                                    <br /><span>
+                                                    <apex:selectList id="selModelIdBOILST" value="{!formFields['RebateDetail__c.ModelID__c.BOILST'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelID__c.BOILST'].blankStop}" disabled="{!disableDE}" size="1" tabindex="73" >
+                                                        <apex:selectOptions value="{!details['BOILST'].modelList}" />
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelID__c.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.BOILST'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelID__c.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.BOILST'].errorStyle}" />
+                                                </div>
+                                                <div id="manmoddivBOILST" style="display:none;">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelNumber__c.BOILST'].fieldLabel}" /></label>
+                                                    <br /><apex:inputText id="frmModelBOILST" value="{!formFields['RebateDetail__c.ModelNumber__c.BOILST'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelNumber__c.BOILST'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="74" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelNumber__c.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.BOILST'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.BOILST'].errorStyle}" />
+                                                </div>
+                                            </td>
+                                            <td width="15%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.Quantity__c.BOILST'].fieldLabel}" /></label>
+                                                <br /><span><apex:inputText id="frmQuantityBOILST" value="{!formFields['RebateDetail__c.Quantity__c.BOILST'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Quantity__c.BOILST'].blankStop}" disabled="{!disableDE}" maxlength="4" size="4" tabindex="75" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Quantity__c.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.BOILST'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Quantity__c.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.BOILST'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">The following equipment was replaced:</td>
+                                            <td colspan="2">
+                                                    <apex:variable var="install_dateBOILST_style" value="blankstop{!formFields['RebateDetail__c.InstallDate__c.BOILST'].blankStop}" />
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.InstallDate__c.BOILST'].fieldLabel}" /></label>
+                                                    <span><input type="text" name="install_dateBOILST" id="install_dateBOILST" class="{!install_dateBOILST_style} datefield" maxlength="10" size="10" tabindex="76" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.InstallDate__c.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.BOILST'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.InstallDate__c.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.BOILST'].errorStyle}" />
+                                                    <apex:inputHidden id="frmInstallDateBOILST" value="{!formFields['RebateDetail__c.InstallDate__c.BOILST'].stringValue}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILST'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplManufBOILST" value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILST'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILST'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="77" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILST'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.BOILST'].errorStyle}" />
+                                            </td>
+                                            <td colspan="2">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILST'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplModelBOILST" value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILST'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILST'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="78" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILST'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILST'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILST'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.BOILST'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="scolorbk" >
+                                <!--  <td colspan="3">
+                                    <apex:inputCheckbox id="hasPTSTAT" value="{!formFields['RebateDetail__c.MeasureSelected.PTSTAT'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('PTSTAT', this.checked)" />
+                                    <apex:outputLabel value="{!formFields['RebateDetail__c.MeasureSelected.PTSTAT'].fieldLabel}" for="hasPTSTAT" escape="false" />
+                                </td> -->
+                            </tr>
+                            <tr id="sectionPTSTAT" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <table class="formtable" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <th colspan="3"><apex:outputText value="{!formFields['RebateDetail__c.MeasureSelected.PTSTAT'].fieldLabel}" styleClass="measureheader" escape="false" /></th>
+                                        <tr>
+                                            <td colspan="3" width="100%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ManualModelFlag.PTSTAT'].fieldLabel}" /></label>
+                                                <apex:inputCheckbox id="manualModelPTSTAT" value="{!formFields['RebateDetail__c.ManualModelFlag.PTSTAT'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="80" onclick="modelCheck('PTSTAT', this.checked)" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ManualModelFlag.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.PTSTAT'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ManualModelFlag.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.PTSTAT'].errorStyle}" />
+                                                If unlisted, check box to enter manually.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <div id="selmandivPTSTAT" style="float:left; padding-right:40px;">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.SelManufacturer.PTSTAT'].fieldLabel}" /></label>
+                                                    <span>
+                                                    <apex:selectList id="selBrandPTSTAT" value="{!formFields['RebateDetail__c.SelManufacturer.PTSTAT'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.SelManufacturer.PTSTAT'].blankStop}" disabled="{!disableDE}" size="1" tabindex="81" >
+                                                        <!-- <apex:selectOptions value="{!PTSTATmanufacturerList}" /> -->
+                                                        <apex:selectOptions value="{!details['PTSTAT'].mfrList}" />
+                                                        <apex:actionSupport action="{!makeModelList}" event="onchange" rerender="selModelIdPTSTAT" status="modelStatusPTSTAT"/>
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.SelManufacturer.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.PTSTAT'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.SelManufacturer.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.PTSTAT'].errorStyle}" />
+                                                    <span style="display:inline-block; margin-left:40px;">
+                                                        <apex:actionStatus id="modelStatusPTSTAT" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                                    </span>
+                                                </div>
+                                     
+                                                <div id="manmandivPTSTAT" style="display:none; float:left">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.Manufacturer__c.PTSTAT'].fieldLabel}" /></label>
+                                                    <span><apex:inputText id="frmBrandPTSTAT" value="{!formFields['RebateDetail__c.Manufacturer__c.PTSTAT'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Manufacturer__c.PTSTAT'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="82" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Manufacturer__c.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.PTSTAT'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.PTSTAT'].errorStyle}" />
+                                                </div>
+                                                
+                                            </td>
+                                            <td width="35%">
+                                                <div id="selmoddivPTSTAT">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelID__c.PTSTAT'].fieldLabel}" /></label>
+                                                    <br /><span>
+                                                    <apex:selectList id="selModelIdPTSTAT" value="{!formFields['RebateDetail__c.ModelID__c.PTSTAT'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelID__c.PTSTAT'].blankStop}" disabled="{!disableDE}" size="1" tabindex="83" >
+                                                        <apex:selectOptions value="{!details['PTSTAT'].modelList}" />
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelID__c.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.PTSTAT'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelID__c.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.PTSTAT'].errorStyle}" />
+                                                </div>
+                                                <div id="manmoddivPTSTAT" style="display:none;">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelNumber__c.PTSTAT'].fieldLabel}" /></label>
+                                                    <br /><apex:inputText id="frmModelPTSTAT" value="{!formFields['RebateDetail__c.ModelNumber__c.PTSTAT'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelNumber__c.PTSTAT'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="84" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelNumber__c.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.PTSTAT'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.PTSTAT'].errorStyle}" />
+                                                </div>
+                                            </td>
+                                            <td width="15%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.Quantity__c.PTSTAT'].fieldLabel}" /></label>
+                                                <br /><span><apex:inputText id="frmQuantityPTSTAT" value="{!formFields['RebateDetail__c.Quantity__c.PTSTAT'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Quantity__c.PTSTAT'].blankStop}" disabled="{!disableDE}" maxlength="4" size="4" tabindex="85" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Quantity__c.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.PTSTAT'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Quantity__c.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.PTSTAT'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">The following equipment was replaced:</td>
+                                            <td colspan="2">
+                                                    <apex:variable var="install_datePTSTAT_style" value="blankstop{!formFields['RebateDetail__c.InstallDate__c.PTSTAT'].blankStop}" />
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.InstallDate__c.PTSTAT'].fieldLabel}" /></label>
+                                                    <span><input type="text" name="install_datePTSTAT" id="install_datePTSTAT" class="{!install_datePTSTAT_style} datefield" maxlength="10" size="10" tabindex="86" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.InstallDate__c.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.PTSTAT'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.InstallDate__c.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.PTSTAT'].errorStyle}" />
+                                                    <apex:inputHidden id="frmInstallDatePTSTAT" value="{!formFields['RebateDetail__c.InstallDate__c.PTSTAT'].stringValue}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.PTSTAT'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplManufPTSTAT" value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.PTSTAT'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedManufacturer__c.PTSTAT'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="87" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.PTSTAT'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.PTSTAT'].errorStyle}" />
+                                            </td>
+                                            <td colspan="2">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.PTSTAT'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplModelPTSTAT" value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.PTSTAT'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedModelNumber__c.PTSTAT'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="88" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.PTSTAT'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.PTSTAT'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.PTSTAT'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.PTSTAT'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="scolorbk" >
+                                <!--  <td colspan="3">
+                                    <apex:inputCheckbox id="hasWHTRI" value="{!formFields['RebateDetail__c.MeasureSelected.WHTRI'].booleanValue}" disabled="{!disableDE}" tabindex="15"  onclick="sectionCheck('WHTRI', this.checked)" />
+                                    <apex:outputLabel value="{!formFields['RebateDetail__c.MeasureSelected.WHTRI'].fieldLabel}" for="hasWHTRI" escape="false" />
+                                </td> -->
+                            </tr>
+                            <tr id="sectionWHTRI" style="display:none;">
+                                <td colspan="3" class="nopadding">
+                                    <table class="formtable" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <th colspan="3"><apex:outputText value="{!formFields['RebateDetail__c.MeasureSelected.WHTRI'].fieldLabel}" styleClass="measureheader" escape="false" /></th>
+                                        <tr>
+                                            <td colspan="3" width="100%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ManualModelFlag.WHTRI'].fieldLabel}" /></label>
+                                                <apex:inputCheckbox id="manualModelWHTRI" value="{!formFields['RebateDetail__c.ManualModelFlag.WHTRI'].booleanValue}" disabled="{!disableDE}" style="margin-left: 10px;" tabindex="90" onclick="modelCheck('WHTRI', this.checked)" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ManualModelFlag.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.WHTRI'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ManualModelFlag.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.WHTRI'].errorStyle}" />
+                                                If unlisted, check box to enter manually.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <div id="selmandivWHTRI" style="float:left; padding-right:40px;">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.SelManufacturer.WHTRI'].fieldLabel}" /></label>
+                                                    <span>
+                                                    <apex:selectList id="selBrandWHTRI" value="{!formFields['RebateDetail__c.SelManufacturer.WHTRI'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.SelManufacturer.WHTRI'].blankStop}" disabled="{!disableDE}" size="1" tabindex="91" >
+                                                        <!-- <apex:selectOptions value="{!WHTRImanufacturerList}" /> -->
+                                                        <apex:selectOptions value="{!details['WHTRI'].mfrList}" />
+                                                        <apex:actionSupport action="{!makeModelList}" event="onchange" rerender="selModelIdWHTRI" status="modelStatusWHTRI"/>
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.SelManufacturer.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.WHTRI'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.SelManufacturer.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.WHTRI'].errorStyle}" />
+                                                    <span style="display:inline-block; margin-left:40px;">
+                                                        <apex:actionStatus id="modelStatusWHTRI" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                                    </span>
+                                                </div>
+                                     
+                                                <div id="manmandivWHTRI" style="display:none; float:left">
+                                                    <label style="display:block"><apex:outputText value="{!formFields['RebateDetail__c.Manufacturer__c.WHTRI'].fieldLabel}" /></label>
+                                                    <span><apex:inputText id="frmBrandWHTRI" value="{!formFields['RebateDetail__c.Manufacturer__c.WHTRI'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Manufacturer__c.WHTRI'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="92" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Manufacturer__c.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.WHTRI'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.WHTRI'].errorStyle}" />
+                                                </div>
+                                                
+                                            </td>
+                                            <td width="35%">
+                                                <div id="selmoddivWHTRI">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelID__c.WHTRI'].fieldLabel}" /></label>
+                                                    <br /><span>
+                                                    <apex:selectList id="selModelIdWHTRI" value="{!formFields['RebateDetail__c.ModelID__c.WHTRI'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelID__c.WHTRI'].blankStop}" disabled="{!disableDE}" size="1" tabindex="93" >
+                                                        <apex:selectOptions value="{!details['WHTRI'].modelList}" />
+                                                    </apex:selectList>
+                                                    </span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelID__c.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.WHTRI'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelID__c.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.WHTRI'].errorStyle}" />
+                                                </div>
+                                                <div id="manmoddivWHTRI" style="display:none;">
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.ModelNumber__c.WHTRI'].fieldLabel}" /></label>
+                                                    <br /><apex:inputText id="frmModelWHTRI" value="{!formFields['RebateDetail__c.ModelNumber__c.WHTRI'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ModelNumber__c.WHTRI'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="94" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelNumber__c.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.WHTRI'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.WHTRI'].errorStyle}" />
+                                                </div>
+                                            </td>
+                                            <td width="15%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.Quantity__c.WHTRI'].fieldLabel}" /></label>
+                                                <br /><span><apex:inputText id="frmQuantityWHTRI" value="{!formFields['RebateDetail__c.Quantity__c.WHTRI'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.Quantity__c.WHTRI'].blankStop}" disabled="{!disableDE}" maxlength="4" size="4" tabindex="95" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.Quantity__c.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.WHTRI'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Quantity__c.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Quantity__c.WHTRI'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">The following equipment was replaced:</td>
+                                            <td colspan="2">
+                                                    <apex:variable var="install_dateWHTRI_style" value="blankstop{!formFields['RebateDetail__c.InstallDate__c.WHTRI'].blankStop}" />
+                                                    <label><apex:outputText value="{!formFields['RebateDetail__c.InstallDate__c.WHTRI'].fieldLabel}" /></label>
+                                                    <span><input type="text" name="install_dateWHTRI" id="install_dateWHTRI" class="{!install_dateWHTRI_style} datefield" maxlength="10" size="10" tabindex="96" /></span>
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.InstallDate__c.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.WHTRI'].warnStyle}" />
+                                                    <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.InstallDate__c.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.InstallDate__c.WHTRI'].errorStyle}" />
+                                                    <apex:inputHidden id="frmInstallDateWHTRI" value="{!formFields['RebateDetail__c.InstallDate__c.WHTRI'].stringValue}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.WHTRI'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplManufWHTRI" value="{!formFields['RebateDetail__c.ReplacedManufacturer__c.WHTRI'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedManufacturer__c.WHTRI'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="97" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.WHTRI'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedManufacturer__c.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedManufacturer__c.WHTRI'].errorStyle}" />
+                                            </td>
+                                            <td colspan="2">
+                                                <label><apex:outputText value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.WHTRI'].fieldLabel}" /></label>
+                                                <span><apex:inputText id="frmReplModelWHTRI" value="{!formFields['RebateDetail__c.ReplacedModelNumber__c.WHTRI'].stringValue}" styleClass="blankstop{!formFields['RebateDetail__c.ReplacedModelNumber__c.WHTRI'].blankStop}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="98" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.WHTRI'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.WHTRI'].warnStyle}" />
+                                                <apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateDetail__c.ReplacedModelNumber__c.WHTRI'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ReplacedModelNumber__c.WHTRI'].errorStyle}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="scolorbk" style="text-align:right; font-weight:bold;">
+                                <td colspan = "3" style="padding-left:0;">
+                                	Total: <apex:outputText id="totalAmountEdit" value="{!totalAmountEdit}" />
+                                </td>
+                            </tr>
+                            <tr id="suptdochrow"><th colspan="3"><span class="text">Supporting Documents</span></th></tr>
+                            <tr id="suptdocrow">
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="50%">
+                                                <iframe id="fileUploadWindow" width="100%" height="100" frameborder="0" src="./RebateDocumentUploader?sessionId={!saveSessionID}" />
+                                            </td>
+                                            <td width="50%">
+                                                You can attach supporting documentation (receipts, etc.) to your electronic rebate application
+                                here.  Scans or photographs of the required bill and receipt are accepted.  Just click the Browse 
+                                button below and select a file to upload.
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <table class="formtable" id="tctable" style="display:none" cellpadding="0" cellspacing="0" border="0">
+                            <tr><th colspan="3"><span class="text">Acceptance of Terms &amp; Conditions</span><img src="{!URLFOR($Resource.SGE2012, 'images/accept_term_cond.png')}" alt="Acceptance of Terms and Conditions" /></th></tr>
+                            <tr>
+                                <td colspan="3"><label class="small">I hereby certify that all information provided herein is true and correct. I have read all terms and conditions on the reverse side of this form and acknowledge
+                                and accept SG&amp;E’s right to inspect the installed heating product(s) listed on the attached receipt. I acknowledge that the SG&amp;E sponsored
+                                rebate program is a limited offer and subject to the availability of funds, and that rebate amounts may be subject to change without notice.</label>
+                                </td>
+                            </tr>
+                            <tr class="shaded">
+                                <td colspan="2">
+                                    <label class="small" style="width:125px;">Customer Signature:</label>
+                                    <span class="screenonly">Signature required on printed hard copy.</span>
+                                </td>
+                                <td>
+                                    <label class="small">Date:</label>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <div id="submitbutton" style="display:none" class="submitbutton roundedbutton" onclick="checkMe()">
+                            <!-- 
+                            <apex:CommandButton action="{!actionCheckMe}" value="{!frmButtonLabel}" disabled="{!disableDE}" styleClass="button" onclick="return checkMe();" />
+                             -->
+                             {!frmButtonLabel}
+                        </div>
+                        <table id="termsconditions" style="display:none" cellspacing="0" cellpadding="0" border="0" class="formtable pagebreak-before">
+                            <tr><th><span class="text">Terms And Conditions</span><img src="{!URLFOR($Resource.SGE2012, 'images/terms_cond.png')}" alt="Terms and Conditions" /></th></tr>
+                            <tr>
+                                <td>
+                                <p>Please refer to the following terms and conditions prior to signing acceptance on previous page:</p>
+                                <ul class="pcolor" style="font-weight:bold;">
+                                    <li><span class="normal">You must be a customer of SG&amp;E and the installation address is in the SG&amp;E service area.</span></li>
+                                    <!-- 
+                                     <li><span class="normal">One rebate per household please.</span></li>
+                                     -->
+                                    <li><span class="normal">This rebate request application must be postmarked within 90 days of the equipment install date.</span></li>
+                                    <li><span class="normal">The installed heating equipment must meet the following qualifications:</span>
+                                    <ul>
+                                        <li><span class="normal">New heating equipment must be purchased and installed between Jan. 1, 2012 and Dec. 31, 2012.</span></li>
+                                        <li><span class="normal">Furnaces, boilers and indirect water heaters must be installed by a licensed contractor, <strong>or</strong> by a contractor
+                                            can supply you with a Federal ID number, a certificate of insurance or a business certificate.</span></li>
+                                    </ul>
+                                    </li>
+                                    <li><span class="normal">All information must be complete, and a <strong>copy</strong> of itemized purchase receipt
+                                    must be enclosed to be considered for payment.</span></li>
+                                </ul>
+                                <p class="small">
+                                SG&amp;E (“SGE”) will review the rebate request application (“Request”) and determine whether the purchased heating 
+                                equipment qualifies for the rebate. If the product(s) qualify, SGE will mail the appropriate rebate within (60) days of SGE’s 
+                                receipt of the Request. By signing this Request and accepting any rebate, Owner (1) 
+                                represents and warrants that the product(s) have been installed in compliance with all applicable federal, state and
+                                local laws, codes, and ordinances, including all building energy and accessibility codes and in compliance with the procedures
+                                specified by SGE; and (2) acknowledges and agrees that: (a) SGE is a sponsor of the rebate program only and has not and does
+                                not make any representations or promises with respect to the products, the energy consumption, and/or energy 
+                                savings from the installed heating equipment; and (b) that SGE MAKES NO IMPLIED OR EXPRESS WARRANTIES REGARDING THIS 
+                                PROGRAM, ITS POLICIES, PROCEDURES, INSPECTIONS AND/OR ANY INSTALLED HEATING EQUIPMENT, AND SPECIFICALLY DISCLAIMS
+                                ANY WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+                                </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </apex:form>
+                </div>
+            </div>
+            <div id="footer">
+                <img src="{!URLFOR($Resource.EFIStandard, 'images/powered_by_efi_sm.png')}" id="efi-logo" alt="Powered by EFI"/>
+            </div>
+        </div>
+    </body>
+</apex:page>

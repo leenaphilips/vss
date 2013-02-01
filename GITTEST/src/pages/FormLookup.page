@@ -1,0 +1,24 @@
+<apex:Page tabStyle="Form__c" >
+<script src="/soap/ajax/15.0/connection.js"></script>
+<script type="text/javascript" />
+<script>
+     window.onload = function() {
+
+     sforce.connection.sessionId = '{!$Api.Session_ID}';
+
+     var describeSObjectResult = sforce.connection.describeSObject("Form__c");
+     var prefix = describeSObjectResult.keyPrefix;
+
+     // Determine the View based on the Role of the User
+     var cView;
+     switch ( "{!$UserRole.Name}" ) {
+     case "New EFI role": cView = "00BU00000013phc" ; break ;
+     default: cView = "00BU00000013phc"; break;
+     }
+
+     // Change the whole window to point to this location
+     parent.document.location.href = "/" + prefix + "?fcf=" + cView ;
+}
+</script>
+<center><h2>Please Wait ..... Loading Forms Tab</h2></center>
+</apex:page>

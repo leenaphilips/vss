@@ -1,0 +1,64 @@
+<apex:page cache="true" controller="Rep_Pse_Detail" contentType="application/x-excel#RebateDetail.xls">
+<head>
+  <style type="text/css">
+    .detail-cell{
+        border:thin solid black;
+    }
+    
+    .sum-row {font-weight:bold}
+    
+    .separator {border-bottom:1px solid black}
+  </style>
+</head>
+<body>
+<table cellspacing="0" cellpadding="5">
+  <apex:repeat var="s" value="{!ResultSet}">
+    <tr>
+        <td colspan="4"><apex:outputText value="{!s.rebate.StoreName__c}"/></td>
+        <td>MOU #</td><td><apex:outputText value="{!s.rebate.MOUNumber__c}"/></td>
+    </tr>
+    <tr>
+        <td colspan="4"><apex:outputTExt value="{!s.rebate.StoreAddress1__c}"/></td>
+        <td></td><td></td>
+    </tr>
+    <tr>
+        <td colspan="4"><apex:outputText value="{!s.rebate.StoreCity__c} {!s.rebate.StoreState__c}"/></td>
+        <td></td><td></td>
+    </tr>
+    <tr>
+      <td colspan="4"></td>
+      <td>Rebate #</td><td><apex:outputText value="{!s.rebate.LegacyRebateNumber__c}"/></td>
+    </tr>
+    <tr>
+      <td colspan="4"><apex:outputText value="{!s.rebate.CustBusinessName__c}"/></td>
+      <td>Rebate Date</td><td><apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!s.rebate.CheckDate__c}"/></apex:outputText></td>
+    </tr>
+    <tr>
+      <td colspan="4"><apex:outputText value="{!s.rebate.CustAddress__c}"/></td>
+      <td>Invoice #</td><td><apex:outputText value="{!s.rebate.PartnerInvoiceNumber__c}"/></td>
+    </tr>
+    <tr>
+      <td colspan="4"><apex:outputText value="{!s.rebate.CustCity__c} "/>, <apex:outputText value=" {!s.rebate.CustState__c}"/></td>
+      <td>Invoice Date</td><td><apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!s.rebate.InvoiceDate__c}"/></apex:outputText></td>
+    </tr>
+    <tr><td colspan="6"></td></tr>
+    <tr><td>Part</td><td>Description</td><td>Manufacturer</td><td>Quantity</td><td>Rebate</td><td>Total Rebate</td></tr>
+    <apex:repeat var="r" value="{!s.rows}">
+      <tr><td class="detail-cell"><apex:outputText value="{!r.PartNumber__c}"/></td>
+          <td class="detail-cell"><apex:outputText value="{!r.PartDescription__c}"/></td>
+          <td class="detail-cell"><apex:outputText value="{!r.Manufacturer__c}"/></td>
+          <td class="detail-cell"><apex:outputText value="{!r.Quantity__c}"/></td>
+          <td class="detail-cell"><apex:outputText value="{0,number,$#,###.00}"><apex:param value="{!r.UnitRebate__c}"/></apex:outputText></td>
+          <td class="detail-cell"><apex:outputText value="{0,number,$#,###.00}"><apex:param value="{!r.IncentiveAmount__c}"/></apex:outputText></td>
+      </tr>
+    </apex:repeat>
+    <tr><td colspan="2"></td><td class="sum-row">TOTAL</td>
+        <td class="sum-row"><apex:outputText value="{!s.numSold}"/></td><td></td>
+        <td class="sum-row"><apex:outputText value="{0,number,$#,###.00}"><apex:param value="{!s.totalRebateAmt}"/></apex:outputText></td>
+    </tr>
+   <tr><td class="separator" colspan="6"></td></tr>
+    <tr><td colspan="6"></td></tr>
+  </apex:repeat>
+</table>
+</body>
+</apex:page>

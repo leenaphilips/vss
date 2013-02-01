@@ -1,0 +1,169 @@
+<apex:page id="SCL2012CW" showHeader="false" standardStyleSheets="false" 
+    controller="FormStatusController">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Seattle City Light Clothes Washer Rebate Status</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+        <script src="{!URLFOR($Resource.SCL2012, 'js/jquery.tooltip.js')}" type="text/javascript" language="javascript"></script>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <!-- 
+        <link href="{!URLFOR($Resource.SCL2012, 'css/style.css')}" rel="stylesheet" type="text/css" />
+         -->        
+       <style type="text/css" media="all">
+            body { font-family:Arial, Helvetica, sans-serif;  color:#333; background-color:#333; margin:0px; }
+            div {  }
+            h1 { font-size:20px; font-weight:bold; color:#fff; border-top:33px #f58025 solid; margin-top:20px;  }
+            h1 span { display:block; margin-top:-28px; padding-left: 40px; }
+            h1 img { display:none; padding-left:30px;  }
+            h2 { font-size:14px;  }
+            p { margin:0px 0px 5px 0px; }
+            .orange { color:#f58025; font-weight:bold; }
+            .orange .normal { font-weight:normal; color:#000; display:inline; }
+            #container { width:895px; margin:0px auto; padding:0px 0px; background-color:#fff;  }
+            .header { background-color:#8dc63f; height:100px; padding-top:15px;  }
+            .scl-header { width:720px; float:left; padding-top:20px; }
+            .efi-logo { float:right; height:95px; padding-top:20px; background-color:#fff; }
+            .efi-logo img {width: 50%; }
+            .scl-header .text { margin:20px 40px;  }
+            #main {  }
+            #content-top { color:#000; font-size:12px; position:relative;   }
+            #content-top .highlight { background-color:#fae62e; padding:5px; color:#333; margin:5px 0px; }
+            #content-top .image { float:left; padding-right:20px; }
+            #content-top .text { margin:20px 40px; }
+            #content-top .mailto.left { float:left; margin-top:10px;margin-left:100px; }
+            #content-top .mailto.right { float:right;margin-top:10px; margin-right:140px; }
+            #content-main  { margin:20px 40px; background-color:#fff; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;
+                border-radius: 5px 5px 5px 5px; clear:both; }
+            #content-main div { margin:0px 0px; }
+            /* form elements */
+            form { font-size:.875em; }
+            .formtable { width:100%; font-size:1em; border-left:1px #f58025 solid; }
+            .formtable th { background-color:#f58025; color:#fff; font-size:13px; text-transform:uppercase; text-align:left; padding:2px 5px 0px 5px; border-top:25px #f58025 solid; }
+            .formtable th img { display:none; }
+            .formtable th span { display:block; margin-top:-21px; }
+            .formtable td { padding:3px 5px; border-bottom:1px #f58025 solid; border-right:1px #f58025 solid; vertical-align:top; }
+            .formtable td.nopadding { padding:0px; }
+            .formtable table td { border:none; }
+            fieldset { border:none; padding:15px 0px 15px 0px; border-top:0px #2fb457 solid; margin:0px; }
+            label { display:inline-block; width:auto; vertical-align:inherit; text-align:left; padding-right:10px; }
+            label.autowidth { width:auto; }
+            form span { display:inline-block; border-bottom:0px #333 solid;  }
+            form span.noborder, form span .noborder, form .noborder span, form .noborder { border:none; }
+            input { font-family:"Courier New", Courier, monospace; }
+            input, select { color:#1f5995; }
+            input[type="submit"] { font-family:Arial, Helvetica, sans-serif; }
+            input[type="text"] {  border:none; border-bottom:0px #333 solid; font-size:1em; width:auto; background-color:#e6edfb; font-weight:bold;  }
+            select, select option { font-weight:bold; background-color:#FFFFFC;  }
+            input:focus { background-color:#ccc; }
+            .longtext, .longtext input[type="text"] { width:28em; }
+            .mediumtext, .mediumtext input[type="text"] { width:18em; }
+            .mediumshorttext, .mediumshorttext input[type="text"] { width:8em; }
+            .shorttext, .shorttext input[type="text"] { width:3em; }
+            .button  { -moz-border-radius: 3px 3px 3px 3px; background-color: #E8E8E9; border-color: #B5B5B5 #B5B5B5 #7F7F7F; border-style: solid; border-width: 1px; color: #333333;
+                font-size: 0.9em; font-weight: bold; margin: 1px; padding: 2px 3px; text-decoration: none; cursor:pointer }
+            #tooltip { position: absolute;  z-index: 3000; border: 1px solid #111; background-color: #EEEEEB; padding: 5px; opacity: 0.85; font-size:11px;  }
+            #tooltip h3 { font-size:11px; margin:0px; }
+            .error-icon { visibility:visible; position:absolute; margin:3px 0px 0px 3px; }
+            .question-icon { visibility:visible; position:absolute; cursor:pointer; margin-left:20px; }
+            #footer {  }        
+            .alwaysblack {color: black; }
+            .printonly { display:none; }
+            .small { font-size:10px; }
+            .shaded td { background-color:#ffefe1; }
+            #content-main .submitbutton { margin:20px 0px; }
+            input.address-field { color:#999; font-weight:normal; font-style:italic; }
+            input.address-field.entered { color:#1f5995; font-weight:bold; font-style:normal; }
+            .shaded .screenonly { color:#999; font-style:italic }
+            .inline { display:inline-block; }
+            #selstorediv div, #manstorediv div { padding:2px 0px; }
+            #need-help { position:absolute; padding:5px; top:5px; right:20px; background-color:#1783C5; font-weight:bold; color:#fff; font-style:italic; border:none; cursor:pointer; }
+            .scl-dialog { display:none; }
+            .ui-dialog-titlebar { background-color:#8DC63F; background-image:none; color:#fff; border-color:#8DC63F }
+            .ui-dialog-content { padding:1em; }
+            .printonly { display:none; }
+            .ui-widget-overlay { opacity:.8; filter:Alpha(Opacity=80); }
+            #footer { background-color:#fff; margin:0px; padding-bottom:20px; text-align:right; }        
+            #footer #efi-logo { display:inline-block; margin-right:40px; }        
+            .error {padding:10px; padding-bottom:20px; color:#C00;  }
+        </style>
+        <script type="text/javascript">
+            $(document).ready( function(){
+                $('#SCL2012CW\\:rebateForm\\:FormCode').val('SCLCW2012')
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <div class="header">
+                    <div class="logo"><img src="{!URLFOR($Resource.SCL2012, 'images/scl_cw_header.png')}" alt="Refrigerator Rebate" style="float:left;" /></div>
+                    <div class="logo"><img src="{!URLFOR($Resource.SCL2012, 'images/scl_logo.png')}" alt="Seattle City Light" style="float:right;" /></div>
+            </div>
+            <div id="main">
+                <div id="content-top">
+                    <h1>
+                        <span>Seattle City Light $50/$100 Clothes Washer Rebate Status</span>
+                    </h1>
+                    
+                    <apex:outputPanel rendered="{! STATUS == 'eSubmit' }" styleClass="text">
+                        <div class="mailto left">
+                            <p><span class="orange">Mail</span><br />
+                            <apex:outputText escape="false" value="{!MailingAddress}" /></p>
+                        </div>
+                        <div class="mailto right">
+                            <p><span class="orange">For more information:</span><br />
+                            Email: SeattleAppliances@efi.org<br />
+                            Website: seattle.gov/appliances<br />
+                            Questions? Call 1-888-562-0120</p>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                <div id="content-main">
+                
+                    <apex:outputPanel rendered="{! NOT(ISBLANK(Status))}">
+                        <table cellpadding="10" cellspacing="0" border="0" style="border:1px solid #1f5995;width:100%;margin-top:0px;text-align:center">
+                        <tbody>
+                            <tr><td style="border-bottom:1px solid #1f5995; font-size:14px"><label style="font-weight:bold;color: #1f5995">Rebate Status:</label><span style="font-weight:bold"><apex:outputText value="{!Status}"/></span></td>
+                                <td style="border-bottom:1px solid #1f5995; font-size:14px"><label style="font-weight:bold;color: #1f5995">Rebate Amount:</label>
+                                    <span style="font-weight:bold"><apex:outputText value="${!TEXT(RebateAmount)}"/></span></td></tr>
+                            <tr><td colspan="2" style=" font-size:14px"><apex:outputText escape="false" value="{!Description}"/></td></tr>
+                        </tbody>
+                        </table>
+                        <div style="margin-top:10px"></div>
+                        </apex:outputPanel>
+                        
+                    <apex:form id="rebateForm"> <!-- rendered="{! NOT(ISNULL(STATUS)) }" -->
+                    
+                    <h2>Enter your rebate number as shown on the printed copy of your rebate along with your mailing address zipcode and then 
+                        click the "Find Rebate" button to retrive your rebate status.
+                    </h2>
+                    <apex:messages style="color:red"/>
+                    <apex:outputText value="{!NoResultsText}" rendered="{! NoResultsReturned }" escape="false" styleClass="error" />
+                    <apex:inputHidden value="{!FormCode}" id="FormCode"/>
+                    <table class="formtable"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr><th colspan="2"><span class="text">Rebate Information</span></th></tr>
+                            <tr><td>Rebate Application Number</td><td><apex:inputText id="rebateNumberTxt" value="{!RebateNumber}" maxlength="14" size="14" tabindex="1" />
+                                <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="error" title="Please enter your Rebate Number" styleClass="error-icon" id="rebateNumberTxtErr" style="padding-left:10px;{!StyleRebateNumber}" />
+                            </td></tr>
+                            <tr><td>Mailing Zipcode</td><td><apex:inputText id="zipCodeTxt" value="{!PostalCode}" maxlength="10" size="14" tabindex="2" />
+                                <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="error" title="Please enter your Mailing Zipcode" styleClass="error-icon" id="zipCodeTxtErr" style="padding-left:10px;{!StylePostalCode}" />
+                            </td></tr>
+                        </tbody>
+                    </table>
+                        
+                    <div style="margin-top:10px; float:right">
+                        <apex:CommandButton action="{!findRebate}" value="Find Rebate" styleclass="button" />
+                    </div>
+                    <!-- div style="text-align:right;margin-top:8px;padding-right:10px;float:right">Clicking the "Find Rebate" button will search for a<br/>rebate matching the criteria entered above</div -->
+                    <div style="clear:right"></div>
+                    </apex:form>
+                </div>
+            </div>
+            
+        <div id="footer">
+            <img src="{!URLFOR($Resource.SCL2012, 'images/efi_logo.png')}" id="efi-logo" alt="Powered by EFI"/>
+        </div>
+        </div>
+    </body>
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page controller="BulkDelete" sidebar="false">
+ <apex:sectionHeader title="Mass Delete Records"/>
+ <apex:form >
+     <apex:PageMessages />
+     <apex:PageBlock >
+         <apex:pageBlockSection columns="1">
+                 <apex:outputLabel value="Select the Object for Deleting Records :">                 
+                     <apex:SelectList value="{!selectedObject}" size="1">
+                         <apex:SelectOptions value="{!objectsList}"/>                    
+                     </apex:SelectList>
+                 </apex:outputLabel>
+                 <apex:outputLabel value="Number of Records to Delete (0 for max) ">
+                     <apex:InputText value="{!deleteCount}" />
+                 </apex:outputLabel>
+         </apex:pageBlockSection>
+         <apex:PageBlockButtons location="bottom">
+             <apex:commandButton value="Delete" action="{!Submit}"/>
+             <apex:commandButton value="Cancel" action="{!cancel}"/>
+         </apex:PageBlockButtons>
+     </apex:PageBlock>
+     </apex:form>
+</apex:page>

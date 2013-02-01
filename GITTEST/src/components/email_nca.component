@@ -1,0 +1,38 @@
+<apex:component controller="NcaLetter" access="global" >    
+  <apex:attribute name="ncaLetterId" description="" type="String" assignTo="{!NcaLetterId}" />
+  <apex:attribute name="contact" description="" type="Contact" />
+  
+
+  <table width="100%" bgcolor="white" style="padding:10px">
+    <tr><td width="100%" align="left"><img src="{!LogoUrl}" alt="{!ClientCode}" /></td></tr>
+    <tr><td colspan="2">
+        <div style="font-size:20px; font-weight:bold; color:#fff; background-color:{!PrimaryColor}; padding:5px;margin-top:10px">Your Rebate Requires Attention</div>
+        <div style="padding-left:10px;padding-right:10px;">
+          <table width="100%">
+            <tr><td><apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{! TODAY() }"/></apex:outputText></td>
+            <td align="right">Reference # <b>{!ControlNumber}</b></td></tr>
+            <tr><td colspan="2"><br />
+                {!contact.Name}<br/>
+                {!contact.ServiceAddress1__c}<br/>
+                <apex:outputText value="{!contact.ServiceAddress2__c}<br/>" escape="false" rendered="NOT(ISBLANK(contact.ServiceAddress2__c))" />
+                {!contact.ServiceCity__c}, {!contact.ServiceState__c} {!contact.ServiceZipcode__c}</td></tr>
+          </table>
+          <p><apex:outputText value="{!header}" escape="false" /></p>
+          <apex:repeat value="{!Groups}" var="g">
+            <p>{!g.GroupText__c}
+              <ul>
+                <apex:repeat value="{!g.NCAText__r}" var="l">
+                  <li>{!l.LetterText__c}</li>
+                </apex:repeat>
+              </ul>
+            </p>
+          </apex:repeat>
+          <p><apex:outputText value="{!footer}" escape="false"/></p>
+        </div>
+    </td></tr>
+    <tr><td width="100%" align="right">
+        <img src="http://c.na12.content.force.com/servlet/servlet.ImageServer?id=015U0000000SGfr&oid=00DU0000000KIG0&lastMod=1351477524000" alt="Powered by EFI" />
+    </td></tr>
+    <tr><td colspan="*" style="text-align:right;padding-top:20px"><span style="font-size:12px">EMAIL_{!Title}</span></td></tr>
+  </table>
+</apex:component>

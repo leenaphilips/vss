@@ -1,0 +1,5 @@
+<apex:page >
+  <script type="text/javascript">
+    self.parent.navigateToUrl("/setup/forcecomHomepage.apexp?setupid=ForceCom");
+   </script>
+</apex:page>

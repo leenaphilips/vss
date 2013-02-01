@@ -1,0 +1,355 @@
+<apex:page id="SGE2012RF" showHeader="false" standardStyleSheets="false" 
+    controller="FormStatusControllerMM" cache="false" expires="0">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <title>SG&amp;E Refrigerator Rebate Status Form</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+        <script src="{!URLFOR($Resource.SCL2012, 'js/jquery.tooltip.js')}" type="text/javascript" language="javascript"></script>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <!-- 
+        <link href="{!URLFOR($Resource.SCL2012, 'css/style.css')}" rel="stylesheet" type="text/css" />
+         -->        
+       <style type="text/css" media="all">
+            body { font-family:Arial, Helvetica, sans-serif;  color:#333; background-color:#333; margin:0px; }
+            div {  }
+            h1 { font-size:20px; font-weight:bold; color:#fff; border-top:33px #f58025 solid; margin-top:20px;  }
+            h1 span { display:block; margin-top:-28px; padding-left: 40px; }
+            h1 img { display:none; padding-left:30px;  }
+            h2 { font-size:14px;  }
+            p { margin:0px 0px 5px 0px; }
+            .orange { color:#f58025; font-weight:bold; }
+            .orange .normal { font-weight:normal; color:#000; display:inline; }
+            #container { width:895px; margin:0px auto; padding:0px 0px; background-color:#fff;  }
+            
+            .header { height:195px; padding-top:25px; position:relative; color:#fff; font-family:Helvetica, Arial, sans-serif;   }
+            .header-title { width:715px; height:90px; background-color:#8dc63f; font-weight:bold; padding:15px 20px 15px 40px;
+                border-radius:0px 5px 5px 0px; -webkit-border-radius:0px 5px 5px 0px;  -moz-border-radius:0px 5px 5px 0px;   }
+            .header-title h1 { font-size:39px; margin:0px; border:none; display:inline-block; vertical-align:bottom; margin-bottom:-4px; }
+            .header-title .logo { display:inline-block; margin-right:10px; }
+            .header-logo { border:4px #8dc63f solid; border-right:none; position:absolute; top:65px; right:0px; background-color:#fff; 
+                padding:5px 20px; border-radius:10px 0px 0px 10px; -webkit-border-radius:10px 0px 0px 10px; -moz-border-radius:10px 0px 0px 10px; }
+            .header-logo img { height:100px; }
+            .header-rebate { background-color:#f18138; padding:10px; margin-left:20px; font-size:20px; width:655px; 
+                border-radius:0px 0px 10px 10px; -webkit-border-radius:0px 0px 10px 10px; -moz-border-radius:0px 0px 10px 10px;   }
+            .header-rebate span.large { font-size:39px; }
+            .SGE-header .text { margin:20px 40px;  }
+            .efi-logo { float:right; height:95px; padding-top:20px; background-color:#fff; }
+            .efi-logo img {width: 50%; }       
+            #need-help { position:absolute; padding:5px; top:28px; right:25px; background-color:#1783C5; font-weight:bold; color:#fff; 
+                font-style:italic; border:none; cursor:pointer; font-size:12px; }
+                
+            #content-top { color:#000; font-size:12px; position:relative;   }
+            #content-top .highlight { background-color:#fae62e; padding:5px; color:#333; margin:5px 0px; }
+            #content-top .image { float:left; padding-right:20px; }
+            #content-top .text { margin:20px 40px; }
+            #content-top .mailto.left { float:left; margin-top:10px;margin-left:100px; }
+            #content-top .mailto.right { float:right;margin-top:10px; margin-right:140px; }
+            #content-main  { margin:20px 40px; background-color:#fff; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;
+                border-radius: 5px 5px 5px 5px; clear:both; }
+            #content-main div { margin:0px 0px; }
+            /* form elements */
+            form { font-size:.875em; }
+            .formtable { width:100%; font-size:1em; border-left:1px #f58025 solid;  }
+            .formtable th { background-color:#f58025; color:#fff; font-size:13px; text-transform:uppercase; text-align:left; padding:2px 5px 0px 5px; border-top:25px #f58025 solid; }
+            .formtable th img { display:none; }
+            .formtable th span { display:block; margin-top:-21px; }
+            .formtable td { padding:3px 5px; border-bottom:1px #f58025 solid; border-right:1px #f58025 solid; vertical-align:top; }
+            .formtable td.nopadding { padding:0px; }
+            .formtable table td { border:none; }
+            .rounded-top { border-radius:7px 7px 0px 0px; -webkit-border-radius:7px 7px 0px 0px; -moz-border-radius:7px 7px 0px 0px; }
+            
+            fieldset { border:none; padding:15px 0px 15px 0px; border-top:0px #2fb457 solid; margin:0px; }
+            label { display:inline-block; width:auto; vertical-align:inherit; text-align:left; padding-right:10px; }
+            label.autowidth { width:auto; }
+            form span { display:inline-block; border-bottom:0px #333 solid;  }
+            form span.noborder, form span .noborder, form .noborder span, form .noborder { border:none; }
+            input { font-family:"Courier New", Courier, monospace; }
+            input, select { color:#1f5995; }
+            input[type="submit"] { font-family:Arial, Helvetica, sans-serif; }
+            input[type="text"] {  border:none; border-bottom:0px #333 solid; font-size:1em; width:auto; background-color:#e6edfb; font-weight:bold;  }
+            select, select option { font-weight:bold; background-color:#FFFFFC;  }
+            input:focus { background-color:#ccc; }
+            .longtext, .longtext input[type="text"] { width:28em; }
+            .mediumtext, .mediumtext input[type="text"] { width:18em; }
+            .mediumshorttext, .mediumshorttext input[type="text"] { width:8em; }
+            .shorttext, .shorttext input[type="text"] { width:3em; }
+            .button  { -moz-border-radius: 3px 3px 3px 3px; background-color: #E8E8E9; border-color: #B5B5B5 #B5B5B5 #7F7F7F; border-style: solid; border-width: 1px; color: #333333;
+                font-size: 0.9em; font-weight: bold; margin: 1px; padding: 2px 3px; text-decoration: none; }
+            #tooltip { position: absolute;  z-index: 3000; border: 1px solid #111; background-color: #EEEEEB; padding: 5px; opacity: 0.85; font-size:11px;  }
+            #tooltip h3 { font-size:11px; margin:0px; }
+            .error-icon { visibility:visible; position:absolute; margin:3px 0px 0px 3px; }
+            .question-icon { visibility:visible; position:absolute; cursor:pointer; margin-left:20px; }
+            #footer {  }        
+            .alwaysblack {color: black; }
+            .printonly { display:none; }
+            .small { font-size:10px; }
+            .shaded td { background-color:#ffefe1; }
+            #content-main .submitbutton { margin:20px 0px; }
+            input.address-field { color:#999; font-weight:normal; font-style:italic; }
+            input.address-field.entered { color:#1f5995; font-weight:bold; font-style:normal; }
+            .shaded .screenonly { color:#999; font-style:italic }
+            .inline { display:inline-block; }
+            #selstorediv div, #manstorediv div { padding:2px 0px; }
+            .scl-dialog { display:none; }
+            .ui-dialog-titlebar { background-color:#8DC63F; background-image:none; color:#fff; border-color:#8DC63F }
+            .ui-dialog-content { padding:1em; }
+            .printonly { display:none; }
+            .ui-widget-overlay { opacity:.8; filter:Alpha(Opacity=80); }
+            
+            #main { clear:both }
+            #footer { background-color:#fff; margin:0px; padding-bottom:20px; text-align:right; }   
+            #footer #efi-logo { display:inline-block; margin-right:40px; }        
+            .error {padding:10px; padding-bottom:20px; color:#C00;  }
+            .efi-logo { float:right; height:95px; padding-top:20px; background-color:#fff; }
+            .efi-logo img {width: 50%; }
+            
+            .old-header { background-color:#fff; height:120px;}
+            .scl-header { width:660px; float:left; background-color:#8dc63f; height:120px;}
+            .scl-header img {margin-top:20px; }
+            .sge-header { float:right; }
+            .sge-header img {margin-top:20px; margin-right:30px;}
+            .scl-header .text { margin:20px 40px;  }
+            
+        </style>
+        <script type="text/javascript">
+            $(document).ready( function(){
+                $('#SGE2012RF\\:rebateForm\\:FormCode').val('SGERF2012')
+            });
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            <!-- div class="old-header">
+              <div class="scl-header"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_fr_header.png')}" alt="Refrigerator Rebate" /></div>
+              <div class="sge-header"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_logo.png')}" alt="SG&E Light" /></div>
+            </div -->
+            <div class="header">
+                <div class="header-title">
+                    <div class="logo"><img src="{!URLFOR($Resource.SGE2012, 'images/fridge_logo.png')}" alt="Refrigerator Rebate" /></div>
+                    <h1>Refrigerator Rebate</h1>
+                </div>
+                <div class="header-logo">
+                    <div class="logo"><img src="{!URLFOR($Resource.SGE2012, 'images/sge_logo.png')}" alt="SG&E Light" /></div>
+                </div>
+                <div class="header-rebate">
+                    SG&amp;E Refrigerator Rebate Status
+                </div>
+                <!-- div id="need-help" class="screenonly">Need help?</div -->
+            </div>
+            
+            <div id="main">
+                <div id="content-top">
+                    <!-- h1>
+                        <span>SG&amp;E $75 Refrigerator Rebate Status</span>
+                        <img src="{!URLFOR($Resource.SCL2012, 'images/scl_header.png')}" alt="Get a $50 rebate on a qualified model when you recycle your old unit." />
+                    </h1 -->
+                    
+                    <apex:outputPanel rendered="{! RebateStatus == 'eSubmit' }" styleClass="text">
+                        <div class="mailto left">
+                            <p><span class="orange">Mail</span><br />
+                            <apex:outputText escape="false" value="{!MailingAddress}" /></p>
+                        </div>
+                        <div class="mailto right">
+                            <p><span class="orange">For more information:</span><br />
+                            Email: SouthboroughAppliances@efi.org<br />
+                            Website: sge.gov/appliances<br />
+                            Questions? Call 1-888-555-1212</p>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                <div id="content-main">
+                    <style type="text/css" media="all">
+                    
+                        td.label {
+                            text-align:right;
+                            color: #1f5995;
+                        }
+                        
+                        td.data {
+                            text-align:left;
+                        }
+                        
+                        table.detail {
+                            width:760px;
+                            padding-left:20px;
+                            font-size:12px;
+                            border-spacing:0px 0px;
+                            text-align:center;
+                            margin-top:10px;
+                        }
+                        table.detail th {
+                            font-weight:bold;
+                            color:#000;
+                            padding:0px 0px 5px;
+                            border-bottom:1px solid black
+                        }
+                        table.detail td {
+                            padding:5px 0px;
+                            border-bottom:1px solid #ccc;
+                        }
+                        
+                        table.rebate {
+                            border-spacing:0px 0px;
+                            width:100%;
+                            padding:0px 5px 15px  5px;
+                            font-size:14px;
+                            font-weight:bold;
+                        }
+                        
+                        td.summary{
+                            font-size:12px;
+                            font-weight:normal;
+                            text-align:left;
+                            padding-top:2px;
+                        }
+                        
+                        .sectionLabel {
+                            font-weight:bold;
+                            color: #1f5995;
+                            font-size:14px;
+                            padding-left:5px;
+                        }
+                        
+                        .subSectionLabel {
+                            font-size:12px;
+                            font-style:italic;
+                            padding-bottom:10px;
+                            color: #1f5995;
+                        }
+                        
+                        .status {
+                            padding-left:20px;
+                            width:760px;
+                            padding-top:25px;
+                            font-size:12px;
+                        }
+                        
+                        .status td {
+                            vertical-align:top;
+                        }
+                        
+                        .status td.label {
+                            padding-right:10px;
+                            padding-top:2px;
+                        }
+                    </style>
+                    
+                    <apex:variable var="details" value="{!detailStatuses}"/>
+                    <apex:outputPanel rendered="{! NOT(ISBLANK(RebateStatus))}">
+                        
+                        <table class="rebate">
+                        <tbody>
+                            <tr>
+                                <td class="label" width="400" style="text-align:left">
+                                    Rebate # <apex:outputText value="{!RebateNumber}"/> submitted on&nbsp;
+
+                                          <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                            <apex:param value="{!RebateDate}" /> 
+                                          </apex:outputText>
+                                </td>
+                                <td class="label">
+                                    Total Rebate Amount: <span style="color:black"><apex:outputText value="${!TEXT(RebateAmount)}"/></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel rendered="{! NOT(ISNULL(details)) }">
+                        <div class="sectionLabel">Line Items</div>
+                        <table class="detail">
+                            <tr>
+                                <th>Category</th>
+                                <th>Product</th>
+                                <th>Status</th>
+                                <th>Rebate Amount</th>
+                                <th>Qty.</th>
+                                <th>Ext. Amount</th>
+                                <th>Paid Date</th>
+                            </tr>
+                            <apex:repeat var="d" value="{!details}">
+                                <tr>
+                                    <td>{!d.MeasureCategory}</td>
+                                    <td>
+                                        <apex:outputPanel rendered="{!ISBLANK(d.Manufacturer)}">
+                                            <span style='font-style:italic;font-size:85%'>unspecified manufacturer&nbsp;</span>
+                                        </apex:outputPanel>
+                                        <apex:outputText rendered="{!NOT(ISBLANK(d.Manufacturer))}" escape="false" value="{!d.Manufacturer}&nbsp;" />
+                                        
+                                        <apex:outputPanel rendered="{!ISBLANK(d.ModelNumber)}">
+                                            <span style='font-style:italic;font-size:85%'>unspecified model</span>
+                                        </apex:outputPanel>
+                                        <apex:outputText rendered="{!NOT(ISBLANK(d.ModelNumber))}" value="{!d.ModelNumber}" />
+                                    </td>
+                                    <td>{!d.Status}</td>
+                                    <td><apex:outputText value="${!TEXT(d.PayableMeasureAmount)}" /></td>
+                                    <td><apex:outputText value="{!TEXT(d.Quantity)}" /></td>
+                                    <td><apex:outputText value="${!TEXT(d.PayableAmount)}" /></td>
+                                    <td>
+                                        <apex:outputPanel rendered="{! 'paid' == d.Status }">
+                                          <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                            <apex:param value="{!d.CheckMailDate}" /> 
+                                          </apex:outputText>
+                                        </apex:outputPanel>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                        </table>
+                        <div style="clear:both;"></div>
+                        
+                        <div class="status">
+                          <div class="subSectionLabel">Status Definitions</div>
+                          <table>
+                            <apex:repeat var="sc" value="{!statusCodes}">
+                              <tr>
+                                <apex:outputPanel rendered="{! NumStatusCodes > 1 }">
+                                  <td class="label" style="color:#000">
+                                    <apex:outputText value="{!sc}" />
+                                  </td>
+                                </apex:outputPanel>
+                                <td class="summary">
+                                  <apex:outputText value="{!statusMessages[sc]}" escape="false"/>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                          </table>        
+                        </div>
+                        <div style="clear:both;"></div>
+                        <div style="margin:30px 0px 30px;border-bottom:2px solid #F58025"></div>
+                    </apex:outputPanel>
+                    
+                    <apex:form id="rebateForm"> <!-- rendered="{! NOT(ISNULL(STATUS)) }" -->
+                    
+                    <h2 style="padding-bottom:10px">Enter your existing rebate number as is shown on your printed copy of your rebate along with your zipcode of your mailing address</h2>
+                    <apex:messages style="color:red"/>
+                    <apex:outputText value="{!NoResultsText}" rendered="{! NoResultsReturned }" escape="false" styleClass="error" />
+                    <apex:inputHidden value="{!FormCode}" id="FormCode"/>
+                    <table class="formtable rounded-top"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr><th colspan="3" style="border-radius:7px 7px 0px 0px; -webkit-border-radius:7px 7px 0px 0px; -moz-border-radius:7px 7px 0px 0px"><span class="text">Rebate Information</span></th></tr>
+                            <tr><td>Rebate Application Number</td><td><apex:inputText id="rebateNumberTxt" value="{!RebateNumber}" maxlength="14" size="14" tabindex="1" />
+                                <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="error" title="Please enter your Rebate Number" styleClass="error-icon" id="rebateNumberTxtErr" style="padding-left:10px;{!StyleRebateNumber}" />
+                            </td></tr>
+                            <tr><td>Mailing Zipcode</td><td><apex:inputText id="zipCodeTxt" value="{!PostalCode}" maxlength="10" size="14" tabindex="2" />
+                                <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="error" title="Please enter your Mailing Zipcode" styleClass="error-icon" id="zipCodeTxtErr" style="padding-left:10px;{!StylePostalCode}" />
+                            </td></tr>
+                        </tbody>
+                    </table>
+                        
+                    <div style="margin-top:10px; float:right">
+                        <apex:CommandButton action="{!findRebate}" value="Find Rebate" styleclass="button" />
+                    </div>
+                    <div style="clear:right"></div>
+                    </apex:form>
+                </div>
+            </div>
+			<div id="footer">
+				<img src="{!URLFOR($Resource.EFIStandard, 'images/powered_by_efi_sm.png')}" id="efi-logo" alt="Powered by EFI"/>
+        	</div>
+        </div>
+    </body>
+</apex:page>

@@ -1,0 +1,83 @@
+<!--
+    CEV:2012.09.04::A unified view of a rebate application.  Currently used solely to generate a PDF from in order to store 
+        in a document repository as an electronic "paper" copy of the users submission
+-->
+<apex:page controller="RebateApplication" tabStyle="Rebate__c">
+    
+    <apex:pageBlock title="{!pdxProgram} - {!rebate.RebateNumber__c}">
+    
+        <table width="100%" class="list" cellpadding="0" cellspacing="0" style="margin-bottom:10px">
+          <thead class="rich-table-thead"> 
+            <tr class="headerRow">
+                <th>Account Number</th>
+                <th>Force Rebate Number</th>
+                <th>Program</th>
+                <th>Rebate Status</th>
+            </tr>
+          </thead>
+          <tr>
+            <td><apex:outputField value="{!contact.AccountNumber__c}" /></td>
+            <td><apex:outputField value="{!rebate.RebateNumber__c}" /></td>
+            <td><apex:outputText value="{!pdxProgram}" /></td>
+            <td><apex:outputField value="{!rebate.RebateStatusMM__c}" /></td>
+          </tr>
+        </table>
+            
+        <apex:pageBlockSection title="Customer Information">
+            <apex:outputField value="{!contact.FirstName}" />
+            <apex:outputField value="{!contact.LastName}" />
+            <apex:outputField value="{!contact.ServiceAddress1__c}" />
+            <apex:outputField value="{!contact.ServiceAddress2__c}" />
+            <apex:outputField value="{!contact.ServiceCity__c}" />
+            <apex:outputField value="{!contact.ServiceState__c}" />
+            <apex:outputField value="{!contact.ServiceZipcode__c}" />
+            
+            <apex:outputText value="" />
+            <apex:outputField value="{!contact.homePhone}" />
+            <apex:outputField value="{!contact.email}" />
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection title="Shipping Information">
+            <apex:outputField value="{!rebate.MailingFirstName__c}" />
+            <apex:outputField value="{!rebate.MailingLastName__c}" />
+            <apex:outputField value="{!rebate.MailingAddress1__c}" />
+            <apex:outputField value="{!rebate.MailingAddress2__c}" />
+            <apex:outputField value="{!rebate.MailingCity__c}" />
+            <apex:outputField value="{!rebate.MailingState__c}" />
+            <apex:outputField value="{!rebate.MailingZipcode__c}" />
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection title="Survey Information">
+            <apex:repeat value="{!surveys}" var="s">
+                <apex:outputField value="{!s.ColumnName__c}" />
+                <apex:outputField value="{!s.Answer__c}" />
+            </apex:repeat>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection Title="Rebate/Payment Information">
+            
+            <apex:outputField value="{!rebate.PurchaseDate__c}" />
+            <apex:outputText value="" />
+            <apex:outputField value="{!rebate.StoreName__c}" />
+            <apex:outputText label="Address" value="{! rebate.StoreAddress1__c & IF(ISBLANK(rebate.StoreAddress2__c), '', ', ') & rebate.StoreAddress2__c}" />
+            <apex:outputField value="{!rebate.StoreCity__c}" />
+            <apex:outputField value="{!rebate.StoreState__c}" />
+            <apex:outputField value="{!rebate.StoreZipcode__c}" />
+            <apex:outputField value="{!rebate.CreatedDate}" label="Force Received Date"/>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection title="Rebate Detail" columns="1">
+        
+        <apex:pageBlockTable value="{!details}" var="d">
+            <apex:column headerValue="Item #" value="{!d.MeasureCode__c}" />
+            <apex:column value="{!d.Quantity__c}" />
+            <apex:column value="{!d.AmountTendered__c}" />
+            <apex:column value="{!d.MeasureRebateAmount__c}" />
+            <apex:column value="{!d.ModelNumber__c}" />
+            <apex:column value="{!d.Manufacturer__c}" />
+            <apex:column value="{!d.DetailStatus__c}" />
+        </apex:pageBlockTable>
+        </apex:pageBlockSection>
+    
+    </apex:pageBlock>
+</apex:page>

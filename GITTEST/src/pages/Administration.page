@@ -1,0 +1,56 @@
+<apex:page controller="Administration">
+  <apex:form >
+    <apex:pageBlock title="Admin Functions">
+      <apex:messages style="color:red"/>
+      <apex:pageBlockSection columns="1" title="Utilities">
+        <apex:pageBlockSectionItem >
+          <apex:commandButton action="{!CleanModels}" value="Clean Models"/>
+          <apex:outputLabel value="Uses the values in the DataCleanup object to update the model's manufacturer"></apex:outputLabel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:commandButton action="{!BuildManufacturers}" value="Build Manufacturers"/>
+          <apex:outputLabel value="Uses the model table to build this list of Manufacturers and then the FormXModel table to build the FormXManufacturer table"></apex:outputLabel>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:commandButton action="{!SendStatusEmails}" value="Send Status Emails"/>
+          <apex:outputLabel value="Sends all queued status emails"></apex:outputLabel>
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+      <apex:pageBlockSection columns="2" title="Delete SGE Rebates">
+        <apex:inputText value="{!emailAddress}" label="Email" />
+        <apex:pageBlockSectionItem >
+          <apex:commandButton action="{!DeleteSgeRecords}" value="Delete Contact's SGE Records"/>
+          <apex:outputLabel value="Deletes all SGE records whose Contact record matches the email address"></apex:outputLabel>
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>
+      <apex:pageBlockSection columns="2" title="Clone Form">
+        <apex:inputText value="{!sourceFormCode}" label="Source Form Code" />
+        <apex:pageBlockSectionItem />
+        <apex:inputText value="{!targetClientCode}" label="Target Client Code" />
+        <apex:inputText value="{!targetFormCode}" label="Target Form Code" />
+        <apex:inputCheckbox value="{!mergeForm}" label="Target Form Exists" />
+        <apex:inputCheckbox value="{!overwriteForm}" label="Overwrite Target Form" />
+        
+        <apex:inputCheckbox value="{!copyLimits}" label="Copy History Limits" />
+        <apex:inputCheckbox value="{!overwriteLimits}" label="Delete Existing History Limits" />
+        <apex:inputCheckbox value="{!copyMeasures}" label="Copy Measures" />
+        <apex:inputCheckbox value="{!overwriteMeasures}" label="Delete Existing Measures" />
+        <apex:inputCheckbox value="{!copyQuestions}" label="Copy Survey Questions" />
+        <apex:inputCheckbox value="{!overwriteQuestions}" label="Delete Existing Survey Questions" />
+        <apex:inputCheckbox value="{!copyStores}" label="Copy Form X Stores" />
+        <apex:inputCheckbox value="{!overwriteStores}" label="Delete Existing Stores" />
+        <apex:inputCheckbox value="{!copyModels}" label="Copy Form X Models"/>
+        <apex:inputCheckbox value="{!overwriteModels}" label="Delete existing Form X Models" />
+        <apex:inputCheckbox value="{!copyReports}" label="Copy Custom Reports"/>
+        <apex:inputCheckbox value="{!overwriteReports}" label="Delete existing Custom Reports" />
+        <apex:inputCheckbox value="{!copyFormParams}" label="Copy Form Params" />
+        <apex:inputCheckbox value="{!overwriteFormParams}" label="Delete Existing Form Parameters" />
+        <apex:inputCheckbox value="{!copyFormFields}" label="Copy Form Fields" />
+        <apex:inputCheckbox value="{!overwriteFormFields}" label="Delete Existing Form Fields" />
+        <apex:inputCheckbox value="{!copyFormLists}" label="Copy Form Lists" />
+        <apex:inputCheckbox value="{!overwriteFormLists}" label="Delete Existing Form Lists" />
+      </apex:pageBlockSection>
+      <apex:commandbutton action="{!CloneForm}" value="Clone Form" />
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

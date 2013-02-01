@@ -1,0 +1,12 @@
+<apex:page controller="ReportLauncher" cache="true" contentType="text/csv#{!reportLabel}.csv; charset=utf-8" language="en-US">
+<apex:variable var="rs" value="{!ResultSet}"/>
+  <apex:repeat var="s" value="{!rs.sections}">
+  	{!s.sectionName}
+	{!s.columnNames}
+	<apex:repeat var="row" value="{!s.rows}">
+	{!row}
+	</apex:repeat>
+	,
+	,
+  </apex:repeat>
+</apex:page>

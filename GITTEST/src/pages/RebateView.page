@@ -1,0 +1,48 @@
+<!--
+    Overrides the standard view page for a rebate to show the customized Rebate Document section that provides for direct downloading of
+        the rebate document from its repository.  
+-->
+<apex:page standardController="Rebate__c" extensions="RebateView" id="page">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript">
+        $(document).ready( function(){
+            //-- move to bottom of related item list -- above more/less
+            $('#page\\:rebateDocumentListForm').insertAfter($('div:last[class=bRelatedList]'));
+        });
+    </script>
+  </head>
+  <body>
+    <apex:detail relatedList="true" title="true" id="rebateDetailBlock"/>
+    <apex:form id="rebateDocumentListForm">
+    <apex:pageBlock id="rebateDocumentBlock" title="Rebate Documents">
+      <apex:facet name="header">
+        <table><tr>
+          <td class="pbTitle"><h3 id="a06K0000000SYjp_00NK0000000iVet_title">Rebate Documents</h3></td>
+          <td style=""><input value="New Rebate Document" class="btn" name="new00NK0000000iVet" title="New Rebate Document" type="button" onclick="window.location.href = '/a0x/e?retURL=/{!rebate__c.id}';"/></td>
+        </tr></table>
+      </apex:facet>
+      
+      <apex:pageBlockTable value="{!RebateDocumentList}" var="d">
+        <apex:column headerValue="Action" width="70px">
+          <a class="actionLink" href="/{!d.RebateDocumentId}/e?retURL=/{!Rebate__c.id}">Edit</a>
+          &nbsp;|&nbsp;
+          <apex:commandLink action="{!deleteRecord}" rerender="rebateDocumentBlock" value="Delete" styleClass="actionLink">
+            <apex:param value="{!d.RebateDocumentId}" name="rebateDocumentId" assignTo="{!rebateDocumentId}"/>
+          </apex:commandLink>
+          
+        </apex:column>
+        <apex:column headerValue="File Name"><a href="/{!d.RebateDocumentId}">{!d.OriginalFileName}</a></apex:column>
+        <apex:column value="{!d.fileSize}" headerValue="File Size"/>
+        <apex:column value="{!d.Repository}" headerValue="Repository"/>
+        <apex:column value="{!d.Project}" headerValue="Project"/>
+        <apex:column headerValue="External Link">
+          <apex:commandLink action="{!viewLink}" value="{!d.externalUid}" styleClass="actionLink" target="_blank">
+            <apex:param value="{!d.RebateDocumentId}" name="rebateDocumentId" assignTo="{!rebateDocumentId}" />
+          </apex:commandLink>
+        </apex:column>
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+    </apex:form>
+  </body>
+</apex:page>

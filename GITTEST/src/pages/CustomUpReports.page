@@ -1,0 +1,50 @@
+<apex:page controller="CustomUpReportCntrl">
+  <head>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+  	<script type="text/javascript">
+  		$(document).ready( function(){
+  			$('.reportlink').click( function(evt){
+  				evt.preventDefault();
+  				evt.stopPropagation();
+  				var year = $("[id$='InvoiceYear']").val();
+  				var dateString = $("[id$='InvoiceDate']").val();
+  				window.open($(this).attr('href')+"&InvoiceYear="+(year ? year : "")+"&InvoiceDate="+(dateString ? dateString : ""), "_blank");
+  			});
+  		});
+  	</script>
+  </head>
+  <apex:form >
+    <apex:pageBlock title="Custom Reports">
+      <apex:messages />
+      <apex:pageBlockSection title="Invoice Date Filter" collapsible="false">
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Invoice Year"/>
+          <apex:selectList value="{!Year}" size="1" id="InvoiceYear">
+          	<apex:actionSupport event="onchange" rerender="InvoiceDate"/>
+            <apex:selectOptions value="{!Years}" />
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Invoice Date"/>
+          <apex:selectList value="{!InvoiceDate}" size="1" id="InvoiceDate">
+            <apex:selectOptions value="{!InvoiceDates}" />
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+      </apex:pageBlockSection>
+      <apex:repeat var="s" value="{!Reports}">
+        <apex:pageBlockSection title="{!s.Name}">
+          <apex:repeat var="i" value="{!s.items}">
+            <apex:pageBlockSectionItem ><a class='reportlink' href="{!i.reportPath}" target="_csvreport">{!i.reportName}</a></apex:pageBlockSectionItem>
+          </apex:repeat>
+        </apex:pageBlockSection>
+      </apex:repeat>
+      <!-- apex:pageBlockSection title="Reports" collapsible="true">
+        <apex:repeat var="r" value="{!accountReports}">
+          <apex:pageBlockSectionItem ><a class="reportlink" href="/apex/{!r.ApexClassName__c}" target="_csvreport">{!r.Name}</a></apex:pageBlockSectionItem>
+        </apex:repeat>
+      </apex:pageBlockSection-->
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

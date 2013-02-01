@@ -1,0 +1,846 @@
+<apex:page id="SCL2012RF" showHeader="false" standardStyleSheets="false" 
+    action="{!initializeSession}" controller="FormSCL2012RF" cache="false" expires="0">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+        <title>Seattle City Refrigerator Rebate Form</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+        <script src="{!URLFOR($Resource.SCL2012, 'js/jquery.tooltip.js')}" type="text/javascript" language="javascript"></script>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <!-- 
+        <link href="{!URLFOR($Resource.SCL2012, 'css/style.css')}" rel="stylesheet" type="text/css" />
+         -->        
+        <style type="text/css" media="all">
+            body { font-family:Arial, Helvetica, sans-serif;  color:#333; background-color:#333; margin:0px; }
+            div {  }
+            h1 { font-size:20px; font-weight:bold; color:#fff; border-top:33px #f58025 solid; margin-top:20px;  }
+            h1 span { display:block; margin-top:-28px; padding-left: 40px; }
+            h1 img { display:none; padding-left:30px;  }
+            h2 { font-size:14px;  }
+            p { margin:0px 0px 5px 0px; }
+            .orange { color:#f58025; font-weight:bold; }
+            .orange .normal { font-weight:normal; color:#000; display:inline; }
+            #container { width:895px; margin:0px auto; padding:0px 0px; background-color:#fff;  }
+            .header { background-color:#8dc63f; height:100px; padding-top:15px;  }
+            .scl-header { width:720px; float:left; padding-top:20px; }
+            .efi-logo { float:right; height:95px; padding-top:20px; background-color:#fff; }
+            .efi-logo img {width: 50%; }
+            .scl-header .text { margin:20px 40px;  }
+            #main {  }
+            #content-top { color:#000; font-size:12px; position:relative;   }
+            #content-top .highlight { background-color:#fae62e; padding:5px; color:#333; margin:5px 0px; }
+            #content-top .image { float:left; padding-right:20px; }
+            #content-top .text { margin:20px 40px; }
+            #content-top .mailto { margin-top:10px; }
+            #content-top .left { float:left; }
+            #content-top .mailto.right { margin-left:300px; }
+            #content-main  { margin:20px 40px; background-color:#fff; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;
+                border-radius: 5px 5px 5px 5px; clear:both; }
+            #content-main div { margin:0px 0px; }
+            /* form elements */
+            form { font-size:.875em; }
+            .formtable { width:100%; font-size:1em; border-left:1px #f58025 solid; }
+            .formtable th { background-color:#f58025; color:#fff; font-size:13px; text-transform:uppercase; text-align:left; padding:2px 5px 0px 5px; border-top:25px #f58025 solid; }
+            .formtable th img { display:none; }
+            .formtable th span { display:block; margin-top:-21px; }
+            .formtable td { padding:3px 5px; border-bottom:1px #f58025 solid; border-right:1px #f58025 solid; vertical-align:top; }
+            .formtable td.nopadding { padding:0px; }
+            .formtable table td { border:none; }
+            fieldset { border:none; padding:15px 0px 15px 0px; border-top:0px #2fb457 solid; margin:0px; }
+            label { display:inline-block; width:auto; vertical-align:inherit; text-align:left; padding-right:10px; }
+            label.autowidth { width:auto; }
+            form span { display:inline-block; border-bottom:0px #333 solid;  }
+            form span.noborder, form span .noborder, form .noborder span, form .noborder, td.noborder { border-width:0px; }
+            td.noborder.right { border-right-width:1px; }
+            input { font-family:"Courier New", Courier, monospace; }
+            input, select { color:#1f5995; }
+            input[type="submit"] { font-family:Arial, Helvetica, sans-serif; }
+            input[type="text"] {  border:none; border-bottom:0px #333 solid; font-size:1em; width:auto; background-color:#e6edfb; font-weight:bold;  }
+            select, select option { font-weight:bold; background-color:#FFFFFC;  }
+            input:focus { background-color:#ccc; }
+            .longtext, .longtext input[type="text"] { width:28em; }
+            .mediumtext, .mediumtext input[type="text"] { width:18em; }
+            .mediumshorttext, .mediumshorttext input[type="text"] { width:8em; }
+            .shorttext, .shorttext input[type="text"] { width:3em; }
+            #tooltip { position: absolute;  z-index: 3000; border: 1px solid #111; background-color: #EEEEEB; padding: 5px; opacity: 0.85; font-size:11px;  }
+            #tooltip h3 { font-size:11px; margin:0px; }
+            .error-icon { visibility:visible; position:absolute; margin:3px 0px 0px 3px; }
+			.question-icon { visibility:visible; position:absolute; cursor:pointer; margin-left:20px; }
+            .alwaysblack {color: black; }
+            .printonly { display:none; }
+            .small { font-size:10px; }
+            .shaded td { background-color:#ffefe1; }
+             #content-main .submitbutton { 
+				background: #296737; /* for non-css3 browsers */
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8DC63F', endColorstr='#527424'); /* for IE */
+				background: -webkit-gradient(linear, left top, left bottom, from(#8DC63F), to(#527424)); /* for webkit browsers */
+				background: -moz-linear-gradient(top,  #8DC63F,  #527424); /* for firefox 3.6+ */ 
+				width:300px; text-align:center; padding:7px; margin:20px 0px;
+				color:#fff; text-decoration:none; font-size:18px; font-weight:normal; z-index:3; display:block;
+				border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;
+				border: 1px solid #527424;
+				cursor:pointer;
+				-moz-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+				-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+				box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+				position:relative;
+				text-shadow: 0px -1px 1px #000;
+				
+			}
+			#content-main .submitbutton::after {
+				background: none;
+				border: 3px solid #E2E6CF;
+				-moz-border-radius: 15px;
+				-webkit-border-radius: 15px;
+				border-radius: 15px;
+				content: "";
+				position: absolute;
+				top: -4px;
+				right: -4px;
+				bottom: -4px;
+				left: -4px;
+			}
+			#content-main .submitbutton:hover { background:#527424; }
+			#content-main .submitbutton.disabled, #content-main .submitbutton.disabled:hover { background:#999; cursor:text; border-color:#999; text-shadow:none; }
+            input.address-field { color:#999; font-weight:normal; font-style:italic; }
+            input.address-field.entered { color:#1f5995; font-weight:bold; font-style:normal; }
+            .shaded .screenonly { color:#999; font-style:italic }
+            .inline { display:inline-block; }
+            #selstorediv div, #manstorediv div { padding:2px 0px; }
+            #need-help { position:absolute; padding:5px; top:5px; right:20px; background-color:#1783C5; font-weight:bold; color:#fff; font-style:italic; border:none; cursor:pointer; }
+            .scl-dialog { display:none; }
+            .ui-dialog-titlebar { background-color:#8DC63F; background-image:none; color:#fff; border-color:#8DC63F }
+            .ui-dialog-content { padding:1em; }
+            .printonly { display:none; }
+            .ui-widget-overlay { opacity:.8; filter:Alpha(Opacity=80); }
+            #footer { background-color:#fff; margin:0px; padding-bottom:20px; text-align:right; }        
+			#footer #efi-logo { display:inline-block; margin-right:40px; }        
+        </style>
+        <style media="print">
+            body { background-color:#fff; }
+            #container .header { padding:0px; height:20px; border-top:70px #8dc63f solid; position:relative; }
+            #container .header .logo { position:absolute; top:-65px; }
+            #container .header .logo.efi { right:20px; }
+            .formtable th { border-top:16px #F58025 solid; }
+            .formtable th img { display:block; margin-top:-17px; max-width:480pt; }
+            .formtable th span, h1 span { display:none; }
+            .formtable td { padding:1px 5px; }
+            .printonly { display:block !important; }
+            .pagebreak-after { page-break-after:always; }
+            .pagebreak-before { page-break-before:always; }
+            #checklist { width:600px; margin:2em auto; }
+            #checklist .text { margin:20px; }
+            #checklist p { margin-bottom: 10px; }
+            #checklist li { list-style:none; margin-bottom:4px; }
+            #checklist .scl-header { width: 400px; }
+            .error-icon, .question-icon, .button, #content-main .submitbutton { display:none !important; }
+            #need-help { display:none; }
+            input[type="text"] { background-color:#fff; }
+            .screenonly { display:none; }
+            h1, h2, #content-main, #content-top .text, .scl-header { margin: 0px; padding:0px; }
+            h1 img { display:block; margin-top: -20px; }
+            h1 { margin-bottom:5px; border-top:25px #F58025 solid }
+            input.address-field { visibility:hidden }
+            input.address-field.entered { visibility:visible; }
+            #footer { display:none; }
+            #container { width: 511pt; }
+            form, .formtable, input[type="text"], select, h2 { font-size:8pt !important; }
+            #content-top, .small { font-size:6pt !important}
+            .logo img { max-width:250pt; }
+            img { max-width:480px; }
+        </style>
+
+        <script>
+            $(function() {
+                $( ".datefield" ).datepicker();
+            });
+            $(document).ready(function(){ 
+                $('.error-icon').tooltip({
+                    track: true,
+                    delay: 0,
+                    showURL: false,
+                    showBody: " - ",
+                    fade: 250
+                });
+            });
+        </script>
+        <script>
+            function checkMe() {
+                // be careful in defining local tests - FDC runs rampant on form as written
+                // so DOM ids and structure may be different from expected
+                // transfer purchase date to FDC field
+                if (document.getElementById("SCL2012RF:rebateForm:frmReadOnly").value == 'yes') return false;
+                document.getElementById("SCL2012RF:rebateForm:frmPurchDate").value = document.getElementById("purchase_date").value
+                document.getElementById("SCL2012RF:rebateForm:frmHaulawayDate").value = document.getElementById("haulaway_date").value
+                submitButton();
+                return true;
+            }
+            function runOnLoad() {
+                // if 'Other' status, redirect
+                var sobj = document.getElementById("SCL2012RF:rebateForm:frmStatus");
+                if (sobj.value == 'Other') {
+                    var nurl = window.location.href;
+                    window.location.href = nurl.replace("?Rebate","_Status?Rebate")+'&FormCode=SCLRF2012';
+                    return; 
+                }
+                // determine if there is any message to display (e.g. AJAX result)
+                var obj = document.getElementById("SCL2012RF:rebateForm:frmLoadMessage");
+                if (obj.value.length > 0) alert(obj.value);
+				// determine if there is an account number error/warning, show dialog
+				var eobj = document.getElementById("SCL2012RF:rebateForm:frmShowInvoice");
+				if (eobj.value == 'Yes') {
+					$('#frmAcctNumExampleDialog').dialog( { modal:true, width:750, });
+				}
+                // replace visible date from value exchanged w/server
+                document.getElementById("purchase_date").value = document.getElementById("SCL2012RF:rebateForm:frmPurchDate").value;
+                document.getElementById("haulaway_date").value = document.getElementById("SCL2012RF:rebateForm:frmHaulawayDate").value;
+
+                if (document.getElementById("SCL2012RF:rebateForm:manualStore").value == "Y") {
+                    storeCheck(true);
+                    document.getElementById("manualstorecb").checked = true;
+                    storeChanged(document.getElementById("SCL2012RF:rebateForm:frmStoreName").value);
+                } else {
+                    storeCheck(false);
+                    document.getElementById("manualstorecb").checked = false;
+                    var stobj = document.getElementById("SCL2012RF:rebateForm:selStoreId");
+                    if (stobj.selectedIndex == -1) {
+	                    storeChanged('');
+                    } else {
+	                    storeChanged(stobj.options[stobj.selectedIndex].text);
+                    }
+                }
+              
+                if (document.getElementById("SCL2012RF:rebateForm:manualModel").value == "Y") {
+                    modelCheck(true);
+                    document.getElementById("manualmodelcb").checked = true;
+                } else {
+                    modelCheck(false);
+                    document.getElementById("manualmodelcb").checked = false;
+                }
+
+                if (document.getElementById("SCL2012RF:rebateForm:manualHC").value == "Y") {
+                    hcCheck(true);
+                    document.getElementById("manualHCcb").checked = true;
+                } else {
+                    hcCheck(false);
+                    document.getElementById("manualHCcb").checked = false;
+                } 
+                      
+                var rn = document.getElementById("SCL2012RF:rebateForm:frmRebateNum").innerHTML;
+                if (rn.length < 2) {
+                    document.getElementById("refnumdiv").style.display = "none";
+                } else {
+                    document.getElementById("refnumdiv").style.display = "block";
+                }
+                
+                if (document.getElementById("SCL2012RF:rebateForm:frmReadOnly").value == "yes") {
+                    document.getElementById("purchase_date").disabled = true;
+                    document.getElementById("haulaway_date").disabled = true;
+                    document.getElementById("manualstorecb").disabled = true;
+                    document.getElementById("manualmodelcb").disabled = true;
+                    document.getElementById("manualHCcb").disabled = true;
+                    // document.getElementById("mailsamecb").disabled = true;
+                    jQuery('.submitbutton').addClass('disabled');
+                    
+                }
+                 
+                if (document.getElementById('SCL2012RF:rebateForm:frmAcctAddress1').value == '') { document.getElementById('SCL2012RF:rebateForm:frmAcctAddress1').value = 'Line 1'; } else if (document.getElementById('SCL2012RF:rebateForm:frmAcctAddress1').value != 'Line 1') { $('.address-field.frmAcctAddress1').addClass('entered'); }
+                if (document.getElementById('SCL2012RF:rebateForm:frmAcctAddress2').value == '') { document.getElementById('SCL2012RF:rebateForm:frmAcctAddress2').value = 'Line 2'; } else if (document.getElementById('SCL2012RF:rebateForm:frmAcctAddress2').value != 'Line 2') { $('.address-field.frmAcctAddress2').addClass('entered'); }
+                if (document.getElementById('SCL2012RF:rebateForm:frmMailAddress1').value == '') { document.getElementById('SCL2012RF:rebateForm:frmMailAddress1').value = 'Line 1'; } else if (document.getElementById('SCL2012RF:rebateForm:frmMailAddress1').value != 'Line 1') { $('.address-field.frmMailAddress1').addClass('entered'); }
+                if (document.getElementById('SCL2012RF:rebateForm:frmMailAddress2').value == '') { document.getElementById('SCL2012RF:rebateForm:frmMailAddress2').value = 'Line 2'; } else if (document.getElementById('SCL2012RF:rebateForm:frmMailAddress2').value != 'Line 2') { $('.address-field.frmMailAddress2').addClass('entered'); }
+                if (document.getElementById('SCL2012RF:rebateForm:frmStoreAddress1').value == '') { document.getElementById('SCL2012RF:rebateForm:frmStoreAddress1').value = 'Line 1'; } else if (document.getElementById('SCL2012RF:rebateForm:frmStoreAddress1').value != 'Line 1') { $('.address-field.frmStoreAddress1').addClass('entered'); }
+                if (document.getElementById('SCL2012RF:rebateForm:frmStoreAddress2').value == '') { document.getElementById('SCL2012RF:rebateForm:frmStoreAddress2').value = 'Line 2'; } else if (document.getElementById('SCL2012RF:rebateForm:frmStoreAddress2').value != 'Line 2') { $('.address-field.frmStoreAddress2').addClass('entered'); }
+               
+            }
+            function modelCheck(ischecked) {
+                // alert(ischecked);
+                var obj = document.getElementById("SCL2012RF:rebateForm:manualModel");
+                if (ischecked) {
+                    document.getElementById("selmandiv").style.display = "none";
+                    document.getElementById("selmoddiv").style.display = "none";
+                    document.getElementById("manmandiv").style.display = "block";
+                    document.getElementById("manmoddiv").style.display = "block";
+                    obj.value = "Y";
+                } else {
+                    document.getElementById("selmandiv").style.display = "block";
+                    document.getElementById("selmoddiv").style.display = "block";
+                    document.getElementById("manmandiv").style.display = "none";
+                    document.getElementById("manmoddiv").style.display = "none";
+                    obj.value = "N";
+                }
+            }
+            function storeCheck(ischecked) {
+                // alert(ischecked);
+                var obj = document.getElementById("SCL2012RF:rebateForm:manualStore");
+                if (ischecked) {
+                    jQuery('#mandp').append( $('#date-purchased') );
+                    document.getElementById("selstorediv").style.display = "none";
+                    document.getElementById("manstorediv").style.display = "block";
+                    obj.value = "Y";
+                } else {
+                    jQuery('#seldp').append( $('#date-purchased') );
+                    document.getElementById("selstorediv").style.display = "block";
+                    document.getElementById("manstorediv").style.display = "none";
+                    obj.value = "N";
+                }
+            }
+            function hcCheck(ischecked) {
+                var obj = document.getElementById("SCL2012RF:rebateForm:manualHC");
+                // alert(ischecked);
+                if (ischecked) {
+                    document.getElementById("selhcdiv").style.display = "none";
+                    document.getElementById("manhcdiv").style.display = "block";
+                    obj.value = "Y";
+                }
+                else {
+                    document.getElementById("selhcdiv").style.display = "block";
+                    document.getElementById("manhcdiv").style.display = "none";
+                    obj.value = "N";
+                }
+            }
+            
+            function hcSigCheck(box, ischecked) {
+            	if (box == 'A') {	
+            		if (ischecked) {
+            		//	document.getElementById("SCL2012RF:rebateForm:hcSigCheckA").value = 'Y';
+            			document.getElementById("SCL2012RF:rebateForm:hcSigCheckB").value = 'N'; // uncheck the other
+            			document.getElementById("hcSigCheckBcb").checked = false;
+            		} else {
+            		//	document.getElementById("SCL2012RF:rebateForm:hcSigCheckA").value = 'N';
+            			// no change to B if A is unchecked
+            		}
+            	} else {
+            		if (ischecked) {
+            			document.getElementById("SCL2012RF:rebateForm:hcSigCheckB").value = 'Y';
+            		//	document.getElementById("SCL2012RF:rebateForm:hcSigCheckA").value = 'N'; // uncheck the other
+            			document.getElementById("hcSigCheckAcb").checked = false;
+            		} else {
+            			document.getElementById("SCL2012RF:rebateForm:hcSigCheckB").value = 'N';
+            			// no change to A if B is unchecked
+            		}
+            	}
+            }
+                        
+            function storeChanged(name) {
+            	if ((name == '') || (name.toLowerCase().indexOf('sears') == -1)) {
+	            	// alert('Process: not Sears');
+                    document.getElementById("hcarea1").style.display = "table-row";
+                    document.getElementById("hcarea2").style.display = "table-row";
+                    document.getElementById("hcarea3").style.display = "table-row";
+                    document.getElementById("hcarea4").style.display = "table-row";
+            	} else {
+            		// alert('Process: Sears');
+                    document.getElementById("hcarea1").style.display = "none";
+                    document.getElementById("hcarea2").style.display = "none";
+                    document.getElementById("hcarea3").style.display = "none";
+                    document.getElementById("hcarea4").style.display = "none";
+            	}
+            }
+                        
+            function focusValue(id,val) {
+                if (document.getElementById("SCL2012RF:rebateForm:"+id).value == val) { 
+                    document.getElementById("SCL2012RF:rebateForm:"+id).value = ''; 
+                    $('.'+id).addClass('entered'); 
+                }
+                
+            }
+            
+            function blurValue(id,val) {
+                if (document.getElementById("SCL2012RF:rebateForm:"+id).value == '') { 
+                    document.getElementById("SCL2012RF:rebateForm:"+id).value = val; 
+                    $('.'+id).removeClass('entered'); 
+                }
+                
+            }
+            
+            function fieldEntered(id,val) {
+                if (document.getElementById("SCL2012RF:rebateForm:"+id).value != '' && document.getElementById("SCL2012RF:rebateForm:"+id).value != val) {
+                    $('.'+id).addClass('entered');
+                }
+                else { 
+                    $('.'+id).removeClass('entered');
+                }
+            }
+            
+            jQuery(document).ready(function($) {
+                jQuery('#need-help').click(function() {
+                    $('#help-dialog').dialog( { modal:true, width:500, });
+                });
+                jQuery('#seldp').append( $('#date-purchased') );
+                jQuery('.question-icon').click(function() {
+					$('#frmAcctNumExampleDialog').dialog( { modal:true, width:750, });
+				});
+            });
+            
+
+            
+        </script>
+    </head>
+    <body onload="runOnLoad();">
+        <div class="printonly pagebreak-after" id="checklist">
+            <div class="header">
+                <div class="scl-header">
+                    <div class="logo"><img src="{!URLFOR($Resource.SCL2012, 'images/scl-logo.png')}" alt="Seattle City Light" style="float:left;" /></div>
+                </div>
+                <div class="efi-logo"><img src="{!URLFOR($Resource.SCL2012, 'images/efi-logo.gif')}" alt="EFI"  /></div>
+            </div>
+            <div class="text">
+                <p>Thank you for submitting your Seattle City Light refrigerator rebate online.</p>
+                <p>In order to finalize your rebate application, please do the following:</p>
+                <ul>
+                    <li><input type="checkbox" readonly="readonly" /> Print and sign the application form.</li>
+                    <li><input type="checkbox" readonly="readonly" /> Attach a copy of your itemized receipt showing the rebated item. </li>
+                    <li><input type="checkbox" readonly="readonly" /> Attach a copy of your receipt showing proof of recycling, OR include a signature from the haul-away company. </li>
+                    <li><input type="checkbox" readonly="readonly" /> Provide the required serial number for your new appliance.</li>
+                    <li><input type="checkbox" readonly="readonly" /> Submit your application no later than 90 days after the purchase of your appliance.</li>
+                </ul>
+                <table>
+                	<tr>
+	                	<td style="padding-right:40px;">
+			                <p>Mail to:</p>
+			                <p>EFI &mdash; Seattle City Light RF Rebate<br />
+			                40 Washington St., Suite 2000<br />
+			                Westborough, MA 01581</p>   
+	                	</td>
+	                	<td style="vertical-align:top;">
+	                		<p>Questions?</p>
+	                		<p>Contact us at 1-888-562-0120</p>
+	                	</td>
+                	</tr>
+                </table>
+            </div>
+        </div>
+        <div id="container">
+            <div class="header">
+                    <div class="logo"><img src="{!URLFOR($Resource.SCL2012, 'images/scl_fr_header.png')}" alt="Refrigerator Rebate" style="float:left;" /></div>
+                    <div class="logo efi"><img src="{!URLFOR($Resource.SCL2012, 'images/scl_logo.png')}" alt="Seattle City Light" style="float:right;" /></div>
+            </div>
+            <div id="main">
+                <div id="content-top">
+                    <div id="need-help" class="screenonly">Need help?</div>
+                    <h1>
+                        <span>Get a $50 rebate on a qualified model when you recycle your old unit.</span>
+                        <img src="{!URLFOR($Resource.SCL2012, 'images/scl_header.png')}" alt="Get a $50 rebate on a qualified model when you recycle your old unit." />
+                    </h1>
+                    <div class="text">
+                        <h2 class="orange">To apply, follow these steps:</h2>
+                        <ol class="orange">
+                            <li><span class="normal"><strong>Your new refrigerator must be purchased between January 1, 2012 and December 31, 2012.</strong> Read the Terms and Conditions below 
+                            to ensure you qualify.</span></li>
+                            <li><span class="normal">Complete the rebate request application and attach a <strong>copy</strong> of itemized receipt. Receipt must include name of retailer, retailer 
+                            address, phone number, purchase date, price, product manufacturer and model number.</span></li>
+                            <li><span class="normal">You must provide documentation that the old unit has been recycled. Ask the haul-away company or drop-off site for a receipt and
+								attach it to this form. In the case where a receipt is not available, a signature from a representative of the haul-away company or drop-
+								off site is required. See signature field in form below. For more information about arranging recycling haul-away, please see Terms and
+								Conditions on back of this form.</span></li>
+                            <li><span class="normal">Sign and date the rebate form and send the completed form with itemized receipts postmarked <strong>within 90 days of purchase</strong> date to:
+                            </span></li>
+                            <div class = "normal">
+                                <div class="mailto left">
+                                    <p><span class="orange">Mail</span><br />
+                                    EFI &mdash; Seattle City Light RF Rebate<br />
+                                    40 Washington St., Suite 2000<br />
+                                    Westborough, MA 01581</p>
+                                </div>
+                                <div class="mailto right">
+                                    <p><span class="orange">For more information:</span><br />
+                                    Email: SeattleAppliances@efi.org<br />
+                                    Website: seattle.gov/appliances<br />
+                                    Questions? Call 1-888-562-0120</p>
+                                </div>
+                            </div>
+                        </ol>
+                    </div>
+                    <div id="help-dialog" class="scl-dialog" title="Need help?">For additional information or assistance in completing this online application, please contact our customer care center at 1-888-562-0120. We are open from 5 AM to 5 PM, Monday through Friday, and 5 AM to 2 PM on Saturdays.</div>
+                </div>
+                <div id="content-main">
+                    <h2>All information below is REQUIRED for processing.</h2>
+                    <apex:form id="rebateForm">
+                        <apex:actionFunction name="submitButton" action="{!actionCheckMe}" />
+                        <apex:inputHidden id="frmLoadMessage" value="{!frmLoadMessage}" />
+                        <apex:inputHidden id="frmReadOnly" value="{!frmReadOnly}" />
+          				<apex:inputHidden id="frmShowInvoice" value="{!frmShowInvoice}" />
+                        <apex:inputHidden id="frmStatus" value="{!frmStatus}" />
+                        <div id="refnumdiv" style="font-weight:bold;">
+                            <label>Reference #: </label>
+                            <span class="mediumshorttext noborder">
+                                <apex:outputText id="frmRebateNum" value="{!frmRebateNum}" styleClass="noborder"/>
+                            </span>
+                        </div>
+                        <table class="formtable"  cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr><th colspan="3"><span class="text">Customer Information</span><img src="{!URLFOR($Resource.SCL2012, 'images/cust_info.png')}" alt="customer information" /></th></tr>
+                            <tr>
+                                <td colspan="3" class="nopadding">
+                                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        <tr>
+                                            <td width="70%" style="border-right:1px #f58025 solid;">
+                                                <label>First</label>
+                                                <span  style="margin-right:20px;"><apex:inputText id="frmFirstName" value="{!frmFirstName}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="1" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmFirstNameMsg}" styleClass="error-icon" id="frmFirstNameErr" style="{!frmFirstNameMsgStyle}" />
+                                                <label>Last</label>
+                                                <span ><apex:inputText id="frmLastName" value="{!frmLastName}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="2" /></span>
+                                                <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="error" title="{!frmLastNameMsg}" styleClass="error-icon" id="frmLastNameErr" style="{!frmLastNameMsgStyle}" />
+                                            </td>
+                                            <td width="30%">
+                                                <label>Daytime Phone: </label>
+                                                <span><apex:inputText id="frmHomePhone" value="{!frmHomePhone}" disabled="{!disableDE}" 
+                                                maxlength="12" size="12" tabindex="3"  /></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Account/Installation Address: </label>
+                                    <span><apex:inputText id="frmAcctAddress1" value="{!frmAcctAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="4" styleClass="address-field frmAcctAddress1" onfocus="focusValue('frmAcctAddress1','Line 1')" onblur="blurValue('frmAcctAddress1','Line 1')" onchange="fieldEntered('frmAcctAddress1','Line 1')" /></span>
+                                    <span><apex:inputText id="frmAcctAddress2" value="{!frmAcctAddress2}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="5" styleClass="address-field frmAcctAddress2" onfocus="focusValue('frmAcctAddress2','Line 2')" onblur="blurValue('frmAcctAddress2','Line 2')" onchange="fieldEntered('frmAcctAddress2','Line 2')" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>City: </label>
+                                    <span ><apex:inputText id="frmAcctCity" value="{!frmAcctCity}" disabled="{!disableDE}" 
+                                    maxlength="25" size="25" tabindex="6" /></span>
+                                </td>
+                                <td width="25%">
+                                    <label>State:</label>
+                                    <span><apex:inputText id="frmAcctState" value="{!frmAcctState}" disabled="{!disableDE}" 
+                                    maxlength="2" size="2" tabindex="7" /></span>
+                                </td>
+                                <td width="25%">
+                                    <label> Zip:</label>
+                                    <span><apex:inputText id="frmAcctZip" value="{!frmAcctZip}" disabled="{!disableDE}" 
+                                    maxlength="10" size="10" tabindex="8" /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Mailing Address (if different): </label>
+                                    <span><apex:inputText id="frmMailAddress1" value="{!frmMailAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="9" styleClass="address-field frmMailAddress1" onfocus="focusValue('frmMailAddress1','Line 1')" onblur="blurValue('frmMailAddress1','Line 1')" onchange="fieldEntered('frmMailAddress1','Line 1')"  /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailAddress1Msg}" styleClass="error-icon" id="frmMailAddress1Err" style="{!frmMailAddress1MsgStyle}" />
+                                    <span><apex:inputText id="frmMailAddress2" value="{!frmMailAddress2}" disabled="{!disableDE}"  maxlength="25" size="25" tabindex="10" styleClass="address-field frmMailAddress2" onfocus="focusValue('frmMailAddress2','Line 2')" onblur="blurValue('frmMailAddress2','Line 2')" onchange="fieldEntered('frmMailAddress2','Line 2')"   /></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>City: </label>
+                                    <span><apex:inputText id="frmMailCity" value="{!frmMailCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="11" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailCityMsg}" styleClass="error-icon" id="frmMailCityErr" style="{!frmMailCityMsgStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label>State:</label>
+                                    <span><apex:inputText id="frmMailState" value="{!frmMailState}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="12" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailStateMsg}" styleClass="error-icon" id="frmMailStateErr" style="{!frmMailStateMsgStyle}" />
+                                </td>
+                                <td width="25%">
+                                    <label> Zip:</label>
+                                    <span><apex:inputText id="frmMailZip" value="{!frmMailZip}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="13" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmMailZipMsg}" styleClass="error-icon" id="frmMailZipErr" style="{!frmMailZipMsgStyle}" />
+                                </td>
+                             </tr>
+                             <tr>
+                                <td colspan="3">
+                                    <p>Your email address is required to receive rebate submission verification and status updates.</p>
+                                    <label style="clear:both">Email Address:</label>
+                                    <span><apex:inputText id="frmEmail"  value="{!frmEmail}" disabled="{!disableDE}" maxlength="50" size="50" tabindex="14" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmEmailMsg}" styleClass="error-icon" id="frmEmailErr" style="{!frmEmailMsgStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="error" title="{!frmEmailMsgRed}" styleClass="error-icon" id="frmEmailErrRed" style="{!frmEmailMsgStyleRed}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Seattle City Light Account Number:</label>
+                                    <span class="orange">1 &nbsp; &mdash; &nbsp; <apex:inputText id="frmAcctNumA" value="{!frmAcctNumA}" disabled="{!disableDE}" maxlength="9" size="9" tabindex="15" /> &nbsp; &mdash; &nbsp;
+                                    <apex:inputText id="frmAcctNumB" value="{!frmAcctNumB}" disabled="{!disableDE}" maxlength="7" size="7" tabindex="16" />
+                                    </span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/question-mark-off.png')}" alt="question" title="Click to view account number location in sample bill." styleClass="error-icon question-icon" id="frmAcctNumExample"  />
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmAcctNumMsg}" styleClass="error-icon" id="frmAcctNumErr" style="{!frmAcctNumMsgStyle}" />
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="warning" title="{!frmAcctNumMsgRed}" styleClass="error-icon" id="frmAcctNumErrRed" style="{!frmAcctNumMsgStyleRed}" />
+                                	<div id="frmAcctNumExampleDialog" class="scl-dialog" title="Account Number Example"><img src="{!URLFOR($Resource.SCL2012, 'images/scl_bill.jpg')}" alt="SCL Bill" /></div>
+                                	
+                                </td>
+                            </tr>
+                            <tr><th colspan="3"><span class="text">New Refrigerator Information</span><img src="{!URLFOR($Resource.SCL2012, 'images/new_fridge_info.png')}" alt="New Refrigerator Information" /></th></tr>
+                            
+                            <tr>
+                                <td colspan="3">
+                                    <p>Choose the state, then enter the city and choose the store from the list below: 
+                                    <input type="checkbox" id="manualstorecb" onclick="storeCheck(this.checked)" tabindex="17" style="display:inline-block; margin-left:10px;" /> If unlisted, check box to enter manually.
+                                    <apex:inputHidden id="manualStore" value="{!manualStore}" />
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div id="selstorediv">
+                                        <div style="float:left">
+                                            <label>Store State: </label>
+                                            <span>
+                                                <apex:selectList id="selState" value="{!selState}" disabled="{!disableDE}"  size="1" tabindex="18" >
+                                                    <apex:selectOptions value="{!stateList}" />
+                                                    <apex:actionSupport action="{!makeStoreList}" event="onchange" rerender="selStoreId" status="stateStatus"/>
+                                                </apex:selectList>
+                                            </span>
+                                            <span><apex:actionStatus id="stateStatus" styleClass="noborder" startText=" updating store list ..." stopText="" /></span>                              
+                                        </div>
+                                        <div style="margin-left:420px;">
+                                            <apex:actionRegion >
+                                                <label>Store City: </label>
+                                                <span>
+                                                    <apex:inputText id="selCity" value="{!selCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="19">
+                                                        <apex:actionSupport action="{!makeStoreList}" rerender="selStoreId,selCityErr" event="onchange" status="stateStatus" />
+                                                    </apex:inputText>
+                                                </span>
+                                                <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selCityMsg}" styleClass="error-icon" id="selCityErr" style="{!selCityMsgStyle}" />
+                                            </apex:actionRegion>
+                                        </div>
+                                        <div style="float:left; margin-right:20px; clear:both">
+                                            <label>Select Store: </label>
+                                            <span>
+                                                <apex:selectList id="selStoreId" value="{!selStoreId}" disabled="{!disableDE}"  size="1" tabindex="20" style="width: 300px;" onchange="storeChanged(this.options[this.selectedIndex].text)">
+                                                    <apex:selectOptions value="{!storeList}" />
+                                                </apex:selectList>
+                                            </span>
+                                            <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selStoreIDMsg}" styleClass="error-icon" id="selStoreIdErr" style="{!selStoreIDMsgStyle}" />
+                                        </div>
+                                        <div id="seldp" style="margin-left:420px;">
+                                            
+                                        </div>
+                                    </div>
+                                    <div id="manstorediv" style="display:none;">
+                                        <div style="float:left">
+                                            <label>Store Name: </label>
+                                            <span ><apex:inputText id="frmStoreName" value="{!frmStoreName}" disabled="{!disableDE}"  maxlength="30" size="30" tabindex="21"  onchange="storeChanged(this.value)"/></span>
+                                            <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreNameMsg}" styleClass="error-icon" id="frmStoreNameErr" style="{!frmStoreNameMsgStyle}" />
+                                        </div>
+                                        <div id="mandp" style="margin-left:420px;">
+                                            
+                                        </div>
+                                        <div>
+                                            <label>Store Address: </label>
+                                            <span><apex:inputText id="frmStoreAddress1" value="{!frmStoreAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="22" styleClass="address-field frmStoreAddress1" onfocus="focusValue('frmStoreAddress1','Line 1')" onblur="blurValue('frmStoreAddress1','Line 1')" onchange="fieldEntered('frmStoreAddress1','Line 1')" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreAddress1Msg}" styleClass="error-icon" id="frmStoreAddress1Err" style="{!frmStoreAddress1MsgStyle}" />
+                                            <span><apex:inputText id="frmStoreAddress2" value="{!frmStoreAddress2}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="23" styleClass="address-field frmStoreAddress2" onfocus="focusValue('frmStoreAddress2','Line 2')" onblur="blurValue('frmStoreAddress2','Line 2')" onchange="fieldEntered('frmStoreAddress2','Line 2')" /></span>
+                                        </div>
+                                        
+                                        <div style="float:left; clear:both">
+                                            <label>City: </label>
+                                            <span><apex:inputText id="frmStoreCity" value="{!frmStoreCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="24" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreCityMsg}" styleClass="error-icon" id="frmStoreCityErr" style="{!frmStoreCityMsgStyle}" />
+                                        </div>
+                                        <div style="margin-left:420px;">
+                                            <label>State:</label>
+                                            <span><apex:inputText id="frmStoreState" value="{!frmStoreState}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="25" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreStateMsg}" styleClass="error-icon" id="frmStoreStateErr" style="{!frmStoreStateMsgStyle}" />
+                                            <label> Zip:</label>
+                                            <span><apex:inputText id="frmStoreZip" value="{!frmStoreZip}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="26" /></span>
+                                            <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmStoreZipMsg}" styleClass="error-icon" id="frmStoreZipErr" style="{!frmStoreZipMsgStyle}" />
+                                        </div>
+                                    </div>
+                                    <div id="date-purchased">
+                                        <label>Date Purchased:</label>
+                                        <span><input type="text" name="purchase_date" id="purchase_date" class="datefield" maxlength="10" size="10" tabindex="27" /></span>
+                                        <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!frmPurchDateMsg}" styleClass="error-icon" id="frmPurchDateErr" style="{!frmPurchDateMsgStyle}" />
+                                        <apex:inputHidden id="frmPurchDate" value="{!frmPurchDate}" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <label>Choose the manufacturer and model from the lists below:</label>
+                                    <input type="checkbox" id="manualmodelcb" onclick="modelCheck(this.checked)" tabindex="28" />
+                                    If unlisted, check box to enter manually.
+                                    <apex:inputHidden id="manualModel" value="{!manualModel}" />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    
+                                    <div id="selmandiv" style="float:left; padding-right:40px;">
+                                        <label style="display:block">Manufacturer: </label>
+                                        <span>
+                                        <apex:selectList id="selBrand" value="{!selBrand}" disabled="{!disableDE}" size="1" tabindex="29" >
+                                            <apex:selectOptions value="{!brandList}" />
+                                            <apex:actionSupport event="onchange" rerender="selModelId" status="modelStatus"/>
+                                        </apex:selectList>
+                                        </span>
+                                        <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selBrandMsg}" styleClass="error-icon" id="SelBrandErr" style="{!selBrandMsgStyle}" />
+                                        <span style="display:inline-block; margin-left:40px;">
+                                            <apex:actionStatus id="modelStatus" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                        </span>
+                                    </div>
+                         
+                                    <div id="manmandiv" style="display:none; float:left">
+                                        <label style="display:block">Manufacturer: </label>
+                                        <span><apex:inputText id="frmBrand" value="{!frmBrand}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="30" /></span>
+                                        <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmBrandMsg}" styleClass="error-icon" id="frmBrandErr" style="{!frmBrandMsgStyle}" />
+                                    </div>
+                                    
+                                </td>
+                                <td>
+                                    <div id="selmoddiv">
+                                        <label>Model Number: </label>
+                                        <span>
+                                        <apex:selectList id="selModelId" value="{!selModelId}" disabled="{!disableDE}" size="1" tabindex="31" >
+                                            <apex:selectOptions value="{!modelList}" />
+                                        </apex:selectList>
+                                        </span>
+                                        <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!selModelIDMsg}" styleClass="error-icon" id="selModelIDErr" style="{!selModelIDMsgStyle}" />
+                                    </div>
+                                    <div id="manmoddiv" style="display:none;">
+                                        <label>Model Number: </label>
+                                        <span class="mediumshorttext"><apex:inputText id="frmModel" value="{!frmModel}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="32" /></span>
+                                        <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmModelMsg}" styleClass="error-icon" id="frmModelErr" style="{!frmModelMsgStyle}" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <label>Serial Number: </label>
+                                    <span><apex:inputText id="frmSerialNum" value="{!frmSerialNum}" disabled="{!disableDE}" maxlength="20" size="20" tabindex="33" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmSerialNumMsg}" styleClass="error-icon" id="frmSerialNumErr" style="{!frmSerialNumMsgStyle}" />
+                                </td>
+                            </tr>
+                            <tr><th colspan="3"><span class="text">Old Refrigerator Information</span><img src="{!URLFOR($Resource.SCL2012, 'images/old_fridge_info.png')}" alt="Old Refrigerator Information" /></th></tr>
+                            <tr>
+                                <td width="50%">
+                                    <label>Model Number: </label>
+                                    <span><apex:inputText id="frmExistModel" value="{!frmExistModel}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="34" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmExistModelMsg}" styleClass="error-icon" id="frmExistModelErr" style="{!frmExistModelMsgStyle}" />
+                                </td>
+                                <td colspan="2">
+                                    <label>Is your old refrigerator in working condition?</label>
+                                    <apex:selectList id="frmExistWorking" value="{!frmExistWorking}" disabled="{!disableDE}" tabindex="35" size="1" >
+                                        <apex:selectOption itemValue="" itemLabel="Select" />
+                                        <apex:selectOption itemValue="Y" itemLabel="Yes" />
+                                        <apex:selectOption itemValue="N" itemLabel="No" />
+                                    </apex:selectList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <p>Name of haul-away company or drop-off site: <span><input type="checkbox" id="manualHCcb" onclick="hcCheck(this.checked)" tabindex="36" /> If unlisted, check box to enter manually </span></p>
+                                    <apex:inputHidden id="manualHC" value="{!manualHC}" />
+                                    <div id="selhcdiv">
+                                        <apex:selectList id="selHC" value="{!selHC}" disabled="{!disableDE}"  size="1" tabindex="37" >
+                                            <apex:selectOptions value="{!hcList}" />
+                                        </apex:selectList>
+                                        <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmHaulawayCoMsg}" styleClass="error-icon" id="frmHaulawayCoErr" style="{!frmHaulawayCoMsgStyle}" />
+                                    </div>
+                                    <div id="manhcdiv" style="display:none">
+                                        <span><apex:inputText id="frmHaulawayCo" value="{!frmHaulawayCo}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="38" /></span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>Haul-away Date:</p>
+                                    <span><input type="text" name="haulaway_date" id="haulaway_date" class="datefield" maxlength="10" size="10" tabindex="39" /></span>
+                                    <apex:image value="{!URLFOR($Resource.SCL2012, 'images/warning-icon-red.png')}" alt="error" title="{!frmHaulawayDateMsg}" styleClass="error-icon" id="frmHaulawayDateErr" style="{!frmHaulawayDateMsgStyle}" />
+                                    <apex:inputHidden id="frmHaulawayDate" value="{!frmHaulawayDate}" />
+                                </td>
+                            </tr>
+                            <!--
+                            <tr>
+                            	<td colspan="3">
+                            		<input type="checkbox" id="hcSigCheckAcb" onclick="hcSigCheck('A',this.checked)" tabindex="40" />
+                            		<apex:inputHidden id="hcSigCheckA" value="{!hcSigCheckA}" />
+                            		I am enclosing a separate document with the 'haul-away' confirmation signature.
+                            	</td>
+                            </tr>
+                            -->
+                            <tr id="hcarea4">
+                            	<td colspan="3">
+                            		<input type="checkbox" id="hcSigCheckBcb" onclick="hcSigCheck('B',this.checked)" tabindex="41" />
+                            		<apex:inputHidden id="hcSigCheckB" value="{!hcSigCheckB}" />
+                            		I am enclosing a receipt which shows the haul-away information.
+                           		</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <table class="formtable" cellpadding="0" cellspacing="0" border="0">
+                            <tr id="hcarea1"><th colspan="3"><span class="text">For completion by representative of haul-away company / drop-off site <span style="font-weight:normal; text-transform:none; display:inline-block; margin:0px;">(required only if receipt not available)</span></span><img src="{!URLFOR($Resource.SCL2012, 'images/for_completion_text.png')}" alt="For completion by representative of haul-away company / drop-off site" /></th></tr>
+                            <tr id="hcarea2">
+                                <td colspan="3">
+                                    <label class="small">I certify that this appliance was removed from the grid (not resold or reused) and recycled, including the appropriate recycling of all CFCs.</label>
+                                </td>
+                            </tr>
+                            <tr class="shaded" id="hcarea3">
+                                <td colspan="2">
+                                    <label class="small" style="width:125px;">Representative Signature:</label>
+                                    <span class="screenonly">Signature required on printed hard copy.</span>
+                                </td>
+                                <td>
+                                    <label class="small">Date:</label>
+                                </td>
+                            </tr>
+                            <tr><th colspan="3"><span class="text">Acceptance of Terms &amp; Conditions</span><img src="{!URLFOR($Resource.SCL2012, 'images/acceptance.png')}" alt="Acceptance of Terms and Conditions" /></th></tr>
+                            <tr>
+                                <td colspan="3"><label class="small">I hereby certify that all information provided herein is true and correct. I have read all terms and conditions on the reverse side of this form and acknowledge
+                                and accept Seattle City Light’s right to inspect the installed refrigerator product listed on the attached receipt. I acknowledge that the Seattle City Lightsponsored
+                                rebate program is a limited offer and subject to the availability of funds, and that rebate amounts may be subject to change without notice.</label>
+                                </td>
+                            </tr>
+                            <tr class="shaded">
+                                <td colspan="2">
+                                    <label class="small" style="width:125px;">Customer Signature:</label>
+                                    <span class="screenonly">Signature required on printed hard copy.</span>
+                                </td>
+                                <td>
+                                    <label class="small">Date:</label>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <div class="submitbutton" onclick="checkMe()">
+                            <!-- 
+                            <apex:CommandButton action="{!actionCheckMe}" value="{!frmButtonLabel}" disabled="{!disableDE}" styleClass="button" onclick="return checkMe();" />
+                        	 -->
+                        	 {!frmButtonLabel}
+                        </div>
+                        
+                        <table class="formtable pagebreak-before">
+                            <tr><th><span class="text">Terms And Conditions</span><img src="{!URLFOR($Resource.SCL2012, 'images/terms_conditions.png')}" alt="Terms and Conditions" /></th></tr>
+                            <tr>
+                                <td>
+                                <p>Please refer to the following terms and conditions prior to signing acceptance on previous page:</p>
+                                <ul class="orange">
+                                    <li><span class="normal">You must be a customer of Seattle City Light and the installation address is in the Seattle City Light service area.</span></li>
+                                    <li><span class="normal">One rebate per household please.</span></li>
+                                    <li><span class="normal">This rebate request application must be postmarked within 90 days of the refrigerator purchase date.</span></li>
+                                    <li><span class="normal">The installed refrigerator must meet the following qualifications:</span>
+                                    <ul>
+                                        <li><span class="normal">New refrigerator must be purchased between Jan. 1, 2012 and Dec. 31, 2012.</span></li>
+                                        <li><span class="normal">ENERGY STAR rated</span></li>
+                                        <li><span class="normal">Minimum of 9 cubic feet (compact refrigerators are not eligible).</span></li>
+                                        <li><span class="normal">You must provide proof of recycling by submitting a receipt from the retailer, 
+                                        haul-away company or drop-off site. In the case where a receipt is not available, a signature from 
+                                        a representative of the haul-away company or drop-off site is required. Many retailers provide 
+                                        recycling haul-away services free of charge or for a minimal fee upon delivery of the new unit. 
+                                        If your local retailer does not provide this service, visit <strong>1800recycle.wa.gov</strong> for a list of 
+                                        recycling providers.</span></li>
+                                    </ul>
+                                    </li>
+                                    <li><span class="normal">All information must be complete, and <strong>copies</strong> of itemized purchase receipt and proof of 
+                                    recycling receipt must be enclosed to be considered for payment.</span></li>
+                                    <li><span class="normal">This rebate may not be combined with Seattle City Light’s $30 refrigerator recycling rebate.</span></li>                           
+                                </ul>
+                                <p class="small">
+                                Seattle City Light (“SCL”) will review the rebate request application (“Request”) and determine whether the purchased refrigerator product qualifies for the rebate. If the product qualifies, SCL will mail the appropriate rebate within (60) days of SCL’s receipt of the Request. Only one rebate is available per home. By signing this Request and accepting any rebate, Owner (1) represents and warrants that the refrigerator product has been installed in compliance with all applicable federal, state and local laws, codes, and ordinances, including all building energy and accessibility codes and in compliance with the procedures specified by SCL; and (2) acknowledges and agrees that: (a) SCL is a sponsor of the rebate program only and has not and does not make any representations or promises with respect to the refrigerator product, the energy consumption, and/or energy savings from the installed refrigerator product; and (b) that SCL MAKES NO IMPLIED OR EXPRESS WARRANTIES REGARDING THIS PROGRAM, ITS POLICIES, PROCEDURES, INSPECTIONS AND/OR ANY OWNER INSTALLED REFRIGERATOR PRODUCT, AND SPECIFICALLY DISCLAIMS ANY WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+                                </p>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                    </apex:form>
+                </div>
+            </div>
+            <div id="footer">
+        		<img src="{!URLFOR($Resource.SCL2012, 'images/efi_logo.png')}" id="efi-logo" alt="Powered by EFI"/>
+        	</div>
+        </div>
+    </body>
+</apex:page>

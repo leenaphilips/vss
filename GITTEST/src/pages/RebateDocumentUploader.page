@@ -1,0 +1,48 @@
+<apex:page controller="RebateDocumentUploader" showHeader="false" sidebar="false" action="{!init}" cache="false">
+  <head>        
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript">
+     var IS_IN_PROGRESS = false;
+     
+     function showFileStatus(){
+         IS_IN_PROGRESS = true;
+         document.getElementById("FileUploadStatus").style.display = "block";
+     }
+     
+     function isInProgress(){
+         return IS_IN_PROGRESS;
+     }
+   </script>
+ </head>
+ <body>
+   <apex:form >
+       <script type="text/javascript">
+           $(document).ready( function(){
+               parent.updateDocumentCount({! IF(ISBLANK(documents), 0, documents.size) });
+           });
+       </script>
+     <apex:outputPanel rendered="{!hasUploadedFiles}">
+       <h2>Uploaded Files</h2>
+       <ol>
+         <apex:repeat value="{!documents}" var="d">
+           <li><apex:outputText value="{!d.FileName__c}" />&nbsp;
+             <apex:commandLink action="{!DeleteFile}" value="delete">
+                 <!-- AssignTo seems to work only when the moons are aligned ... -->
+                 <apex:param value="{!d.id}" name="selectedDocId" assignTo="{!selectedDocId}"/>
+             </apex:commandLink>
+           </li>
+         </apex:repeat>
+       </ol>
+     </apex:outputPanel>
+     <apex:messages />
+     <h2>Upload File</h2>
+     <apex:actionFunction name="uploadFile" action="{!uploadFile}" status="UploadStatus"  />
+     <apex:inputFile fileName="{!fileName}" fileSize="{!fileSize}" value="{!fileBody}" onchange="showFileStatus();uploadFile();"  />
+     <div id="FileUploadStatus" style="display:none">Uploading...</div>
+   </apex:form>
+ </body>
+</apex:page>

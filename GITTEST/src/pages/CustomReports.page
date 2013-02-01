@@ -1,0 +1,61 @@
+<apex:page controller="CustomReportCntrl">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript">
+        $(document).ready( function(){
+            $('.reportlink').click( function(evt){
+                evt.preventDefault();
+                evt.stopPropagation();
+                window.open($(this).attr('href')+"&InvoiceYear="+$("[id$='InvoiceYear']").val()+"&InvoiceDate="+$("[id$='InvoiceDate']").val(), "_blank");
+            });
+        });
+    </script>
+  </head>
+  <apex:form >
+    <apex:pageBlock title="Custom Reports">
+      <apex:messages />
+      <apex:pageBlockSection title="Invoice Date Filter" collapsible="false">
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Invoice Year"/>
+          <apex:selectList value="{!Year}" size="1" id="InvoiceYear">
+            <apex:actionSupport event="onchange" rerender="InvoiceDate"/>
+            <apex:selectOptions value="{!Years}" />
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Invoice Date"/>
+          <apex:selectList value="{!InvoiceDate}" size="1" id="InvoiceDate">
+            <apex:selectOptions value="{!InvoiceDates}" />
+          </apex:selectList>
+        </apex:pageBlockSectionItem>
+
+      </apex:pageBlockSection>
+      <apex:pageBlockSection title="Global Reports" collapsible="true" rendered="{!hasAccountReports}">
+        <apex:repeat var="i" value="{!accountReports}">
+          <apex:pageBlockSectionItem ><a class="reportlink" href="{i.reportPath}" target="_csvreport">{!i.reportName}</a></apex:pageBlockSectionItem>
+        </apex:repeat>
+      </apex:pageBlockSection>
+      
+      <apex:repeat var="s" value="{!ProgramReports}">
+        <apex:pageBlockSection title="{!s.Name}">
+          <apex:repeat var="i" value="{!s.items}">
+            <apex:pageBlockSectionItem ><a class="reportlink" href="{!i.reportPath}" target="_csvreport">{!i.reportName}</a></apex:pageBlockSectionItem>
+          </apex:repeat>
+          <!-- REQUIRED SO THAT THE TABLE DOESN'T ADD ANOTHER COLUMN FOR THE LABEL ON THE NULL CELL -->
+          <apex:pageBlockSectionItem rendered="{! MOD(s.items.size, 2) == 1}">&nbsp;</apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+      </apex:repeat>      
+      
+      <apex:repeat var="s" value="{!FormReports}">
+        <apex:pageBlockSection title="{!s.Name}">
+          <apex:repeat var="i" value="{!s.items}">
+            <apex:pageBlockSectionItem ><a class="reportlink" href="{!i.reportPath}" target="_csvreport">{!i.reportName}</a></apex:pageBlockSectionItem>
+          </apex:repeat>
+          <!-- REQUIRED SO THAT THE TABLE DOESN'T ADD ANOTHER COLUMN FOR THE LABEL ON THE NULL CELL -->
+          <apex:pageBlockSectionItem rendered="{! MOD(s.items.size, 2) == 1}">&nbsp;</apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+      </apex:repeat>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

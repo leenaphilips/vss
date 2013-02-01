@@ -1,0 +1,11 @@
+<apex:component controller="Email_ShowFooter" access="global">
+  <apex:attribute name="ClientCode" description="" type="String" assignTo="{!ClientCode}" />
+  <apex:attribute name="FormCode" description="" type="String" assignTo="{!FormCode}" />
+
+    <p>If you have questions regarding any aspect of your rebate please do not hesitate to 
+       contact our Customer Service center at {!CustomerServicePhone}.  Our Customer Service department is open from {!weekdayOpenTime} 
+       to {!weekdayCloseTime}, Monday through Friday, and {!weekendOpenTime} to {!weekendCloseTime} on Saturdays.
+    </p>
+    <p>{! BLANKVALUE(Valediction, 'Regards') } - <span style="font-weight:bold">{!ClientProgramName}</span></p>
+
+</apex:component>

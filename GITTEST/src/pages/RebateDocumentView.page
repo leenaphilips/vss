@@ -1,0 +1,32 @@
+<!--
+    CEV:2012.08.30::Overrides the standard page for the RebateDocument to display the image from the associated repository.
+        The controller ext. is responsible for locating a viewer that can generate content that can be displayed on the page
+-->
+<apex:page standardController="RebateDocument__c" extensions="RebateDocumentView">
+  <head>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+    <script type="text/javascript">
+        $(document).ready( function(){
+            //--removes the border & color to look like the default view page
+            $('div[id$="externalDocBlock"]').addClass('bDetailBlock');
+        });
+    </script>
+  </head>
+  <body>
+      <apex:detail relatedList="false" title="true" />
+      <apex:pageBlock title="External Document" id="externalDocBlock">
+          <apex:pageBlockSection >
+            <apex:pageBlockSectionItem >
+              <apex:outputLabel value="External Document Link"/>
+              <a href="{!ExternalUrl}">{!ExternalFileName}</a>
+            </apex:pageBlockSectionItem>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection columns="1">
+            <apex:pageBlockSectionItem >
+              <apex:outputLabel value="Document" />
+              <apex:dynamicComponent componentValue="{!DocumentViewer}"/>
+            </apex:pageBlockSectionItem>
+          </apex:pageBlockSection>
+      </apex:pageBlock>
+    </body>
+</apex:page>

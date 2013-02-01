@@ -1,0 +1,497 @@
+<apex:page id="VTEFF2012RF" showHeader="false" standardStyleSheets="false" 
+	controller="FormVTEFF2012RF">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>LIPA Refrigerator Rebate Form</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+		<script src="{!URLFOR($Resource.VTEFF2012RF, 'js/jquery.tooltip.js')}" type="text/javascript" language="javascript"></script>
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+		<style type="text/css">
+			body { font-family:Arial, Helvetica, sans-serif;  background-color:#fff; margin:0px; }
+			div {  }
+			h1 { font-size:16px; font-weight:bold; }
+			p { margin:0px; }
+			#container { width:600px; margin:0px auto; padding:20px 40px; background-color:#ffd457;  }
+			#header { background-color:#fff; height:100px; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; 
+				border-radius: 5px 5px 5px 5px; }
+			#main { color:#000; }
+			#content-top { color:#333333; font-size:12px;   }
+			#content-top .highlight { background-color:#fae62e; padding:5px; color:#333; margin:5px 0px; }
+			#content-top #mailto { font-size:13px; }
+			#content-top p, #content-top h3 { margin-bottom:6px; }
+			#content-top ul, #content-top ol { margin-top:0px; }
+			#content-main  { margin-top:20px; background-color:#fff; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;
+				border-radius: 5px 5px 5px 5px; }
+			#content-main div { margin:10px 0px; }
+			#content-main h2 { font-size:16px; margin:0px 0px 0px 0px; }
+			.blue-header { color:#00aeef; }
+			/* form elements */
+			form { font-size:.875em; }
+			form h3 { font-size: 1em; font-weight:bold; margin:1em 0 0 0; }
+			fieldset { border:none; padding:15px 0px 15px 0px; border-top:0px #2fb457 solid; margin:0px; }
+			label { display:inline-block; width:125px; vertical-align:inherit; text-align:right; padding-right:10px; }
+			label.autowidth { width:auto; text-align:left; }
+			form span { display:inline-block; border-bottom:1px #333 solid; margin-right:30px; }
+			form span.noborder, form span .noborder, form .noborder span, form .noborder { border:none; }
+			input[type="text"] {  border:none; border-bottom:0px #333 solid; font-size:1em; width:auto;  }
+			input:focus { background-color:#ccc; }
+			.input-radio label { text-align:left; margin:0px 20px 0px 5px; width:auto; }
+			.longtext { width:28em; }
+			.mediumtext { width:18em; }
+			.mediumshorttext { width:9em; }
+			.shorttext { width:3em; }
+			.button  { -moz-border-radius: 3px 3px 3px 3px; background-color: #E8E8E9; border-color: #B5B5B5 #B5B5B5 #7F7F7F; border-style: solid; border-width: 1px; color: #333333;
+				font-size: 0.9em; font-weight: bold; margin: 1px; padding: 2px 3px; text-decoration: none; }
+			#tooltip { position: absolute; 	z-index: 3000; border: 1px solid #111; background-color: #EEEEEB; padding: 5px; opacity: 0.85; font-size:11px;  }
+			#tooltip h3 { font-size:11px; margin:0px; }
+			.error-icon { visibility:hidden; position:absolute; margin-left:-20px; }
+			.alwaysblack {color: black; }
+			.left-align { float:left; }
+			.clear { clear:both; }
+			.clearfix:after { clear: both; content: "."; display: block; height: 0; line-height: 0; visibility: hidden; }
+			#footer {  }		
+		</style>
+		<script>
+			$(function() {
+				$( "#purchase_date" ).datepicker();
+			});
+			$(document).ready(function(){ 
+				$('.error-icon').tooltip({
+					track: true,
+					delay: 0,
+					showURL: false,
+					showBody: " - ",
+					fade: 250
+				});
+			});
+		</script>
+		<script>
+			function checkMe() {
+				// be careful in defining local tests - FDC runs rampant on form as written
+				// so DOM ids and structure may be different from expected
+				// transfer purchase date to FDC field
+				document.getElementById("VTEFF2012RF:rebateForm:frmPurchDate").value = document.getElementById("purchase_date").value
+				return true;
+			}
+			function runOnLoad() {
+				// determine if there is any message to display (e.g. AJAX result)
+				var obj = document.getElementById("VTEFF2012RF:rebateForm:frmLoadMessage");
+				if (obj.value.length > 0) alert(obj.value);
+				// replace visible date from value exchanged w/server
+				document.getElementById("purchase_date").value = document.getElementById("VTEFF2012RF:rebateForm:frmPurchDate").value;
+				if (document.getElementById("VTEFF2012RF:rebateForm:manualModel").value == "Y") {
+					modelCheck(true);
+					document.getElementById("manualmodelcb").checked = true;
+				} else {
+					modelCheck(false);
+					document.getElementById("manualmodelcb").checked = false;
+				}
+				if (document.getElementById("VTEFF2012RF:rebateForm:mailSame").value == "Y") {
+					mailCheck(true);
+					document.getElementById("mailsamecb").checked = true;
+				} else {
+					mailCheck(false);
+					document.getElementById("mailsamecb").checked = false;
+				}
+				var rn = document.getElementById("VTEFF2012RF:rebateForm:frmRebateNum").innerHTML;
+				if (rn.length < 2) {
+					document.getElementById("refnumdiv").style.display = "none";
+				} else {
+					document.getElementById("refnumdiv").style.display = "block";
+				}
+				if (document.getElementById("VTEFF2012RF:rebateForm:frmReadOnly").value == "yes") {
+					document.getElementById("purchase_date").disabled = true;
+					document.getElementById("manualstorecb").disabled = true;
+					document.getElementById("manualmodelcb").disabled = true;
+					document.getElementById("mailsamecb").disabled = true;	
+				}
+			}
+			function modelCheck(ischecked) {
+				// alert(ischecked);
+				var obj = document.getElementById("VTEFF2012RF:rebateForm:manualModel");
+				if (ischecked) {
+					document.getElementById("selmandiv").style.display = "none";
+					document.getElementById("selmoddiv").style.display = "none";
+					document.getElementById("manmandiv").style.display = "block";
+					document.getElementById("manmoddiv").style.display = "block";
+					obj.value = "Y";
+				} else {
+					document.getElementById("selmandiv").style.display = "block";
+					document.getElementById("selmoddiv").style.display = "block";
+					document.getElementById("manmandiv").style.display = "none";
+					document.getElementById("manmoddiv").style.display = "none";
+					obj.value = "N";
+				}
+			}
+			function storeCheck(ischecked) {
+				// alert(ischecked);
+				var obj = document.getElementById("VTEFF2012RF:rebateForm:manualStore");
+				if (ischecked) {
+					document.getElementById("selstorediv").style.display = "none";
+					document.getElementById("manstorediv").style.display = "block";
+					obj.value = "Y";
+				} else {
+					document.getElementById("selstorediv").style.display = "block";
+					document.getElementById("manstorediv").style.display = "none";
+					obj.value = "N";
+				}
+			}
+			function mailCheck(ischecked) {
+				// alert(ischecked);
+				var obj = document.getElementById("VTEFF2012RF:rebateForm:mailSame");
+				if (ischecked) {
+					document.getElementById("manmaildiv").style.display = "none";
+					obj.value = "Y";
+				} else {
+					document.getElementById("manmaildiv").style.display = "block";
+					obj.value = "N";
+				}
+			}
+		</script>
+	</head>
+	<body onload="runOnLoad();">
+		<div id="container">
+			<div id="header">
+		    	<img src="{!URLFOR($Resource.VTEFF2012RF, 'images/efficiencyvermont_logo.png')}" alt="Efficiency Vermont" style="float:left;" />
+		        <img src="{!URLFOR($Resource.VTEFF2012RF, 'images/efi-logo.gif')}" alt="EFI" style="float:right" />
+		    </div>
+		    <div id="main">
+		    	<div id="content-top">
+		        	<h1 class="blue-header">The ENERGY STAR $50 Mail-in Rebate</h1>
+		            <p>Get $50 back from Efficiency Vermont on your purchase of a select ENERGY STAR qualified refrigerator. This rebate is good 
+		            for purchases made 12/1/11 through 6/30/12.
+		            </p>
+		            <p>To receive your rebate:</p>
+					<ol>
+						<li>Please fill out this form completely.</li>
+						<li>Enclose a copy of your dated sales receipt and a copy of a recent electric bill.</li>
+						<li>Mail it to the address below.</li>
+					</ol>
+					<p>Incomplete information will delay or disqualify your rebate. All rebate requests must be postmarked no later than July 31, 2012.</p>
+		            <h3 class="blue-header">Mail to:</h3>
+	            	<p><strong>EFI–VT Select ENERGY STAR Refrigerator Rebate</strong><br />
+	                40 Washington Street, Suite 2000<br />
+	                Westborough, MA 01581</p>
+		            <p><strong>(Please DO NOT include rebate coupon with utility bill payment.)</strong></p>
+		        </div>
+		        <div id="content-main">
+		            <apex:form id="rebateForm">
+			        	<h3>Please fill out completely.</h3>
+		            	<apex:inputHidden id="frmLoadMessage" value="{!frmLoadMessage}" />
+          				<apex:inputHidden id="frmReadOnly" value="{!frmReadOnly}" />
+			            <fieldset style="border:none;">
+				            <div id="refnumdiv" style="font-weight:bold;">
+				                <label>Reference #: </label>
+				                <span class="mediumshorttext noborder"><apex:outputText id="frmRebateNum" value="{!frmRebateNum}" styleClass="noborder"/></span>
+				            </div>
+				            <div>
+				                <label>First Name: </label>
+				                <span class="mediumtext"><apex:inputText id="frmFirstName" value="{!frmFirstName}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="2" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="frmFirstNameErr"  />
+				            </div>
+				            <div>
+				                <label>Last Name: </label>
+				                <span class="mediumtext"><apex:inputText id="frmLastName" value="{!frmLastName}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="3" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-red.png')}" alt="error" title="{!frmLastNameMsg}" styleClass="error-icon" id="frmLastNameErr" style="{!frmLastNameMsgStyle}" />
+				            </div>
+				            <div>
+				                <label>Installation Address: </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctAddress1" value="{!frmAcctAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="4" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="frmAddress1Err"  />
+				            </div>
+				            <div>
+				                <label> </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctAddress2" value="{!frmAcctAddress2}" disabled="{!disableDE}"  maxlength="25" size="25" tabindex="5" /></span>
+				            </div>
+				            <div>
+				                <label>City: </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctCity" value="{!frmAcctCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="6" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="frmAcctCityErr"  />
+				            </div>
+				            <div>
+				                <label>State:</label>
+				                <span class="mediumshorttext"><apex:inputText id="frmAcctState" value="{!frmAcctState}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="7" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="frmAcctStateErr"  />
+				                <label style="width:5em;"> Zip:</label>
+				                <span class="mediumshorttext"><apex:inputText id="frmAcctZip" value="{!frmAcctZip}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="8" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="frmAcctZipErr"  />
+				            </div>
+				            <div>
+				                <label>Home Phone: </label>
+				                <span class="mediumshorttext"><apex:inputText id="frmHomePhone" value="{!frmHomePhone}" disabled="{!disableDE}" maxlength="12" size="12" tabindex="9" /></span>
+				                <label style="width:5em">Work Phone:</label>
+				                <span class="mediumshorttext"><apex:inputText id="frmWorkPhone" value="{!frmWorkPhone}" disabled="{!disableDE}" maxlength="12" size="12" tabindex="10" /></span>
+				            </div>
+			            </fieldset>
+			            <fieldset>
+			            	<div>
+				            	<input type="checkbox" id="mailsamecb" readonly="readonly" style="margin-left: 100px;" onchange="mailCheck(this.checked)" />
+		            			Check if mailing address is same as account address
+				                <apex:inputHidden id="mailSame" value="{!mailSame}" />
+			            	</div>
+			            	<div id="manmaildiv">
+					            <div>
+					                <label>Mailing Address: </label>
+					                <span class="mediumtext"><apex:inputText id="frmMailAddress1" value="{!frmMailAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="11" /></span>
+					            </div>
+					            <div>
+					                <label> </label>
+					                <span class="mediumtext"><apex:inputText id="frmMailAddress2" value="{!frmMailAddress2}" disabled="{!disableDE}"  maxlength="25" size="25" tabindex="12" /></span>
+					            </div>
+					            <div>
+					                <label>City: </label>
+					                <span class="mediumtext"><apex:inputText id="frmMailCity" value="{!frmMailCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="13" /></span>
+					            </div>
+					            <div>
+					                <label>State:</label>
+					                <span class="mediumshorttext"><apex:inputText id="frmMailState" value="{!frmMailState}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="14" /></span>
+					                <label style="width:5em;"> Zip:</label>
+					                <span class="mediumshorttext"><apex:inputText id="frmMailZip" value="{!frmMailZip}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="15" /></span>
+					            </div>
+			            	</div>
+			            </fieldset>
+			            <fieldset>
+			                <label class="autowidth">Please tell us about your home:</label>
+			                <div>
+			                    <label>House Type: </label>
+								<span class="mediumshorttext noborder">
+			                    <apex:selectList id="frmHouseType" value="{!frmHouseType}" disabled="{!disableDE}" size="1" tabindex="21" >
+			                        <apex:selectOption itemValue="DK" itemLabel="Select ..." />
+			                        <apex:selectOption itemValue="SF" itemLabel="Single Family" />
+			                        <apex:selectOption itemValue="MF4" itemLabel="Multi Family" />
+			                    </apex:selectList>
+			                    </span>
+			                    <label>Number Of Units: </label>
+			                    <span class="shorttext"><apex:inputText id="frmHouseUnits" value="{!frmHouseUnits}" disabled="{!disableDE}" maxlength="5" size="5" tabindex="23" /></span>
+			                 </div>
+			                 <div>
+			                    <label>Own/Rent:</label>
+			                    <span class="noborder" style="width:100px;">
+			                    <apex:selectList id="frmOwnRent" value="{!frmOwnRent}" disabled="{!disableDE}" size="1" tabindex="20" >
+			                        <apex:selectOption itemValue="DK" itemLabel="Select ..." />
+			                        <apex:selectOption itemValue="OWN" itemLabel="Own" />
+			                        <apex:selectOption itemValue="RENT" itemLabel="Rent" />
+			                    </apex:selectList>
+			                    </span>
+			                    <label>Primary Residence or Vacation Home:</label>
+			                    <apex:selectList id="frmPriVac" value="{!frmPriVac}" disabled="{!disableDE}" size="1" tabindex="22" >
+			                        <apex:selectOption itemValue="DK" itemLabel="Select ..." />
+			                        <apex:selectOption itemValue="PRIM" itemLabel="Primary Residence" />
+			                        <apex:selectOption itemValue="VAC" itemLabel="Vacation Home" />
+			                    </apex:selectList>
+			                </div>
+			                <div>
+			                </div>
+			            </fieldset>
+			            <fieldset>
+			            	<label class="autowidth">For installation address:</label>
+							<div>
+			                    <label>Your electric company:</label>
+			                    <apex:selectList id="frmElecCompany" value="{!frmElecCompany}" disabled="{!disableDE}" size="1" tabindex="22" >
+			                        <apex:selectOption itemValue="DK" itemLabel="Select ..." />
+			                        <apex:selectOption itemValue="ELEC_CO_1" itemLabel="Electric Company 1" />
+			                        <apex:selectOption itemValue="ELEC_CO_2" itemLabel="Electric Company 2" />
+			                    </apex:selectList>							
+							</div>
+				            <div>
+				                <label>Account Number: </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctNum" value="{!frmAcctNum}" disabled="{!disableDE}" maxlength="14" size="14" tabindex="1" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmAcctNumMsg}" styleClass="error-icon" id="frmAcctNumErr" style="{!frmAcctNumMsgStyle}" />
+				            </div>
+				        </fieldset>
+				        <fieldset>
+			            	<div>
+				            	<input type="checkbox" id="manualmodelcb" style="margin-left: 100px;" onchange="modelCheck(this.checked)" />
+		            			Select manufacturer and model, or check box to enter manually
+				                <apex:inputHidden id="manualModel" value="{!manualModel}" />
+			            	</div>
+				            <div id="selmandiv" class="noborder">
+				                <label>Manufacturer: </label>
+								<span class="mediumshorttext noborder">
+			                    <apex:selectList id="selBrand" value="{!selBrand}" disabled="{!disableDE}" size="1" tabindex="24" >
+			                    	<apex:selectOptions value="{!brandList}" />
+			                        <apex:actionSupport event="onchange" rerender="selModelId" status="modelStatus"/>
+			                    </apex:selectList>
+			                    </span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="SelBrandErr"  />
+			                    <span class="noborder">
+									<apex:actionStatus id="modelStatus" styleClass="noborder" startText=" updating model list ..." stopText="" />			                    
+								</span>
+				            </div>
+				            <div id="selmoddiv" class="noborder">
+				                <label>Model Number: </label>
+								<span class="mediumshorttext noborder">
+			                    <apex:selectList id="selModelId" value="{!selModelId}" disabled="{!disableDE}" size="1" tabindex="25" >
+									<apex:selectOptions value="{!modelList}" />
+			                    </apex:selectList>
+			                    </span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="selModelIDErr"  />
+				            </div>
+				            <div id="manmandiv" style="display:none;">
+				                <label>Manufacturer: </label>
+				                <span class="mediumtext"><apex:inputText id="frmBrand" value="{!frmBrand}" disabled="{!disableDE}" maxlength="15" size="15" tabindex="26" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="frmBrandErr"  />
+				            </div>
+				            <div id="manmoddiv" style="display:none;">
+				                <label>Model Number: </label>
+				                <span class="mediumtext"><apex:inputText id="frmModel" value="{!frmModel}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="27" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-yellow.png')}" alt="warning" title="Warning: blank field" styleClass="error-icon" id="frmModelErr"  />
+				            </div>
+				        	
+				        </fieldset>
+			            <fieldset>
+			            	<div>
+				            	<input type="checkbox" id="manualstorecb" style="margin-left: 100px;" onchange="storeCheck(this.checked)" />
+		            			Enter City, select store from list, or check box to enter manually
+				                <apex:inputHidden id="manualStore" value="{!manualStore}" />
+			            	</div>
+				            <div id="selstorediv" class="noborder">
+				            	<div>
+				            		<label>Store State: </label>
+				            		<span class="mediumtext noborder">
+					                    <apex:selectList id="selState" value="{!selState}" disabled="{!disableDE}" size="1" tabindex="28" >
+											<apex:selectOptions value="{!stateList}" />
+					                        <apex:actionSupport event="onchange" rerender="selStoreId" status="stateStatus"/>
+					                    </apex:selectList>
+				            		</span>
+									<apex:actionStatus id="stateStatus" styleClass="noborder" startText=" updating store list ..." stopText="" />			                    
+				            	</div>
+				            	<div>
+				            		<apex:actionRegion >
+						                <label>Store City: </label>
+						                <span class="mediumtext">
+						                	<apex:inputText id="selCity" value="{!selCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="28">
+						                		<apex:actionSupport event="onchange" rerender="selStoreId" status="stateStatus" />
+						                	</apex:inputText>
+						                </span>
+					                </apex:actionRegion>
+				            	</div>
+				            	<div>
+					                <label>Select Store: </label>
+									<span class="mediumtext noborder">
+					                    <apex:selectList id="selStoreId" value="{!selStoreId}" disabled="{!disableDE}" size="1" tabindex="28" style="width: 400px;">
+											<apex:selectOptions value="{!storeList}" />
+					                    </apex:selectList>
+				                    </span>
+				            	</div>
+				            </div>
+				            <div id="manstorediv" style="display:none;">
+				                <div>
+				                    <label>Store Name: </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreName" value="{!frmStoreName}" disabled="{!disableDE}" maxlength="30" size="30" tabindex="29" /></span>
+				                </div>
+				                <div>
+				                    <label>Store Address: </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreAddress1" value="{!frmStoreAddress1}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="30" /></span>
+				                </div>
+				                <div>
+				                	<label> </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreAddress2" value="{!frmStoreAddress2}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="31" /></span>
+				                </div>
+				                <div>
+				                    <label>City: </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreCity" value="{!frmStoreCity}" disabled="{!disableDE}" maxlength="25" size="25" tabindex="32" /></span>
+				                </div>
+				                <div>
+				                    <label>State:</label>
+				                    <span class="mediumshorttext"><apex:inputText id="frmStoreState" value="{!frmStoreState}" disabled="{!disableDE}" maxlength="2" size="2" tabindex="33" /></span>
+				                    <label style="width:100px"> Zip:</label>
+				                    <span class="mediumshorttext"><apex:inputText id="frmStoreZip" value="{!frmStoreZip}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="34" /></span>
+				                </div>
+				            </div>
+			            </fieldset>
+			            <fieldset>
+				            <div>
+				                <label>Purchase Price: </label>
+				                <span class="mediumshorttext">$<apex:inputText id="frmPaidAmt" value="{!frmPaidAmt}" disabled="{!disableDE}" maxlength="10" size="10" tabindex="35" /></span>
+				                <label style="width:100px">Purchase Date: </label>
+				                <span class="mediumshorttext"><input type="text" name="purchase_date" id="purchase_date" class="alwaysblack" maxlength="10" size="10" tabindex="36" /></span>
+				                <apex:image value="{!URLFOR($Resource.VTEFF2012RF, 'images/warning-icon-red.png')}" alt="error" title="{!frmPurchDateMsg}" styleClass="error-icon" id="frmPurchDateErr" style="{!frmPurchDateMsgStyle}" />
+				                <apex:inputHidden id="frmPurchDate" value="{!frmPurchDate}" />
+				            </div>
+			            </fieldset>
+			            <h3>Optional information:</h3>
+			            <fieldset>
+							<div>
+				            	<label class="autowidth">What was the main reason you purchased a select ENERGY STAR® qualified refrigerator? Please check one:</label>
+			                    <apex:selectList id="frmPrchRsn" value="{!frmPrchRsn}" disabled="{!disableDE}" size="1" tabindex="37" >
+			                        <apex:selectOption itemValue="DK" itemLabel="Select ..." />
+			                        <apex:selectOption itemValue="01" itemLabel="Energy Savings" />
+			                        <apex:selectOption itemValue="02" itemLabel="Size or Larger Capacity" />
+			                        <apex:selectOption itemValue="03" itemLabel="Rebate" />
+			                        <apex:selectOption itemValue="04" itemLabel="Quieter Operation" />
+			                        <apex:selectOption itemValue="06" itemLabel="Like to buy the best" />
+			                        <apex:selectOption itemValue="07" itemLabel="Takes up Less Space" />
+			                        <apex:selectOption itemValue="08" itemLabel="Global Warming/Climate Change" />
+			                        <apex:selectOption itemValue="99" itemLabel="Other" />
+			                    </apex:selectList>							
+							</div>
+							<div>
+				            	<label class="autowidth">Did you know about the rebate before you purchased your refrigerator?</label>
+			                    <apex:selectRadio id="frmRebate" value="{!frmRebate}" disabled="{!disableDE}" tabindex="38" styleClass="input-radio" >
+			                        <apex:selectOption itemValue="N" itemLabel="No" />
+			                        <apex:selectOption itemValue="Y" itemLabel="Yes" />
+			                    </apex:selectRadio>							
+							</div>
+							<div>
+				            	<label class="autowidth">If yes, did the rebate influence your purchase decision?</label>
+			                    <apex:selectRadio id="frmRebInf" value="{!frmRebInf}" disabled="{!disableDE}" tabindex="39" styleClass="input-radio" >
+			                        <apex:selectOption itemValue="N" itemLabel="No" />
+			                        <apex:selectOption itemValue="Y" itemLabel="Yes" />
+			                    </apex:selectRadio>							
+							</div>
+							<div class="clearfix">
+				            	<label class="autowidth">Why did you purchase a refrigerator at this time? Check all that apply:</label>
+			                    <apex:selectCheckboxes id="frmPrchOldBroke" value="{!frmPrchOldBroke}" disabled="{!disableDE}" tabindex="40" styleClass="input-radio left-align" style="width:40%;" >
+			                        <apex:selectOption itemValue="1" itemLabel="old machine broke" />
+			                    </apex:selectCheckboxes>	
+			                    <apex:selectCheckboxes id="frmPrchRemodel" value="{!frmPrchRemodel}" disabled="{!disableDE}" tabindex="41" styleClass="input-radio left-align" >
+			                        <apex:selectOption itemValue="1" itemLabel="remodeling" />
+			                    </apex:selectCheckboxes>	
+			                    <apex:selectCheckboxes id="frmPrchUpgrade" value="{!frmPrchUpgrade}" disabled="{!disableDE}" tabindex="42" styleClass="input-radio left-align clear" style="width:40%;" >
+			                        <apex:selectOption itemValue="1" itemLabel="wanted upgrade" />
+			                    </apex:selectCheckboxes>	
+			                    <apex:selectCheckboxes id="frmPrchNewHome" value="{!frmPrchNewHome}" disabled="{!disableDE}" tabindex="43" styleClass="input-radio left-align" >
+			                        <apex:selectOption itemValue="1" itemLabel="new home" />
+			                    </apex:selectCheckboxes>
+			                    <apex:selectCheckboxes id="frmPrchEnrgySav" value="{!frmPrchEnrgySav}" disabled="{!disableDE}" tabindex="44" styleClass="input-radio left-align clear" style="width:40%;" >
+			                        <apex:selectOption itemValue="1" itemLabel="energy savings" />
+			                    </apex:selectCheckboxes>	
+			                    <apex:selectCheckboxes id="frmPrchPerform" value="{!frmPrchPerform}" disabled="{!disableDE}" tabindex="45" styleClass="input-radio left-align" style="width:40%;" >
+			                        <apex:selectOption itemValue="1" itemLabel="new home" />
+			                    </apex:selectCheckboxes>	
+			                    <apex:selectCheckboxes id="frmPrchNew" value="{!frmPrchNew}" disabled="{!disableDE}" tabindex="46" styleClass="input-radio left-align clear" >
+			                        <apex:selectOption itemValue="1" itemLabel="new purchase (does not replace old unit)" />
+			                    </apex:selectCheckboxes>						
+							</div>
+							<div>
+				            	<label class="autowidth">Have you purchased other ENERGY STAR qualified products?</label>
+			                    <apex:selectRadio id="frmEStarHome" value="{!frmEStarHome}" disabled="{!disableDE}" tabindex="47" styleClass="input-radio" >
+			                        <apex:selectOption itemValue="N" itemLabel="No" />
+			                        <apex:selectOption itemValue="Y" itemLabel="Yes" />
+			                    </apex:selectRadio>							
+							</div>
+							<div>
+				            	<label class="autowidth">What do you plan on doing with the old refrigerator?</label>
+			                    <apex:selectList id="frmOldStatus" value="{!frmOldStatus}" disabled="{!disableDE}" tabindex="48" size="1" styleClass="input-radio" >
+			                        <apex:selectOption itemValue="00" itemLabel="Select ..." />
+			                        <apex:selectOption itemValue="01" itemLabel="Recycling" />
+			                        <apex:selectOption itemValue="02" itemLabel="Disposing" />
+			                        <apex:selectOption itemValue="03" itemLabel="Garage/Basement" />
+			                        <apex:selectOption itemValue="04" itemLabel="Selling" />
+			                        <apex:selectOption itemValue="05" itemLabel="Friend" />
+			                        <apex:selectOption itemValue="06" itemLabel="Other" />
+			                    </apex:selectList>							
+							</div>
+							
+			            </fieldset>
+			            <div>
+			            	<apex:CommandButton action="{!actionCheckMe}" value="{!frmButtonLabel}" disabled="{!disableDE}" styleClass="button" onclick="return checkMe();" />
+			            </div>
+					</apex:form>
+		        </div>
+		    </div>
+		</div>
+	</body>
+</apex:page>

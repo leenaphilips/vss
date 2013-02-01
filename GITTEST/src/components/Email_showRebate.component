@@ -1,0 +1,46 @@
+<apex:component controller="Email_ShowRebate" access="Global">
+  <apex:attribute name="rebateId" description="" type="ID" assignTo="{!RebateId}" />
+  <apex:attribute name="primaryColor" description="" type="String" />
+  <apex:attribute name="secondaryColor" description="" type="String" />
+  <apex:attribute name="hideHeader" description="" type="Boolean" default="false"/>
+  <apex:attribute name="hideDetails" description="" type="Boolean" default="false"/>
+  
+  <apex:outputPanel rendered="{! NOT(hideHeader) }">
+    <table style="margin-left:10px;font-family: Arial,Helvetica,sans-serif; font-size: 75%">
+      <tr><td style="font-weight:bold;text-align:left">Rebate Application No.:</td><td> {! rebate.RebateNumber__c }</td></tr>
+      <tr><td style="font-weight:bold;text-align:left">Total Rebate Amount:</td><td> ${! TEXT(rebate.CustomerPayableAmount__c) }</td></tr>
+    </table>
+  </apex:outputPanel>
+  <apex:outputPanel rendered="{! NOT(hideDetails) }">
+    <p>The following items are specified in your rebate submission:</p>
+    
+    <table style="margin-left:10px;font-family: Arial,Helvetica,sans-serif; font-size: 75%;width:100%;text-align:center" cellspacing="0">
+      <tr><th style="border-bottom:1px solid {!primaryColor}; padding:5px">Rebate Type</th><th style="border-bottom:1px solid {!primaryColor}; padding:5px">Status</th>
+      <th style="border-bottom:1px solid {!primaryColor}; padding:5px">Item</th><th style="border-bottom:1px solid {!primaryColor}; padding:5px">Rebate Amount</th>
+      <th style="border-bottom:1px solid {!primaryColor}; padding:5px">Quantity</th><th style="border-bottom:1px solid {!primaryColor}; padding:5px">Extended Amount</th></tr>
+      <apex:repeat value="{!PayableDetails}" var="detail" id="theRepeat">
+        <tr><td style="border-bottom:1px solid #CCC; padding:5px">{!detail.MeasureCategory__c}</td>
+            <td style="border-bottom:1px solid #CCC; padding:5px">{!detail.DetailStatus__c}&nbsp;
+              <apex:outputPanel rendered="{! 'Paid' == detail.DetailStatus__c }">
+                (mailed on&nbsp;<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"> <apex:param value="{!detail.CheckMailDate__c}" /> </apex:outputText>)
+              </apex:outputPanel>
+            </td>
+            <td style="border-bottom:1px solid #CCC; padding:5px">
+                <apex:outputPanel rendered="{!ISBLANK(detail.Manufacturer__c)}">
+                    <span style='font-style:italic;font-size:85%'>unspecified manufacturer&nbsp;</span>
+                </apex:outputPanel>
+                <apex:outputText rendered="{!NOT(ISBLANK(detail.Manufacturer__c))}" escape="false" value="{!detail.Manufacturer__c}&nbsp;" />
+                
+                <apex:outputPanel rendered="{!ISBLANK(detail.ModelNumber__c)}">
+                    <span style='font-style:italic;font-size:85%'>unspecified model</span>
+                </apex:outputPanel>
+                <apex:outputText rendered="{!NOT(ISBLANK(detail.ModelNumber__c))}" value="{!detail.ModelNumber__c}" />
+            </td>
+            <td style="border-bottom:1px solid #CCC; padding:5px">${!TEXT(detail.PayableMeasureAmount__c)}</td>
+            <td style="border-bottom:1px solid #CCC; padding:5px">{!TEXT(detail.Quantity__c)}</td>
+            <td style="border-bottom:1px solid #CCC; padding:5px">${!TEXT(detail.PayableAmount__c)}</td>
+        </tr>
+      </apex:repeat>
+      </table>
+</apex:outputPanel>
+</apex:component>

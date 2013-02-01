@@ -1,0 +1,94 @@
+<apex:page id="GAP2011RF" showHeader="false" standardStyleSheets="false" 
+	controller="FormStatusController">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Georgia Power Refrigerator Rebate Form</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+		<script src="js/jquery.tooltip.js" type="text/javascript" language="javascript"></script>
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+		<link href="{!URLFOR($Resource.LIPA2011RF, 'css/style.css')}" rel="stylesheet" type="text/css" />
+		<style>
+			.display {color: #333}
+			.display span{ color: #666; border-bottom:1px solid #666; }
+			.instructions {
+				margin-left:10px;
+				margin-bottom:10px;
+				font-weight:bold;
+				border:none;
+			}
+		</style>
+		<script type="text/javascript">
+			$(document).ready( function(){
+				$('#GAP2011RF\\:rebateForm\\:FormCode').val('GAPRF2011')
+			});
+		</script>
+	</head>
+	<body>
+		<div id="container" style='background-color:#EE2D24;'>
+			<div id="header">
+		    	<img src="http://www.georgiapower.com/about/images/gpc_med.gif" alt="GAP" style="float:left;" />
+		        <img src="{!URLFOR($Resource.LIPA2011RF, 'images/efi-logo.gif')}" alt="EFI" style="float:right" />
+		    </div>
+		    <div id="main">
+		    	<div id="content-top">
+		        	<h1>The ENERGY STAR $30 MAIL-IN REBATE</h1>
+		            <p>Get $30 back from Georgia Power on your purchase of an eligible ENERGY STAR qualified
+		            refrigerator. This rebate is good for purchases made January 1, 2011 through 
+		            December 31, 2011. Limit 1 rebate per Georgia Power residential electric customer account. 
+		            To receive your rebate, please fill out this form completely and mail it to the 
+		            address below.
+		            </p>
+		            <p><b><br />Please include a copy of your dated sales receipt and/or 
+		            invoice showing the manufacturer, model number, and price of the ENERGY STAR 
+		            qualified refrigerator purchased, and a copy of your recent electric bill. 
+		            Incomplete information will delay or disqualify your rebate. All rebate requests 
+		            must be postmarked no later than January 31, 2012.</b><br /><br />
+		            </p>
+		            <div id="mailto">
+		            	<p style="font-weight:bold">Mail to: EFI - Georgia Power Refrigerator Rebate</p>
+		                <p>40 Washington Street, Suite 2000</p>
+		                <p>Westborough, MA 01581-1013</p>
+		            </div>
+		        </div>
+		        <div id="content-main">
+					<apex:form id="rebateForm">
+						<apex:inputHidden value="{!FormCode}" id="FormCode"/>
+			            <apex:outputPanel rendered="{! NOT(ISNULL(STATUS)) }" style="border:1px solid #CCC">
+			            <fieldset class="display">
+			            <div>
+			                <span style="margin-left:20px; margin-right:10px; margin-bottom:10px; text-align:center; border:none"><apex:outputText value="{!Description}"/></span>
+			            </div>
+			            <div>
+			                <label>Rebate Status:</label><span class="mediumshorttext"><apex:outputText value="{!Status}"/></span>
+			                <label style="width:8em;">Rebate Amount</label>
+			                <span class="mediumshorttext"><apex:outputText value="${!TEXT(RebateAmount)}"/></span>
+			            </div>
+			            </fieldset>
+			            </apex:outputPanel>
+			            <fieldset style="border:none;">
+			            <span class="instructions">Enter your existing rebate number as is shown on your printed copy of your rebate along with your zipcode of your mailing address</span>
+			           
+		            	<apex:messages style="color:red"/>
+			            <div>
+			                <label>Rebate Number: </label>
+			                <span class="mediumtext"><apex:inputText id="frmAcctNum" value="{!RebateNumber}" maxlength="14" size="14" tabindex="1" /></span><apex:image value="{!URLFOR($Resource.LIPA2011RF, 'images/warning-icon-red.png')}" alt="warning" title="You must specify a rebate number" styleClass="error-icon" id="frmAcctNumErr" style="{!StyleRebateNumber}" />
+			            </div>
+			            <div>
+			                <label>Mailing Zipcode: </label>  
+			                <span class="mediumtext"><apex:inputText id="frmFirstName" value="{!PostalCode}" maxlength="25" size="25" tabindex="2" /></span><apex:image value="{!URLFOR($Resource.LIPA2011RF, 'images/warning-icon-red.png')}" alt="warning" title="You must specify your mailing zipcode" styleClass="error-icon" style="{!StylePostalCode}" />
+			            </div>
+			            </fieldset>
+			            <div>
+			            	<apex:CommandButton action="{!findRebate}" value="Find Rebate" styleclass="button">
+			            		<apex:param value="LIPA" name="FormCode" assignTo="{!FormID}" />
+			            	</apex:CommandButton>
+			            </div>
+					</apex:form>
+			            
+			            <apex:pageBlock id="hiddenBlock" rendered="false"></apex:pageBlock>
+		        </div>
+		    </div>
+		</div>
+	</body>
+</apex:page>

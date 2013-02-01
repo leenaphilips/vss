@@ -1,0 +1,367 @@
+<apex:page id="GAP2011RF" showHeader="false" standardStyleSheets="false" 
+	controller="FormGAP2011RF">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Georgia Power Refrigerator Rebate Form</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+		<script src="js/jquery.tooltip.js" type="text/javascript" language="javascript"></script>
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+		<link href="{!URLFOR($Resource.LIPA2011RF, 'css/style.css')}" rel="stylesheet" type="text/css" />
+		<script>
+			$(function() {
+				$( "#purchase_date" ).datepicker();
+			});
+			$(document).ready(function(){ 
+				$('.error-icon').tooltip({
+					track: true,
+					delay: 0,
+					showURL: false,
+					showBody: " - ",
+					fade: 250
+				});
+			});
+		</script>
+		<script>
+			function checkMe() {
+				// be careful in defining local tests - FDC runs rampant on form as written
+				// so DOM ids and structure may be different from expected
+				// transfer purchase date to FDC field
+				document.getElementById("GAP2011RF:rebateForm:frmPurchDate").value = document.getElementById("purchase_date").value
+				return true;
+			}
+			function runOnLoad() {
+				// determine if there is any message to display (e.g. AJAX result)
+				var obj = document.getElementById("GAP2011RF:rebateForm:frmLoadMessage");
+				if (obj.value.length > 0) alert(obj.value);
+				// replace visible date from value exchanged w/server
+				document.getElementById("purchase_date").value = document.getElementById("GAP2011RF:rebateForm:frmPurchDate").value;
+				if (document.getElementById("GAP2011RF:rebateForm:manualModel").value == "Y") {
+					modelCheck(true);
+					document.getElementById("manualmodelcb").checked = true;
+				} else {
+					modelCheck(false);
+					document.getElementById("manualmodelcb").checked = false;
+				}
+				if (document.getElementById("GAP2011RF:rebateForm:mailSame").value == "Y") {
+					mailCheck(true);
+					document.getElementById("mailsamecb").checked = true;
+				} else {
+					mailCheck(false);
+					document.getElementById("mailsamecb").checked = false;
+				}
+				var rn = document.getElementById("GAP2011RF:rebateForm:frmRebateNum").innerHTML;
+				if (rn.length < 2) {
+					document.getElementById("refnumdiv").style.display = "none";
+				} else {
+					document.getElementById("refnumdiv").style.display = "block";
+				}
+			}
+			function modelCheck(ischecked) {
+				// alert(ischecked);
+				var obj = document.getElementById("GAP2011RF:rebateForm:manualModel");
+				if (ischecked) {
+					document.getElementById("selmandiv").style.display = "none";
+					document.getElementById("selmoddiv").style.display = "none";
+					document.getElementById("manmandiv").style.display = "block";
+					document.getElementById("manmoddiv").style.display = "block";
+					obj.value = "Y";
+				} else {
+					document.getElementById("selmandiv").style.display = "block";
+					document.getElementById("selmoddiv").style.display = "block";
+					document.getElementById("manmandiv").style.display = "none";
+					document.getElementById("manmoddiv").style.display = "none";
+					obj.value = "N";
+				}
+			}
+			function storeCheck(ischecked) {
+				// alert(ischecked);
+				var obj = document.getElementById("GAP2011RF:rebateForm:manualStore");
+				if (ischecked) {
+					document.getElementById("selstorediv").style.display = "none";
+					document.getElementById("manstorediv").style.display = "block";
+					obj.value = "Y";
+				} else {
+					document.getElementById("selstorediv").style.display = "block";
+					document.getElementById("manstorediv").style.display = "none";
+					obj.value = "N";
+				}
+			}
+			function mailCheck(ischecked) {
+				// alert(ischecked);
+				var obj = document.getElementById("GAP2011RF:rebateForm:mailSame");
+				if (ischecked) {
+					document.getElementById("manmaildiv").style.display = "none";
+					obj.value = "Y";
+				} else {
+					document.getElementById("manmaildiv").style.display = "block";
+					obj.value = "N";
+				}
+			}
+		</script>
+	</head>
+	<body onload="runOnLoad();">
+		<div id="container" style='background-color:#EE2D24;'>
+			<div id="header">
+		    	<img src="http://www.georgiapower.com/about/images/gpc_med.gif" alt="GAP" style="float:left;" />
+		        <img src="{!URLFOR($Resource.LIPA2011RF, 'images/efi-logo.gif')}" alt="EFI" style="float:right" />
+		    </div>
+		    <div id="main">
+		    	<div id="content-top">
+		        	<h1>The ENERGY STAR $30 MAIL-IN REBATE</h1>
+		            <p>Get $30 back from Georgia Power on your purchase of an eligible ENERGY STAR qualified
+		            refrigerator. This rebate is good for purchases made January 1, 2011 through 
+		            December 31, 2011. Limit 1 rebate per Georgia Power residential electric customer account. 
+		            To receive your rebate, please fill out this form completely and mail it to the 
+		            address below.
+		            </p>
+		            <p><b><br />Please include a copy of your dated sales receipt and/or 
+		            invoice showing the manufacturer, model number, and price of the ENERGY STAR 
+		            qualified refrigerator purchased, and a copy of your recent electric bill. 
+		            Incomplete information will delay or disqualify your rebate. All rebate requests 
+		            must be postmarked no later than January 31, 2012.</b><br /><br />
+		            </p>
+		            <div id="mailto">
+		            	<p style="font-weight:bold">Mail to: EFI - Georgia Power Refrigerator Rebate</p>
+		                <p>40 Washington Street, Suite 2000</p>
+		                <p>Westborough, MA 01581-1013</p>
+		            </div>
+		        </div>
+		        <div id="content-main">
+		        	<h2>Fill out completely. All information below is required.</h2>
+		            <apex:form id="rebateForm">
+		            	<apex:inputHidden id="frmLoadMessage" value="{!frmLoadMessage}" />
+			            <fieldset style="border:none;">
+				            <div id="refnumdiv" style="font-weight:bold;">
+				                <label>Reference #: </label>
+				                <span class="mediumshorttext noborder"><apex:outputText id="frmRebateNum" value="{!frmRebateNum}" styleClass="noborder"/></span>
+				            </div>
+				            <div>
+				                <label> Account Number: </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctNum" value="{!frmAcctNum}" maxlength="14" size="14" tabindex="1" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2011RF, 'images/warning-icon-yellow.png')}" alt="warning" title="{!frmAcctNumMsg}" styleClass="error-icon" id="frmAcctNumErr" style="{!frmAcctNumMsgStyle}" />
+				            </div>
+				            <div>
+				                <label>First Name: </label>
+				                <span class="mediumtext"><apex:inputText id="frmFirstName" value="{!frmFirstName}" maxlength="25" size="25" tabindex="2" /></span>
+				            </div>
+				            <div>
+				                <label>Last Name: </label>
+				                <span class="mediumtext"><apex:inputText id="frmLastName" value="{!frmLastName}" maxlength="25" size="25" tabindex="3" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2011RF, 'images/warning-icon-red.png')}" alt="error" title="{!frmLastNameMsg}" styleClass="error-icon" id="frmLastNameErr" style="{!frmLastNameMsgStyle}" />
+				            </div>
+				            <div>
+				                <label>Account/Installation Address: </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctAddress1" value="{!frmAcctAddress1}" maxlength="25" size="25" tabindex="4" /></span>
+				            </div>
+				            <div>
+				                <label> </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctAddress2" value="{!frmAcctAddress2}"  maxlength="25" size="25" tabindex="5" /></span>
+				            </div>
+				            <div>
+				                <label>City: </label>
+				                <span class="mediumtext"><apex:inputText id="frmAcctCity" value="{!frmAcctCity}" maxlength="25" size="25" tabindex="6" /></span>
+				            </div>
+				            <div>
+				                <label>State:</label>
+				                <span class="mediumshorttext"><apex:inputText id="frmAcctState" value="{!frmAcctState}" maxlength="2" size="2" tabindex="7" /></span>
+				                <label style="width:5em;"> Zip:</label>
+				                <span class="mediumshorttext"><apex:inputText id="frmAcctZip" value="{!frmAcctZip}" maxlength="10" size="10" tabindex="8" /></span>
+				            </div>
+				            <div>
+				                <label>Home Tel: </label>
+				                <span class="mediumshorttext"><apex:inputText id="frmHomePhone" value="{!frmHomePhone}" maxlength="12" size="12" tabindex="9" /></span>
+				                <label style="width:5em">Work Tel:</label>
+				                <span class="mediumshorttext"><apex:inputText id="frmWorkPhone" value="{!frmWorkPhone}" maxlength="12" size="12" tabindex="10" /></span>
+				            </div>
+			            </fieldset>
+			            <fieldset>
+			            	<div>
+				            	<input type="checkbox" id="mailsamecb" style="margin-left: 100px;" onchange="mailCheck(this.checked)" />
+		            			Check if mailing address is same as account address
+				                <apex:inputHidden id="mailSame" value="{!mailSame}" />
+			            	</div>
+			            	<div id="manmaildiv">
+					            <div>
+					                <label>Mailing Address: </label>
+					                <span class="mediumtext"><apex:inputText id="frmMailAddress1" value="{!frmMailAddress1}" maxlength="25" size="25" tabindex="11" /></span>
+					            </div>
+					            <div>
+					                <label> </label>
+					                <span class="mediumtext"><apex:inputText id="frmMailAddress2" value="{!frmMailAddress2}"  maxlength="25" size="25" tabindex="12" /></span>
+					            </div>
+					            <div>
+					                <label>City: </label>
+					                <span class="mediumtext"><apex:inputText id="frmMailCity" value="{!frmMailCity}" maxlength="25" size="25" tabindex="13" /></span>
+					            </div>
+					            <div>
+					                <label>State:</label>
+					                <span class="mediumshorttext"><apex:inputText id="frmMailState" value="{!frmMailState}" maxlength="2" size="2" tabindex="14" /></span>
+					                <label style="width:5em;"> Zip:</label>
+					                <span class="mediumshorttext"><apex:inputText id="frmMailZip" value="{!frmMailZip}" maxlength="10" size="10" tabindex="15" /></span>
+					            </div>
+			            	</div>
+			            </fieldset>
+			            <fieldset>
+				            <div >
+				            	<apex:inputCheckbox id="frmRecvEmail" value="{!frmRecvEmail}" style="margin-left: 100px;" tabindex="16" /> 
+				           		Yes, I wish to receive email about energy-related products and services
+				            </div>
+				            <div>
+				                <label>Email Address: </label>
+				                <span class="mediumtext"><apex:inputText id="frmEmail"  value="{!frmEmail}" maxlength="50" size="25" tabindex="17" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2011RF, 'images/warning-icon-red.png')}" alt="error" title="{!frmEmailMsg}" styleClass="error-icon" id="frmEmailErr" style="{!frmEmailMsgStyle}" />
+				            </div>
+			            </fieldset>
+			            <fieldset>
+			                <label class="autowidth">I have the following appliance(s) in my home:</label>
+			                <div>
+			                    <label >Water Heater <br />
+			                    Fuel Type:</label>
+			                  <span class="noborder" style="width:100px">
+			                    <apex:selectList id="frmWHFuel" value="{!frmWHFuel}" size="1" tabindex="18" >
+			                        <apex:selectOption itemValue="BLK" itemLabel="None" />
+			                        <apex:selectOption itemValue="ELEC" itemLabel="Electric" />
+			                        <apex:selectOption itemValue="NGAS" itemLabel="Natural Gas" />
+			                        <apex:selectOption itemValue="OIL" itemLabel="Oil" />
+			                        <apex:selectOption itemValue="OTHR" itemLabel="Other" />
+			                    </apex:selectList>
+			                  </span>
+			                  <label>Clothes Washer <br />
+			                  Fuel Type:</label>
+			                    <apex:selectList id="frmCWFuel" value="{!frmCWFuel}" size="1" tabindex="19" >
+			                        <apex:selectOption itemValue="BLK" itemLabel="None" />
+			                        <apex:selectOption itemValue="ELEC" itemLabel="Electric" />
+			                        <apex:selectOption itemValue="NGAS" itemLabel="Natural Gas" />
+			                        <apex:selectOption itemValue="OIL" itemLabel="Oil" />
+			                        <apex:selectOption itemValue="OTHR" itemLabel="Other" />
+			                    </apex:selectList>
+			                </div>
+			                <div>
+			                    <label>Own/Rent:</label>
+			                    <span class="noborder" style="width:100px;">
+			                    <apex:selectList id="frmOwnRent" value="{!frmOwnRent}" size="1" tabindex="20" >
+			                        <apex:selectOption itemValue="BLK" itemLabel="Select" />
+			                        <apex:selectOption itemValue="OWN" itemLabel="Own" />
+			                        <apex:selectOption itemValue="RENT" itemLabel="Rent" />
+			                    </apex:selectList>
+			                    </span>
+			                    <label>House Type: </label>
+								<span class="mediumshorttext noborder">
+			                    <apex:selectList id="frmHouseType" value="{!frmHouseType}" size="1" tabindex="21" >
+			                        <apex:selectOption itemValue="BLK" itemLabel="Select" />
+			                        <apex:selectOption itemValue="SF" itemLabel="Single Family" />
+			                        <apex:selectOption itemValue="CT" itemLabel="Condo/Townhouse" />
+			                        <apex:selectOption itemValue="MULT" itemLabel="Multi Family" />
+			                    </apex:selectList>
+			                    </span>
+			                </div>
+			                 <div>
+			                    <label>Primary Residence or Vacation Home:</label>
+			                    <apex:selectList id="frmPriVac" value="{!frmPriVac}" size="1" tabindex="22" >
+			                        <apex:selectOption itemValue="BLK" itemLabel="Select" />
+			                        <apex:selectOption itemValue="PRIM" itemLabel="Primary Residence" />
+			                        <apex:selectOption itemValue="VAC" itemLabel="Vacation Home" />
+			                    </apex:selectList>
+			                </div>
+			                <div>
+			                    <label>Number Of Units: </label>
+			                    <span class="shorttext"><apex:inputText id="frmHouseUnits" value="{!frmHouseUnits}" maxlength="5" size="5" tabindex="23" /></span>
+			                </div>
+			            </fieldset>
+			            <fieldset>
+			            	<div>
+				            	<input type="checkbox" id="manualmodelcb" style="margin-left: 100px;" onchange="modelCheck(this.checked)" />
+		            			Select manufacturer and model, or check box to enter manually
+				                <apex:inputHidden id="manualModel" value="{!manualModel}" />
+			            	</div>
+				            <div id="selmandiv" class="noborder">
+				                <label>Manufacturer: </label>
+								<span  class="mediumshorttext noborder">
+			                    <apex:selectList id="selBrand" value="{!selBrand}" size="1" tabindex="24"  styleClass="noborder">
+			                        <apex:selectOption itemValue="" itemLabel="Please Select ..." />
+			                        <apex:selectOption itemValue="FRIGIDAIRE" itemLabel="Frigidaire" />
+			                        <apex:selectOption itemValue="KENMORE" itemLabel="Sears Kenmore" />
+			                        <apex:selectOption itemValue="U-LINE" itemLabel="U-Line" />
+			                        <apex:actionSupport event="onchange" rerender="selModelId" status="modelStatus"/>
+			                    </apex:selectList>
+			                    </span>
+			                    <span class="noborder">
+									<apex:actionStatus id="modelStatus" styleClass="noborder" startText=" updating model list ..." stopText="" />			                    
+								</span>
+				            </div>
+				            <div id="selmoddiv" class="noborder">
+				                <label>Model Number: </label>
+								<span class="mediumtext noborder">
+			                    <apex:selectList id="selModelId" value="{!selModelId}" size="1" tabindex="25" >
+									<apex:selectOptions value="{!modelList}" />
+			                    </apex:selectList>
+			                    </span>
+				            </div>
+				            <div id="manmandiv" style="display:none;">
+				                <label>Manufacturer: </label>
+				                <span class="mediumtext"><apex:inputText id="frmBrand" value="{!frmBrand}" maxlength="15" size="15" tabindex="26" /></span>
+				            </div>
+				            <div id="manmoddiv" style="display:none;">
+				                <label>Model Number: </label>
+				                <span class="mediumtext"><apex:inputText id="frmModel" value="{!frmModel}" maxlength="25" size="25" tabindex="27" /></span>
+				            </div>
+				        </fieldset>
+			            <fieldset>
+			            	<div>
+				            	<input type="checkbox" id="manualstorecb" style="margin-left: 100px;" onchange="storeCheck(this.checked)" />
+		            			Select store from list, or check box to enter manually
+				                <apex:inputHidden id="manualStore" value="{!manualStore}" />
+			            	</div>
+				            <div id="selstorediv" class="noborder">
+				                <label>Store: </label>
+								<span class="mediumtext noborder">
+			                    <apex:selectList id="selStoreId" value="{!selStoreId}" size="1" tabindex="28" style="width: 400px;">
+									<apex:selectOptions value="{!storeList}" />
+			                    </apex:selectList>
+			                    </span>
+				            </div>
+				            <div id="manstorediv" style="display:none;">
+				                <div>
+				                    <label>Store Name: </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreName" value="{!frmStoreName}" maxlength="30" size="30" tabindex="29" /></span>
+				                </div>
+				                <div>
+				                    <label>Store Address: </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreAddress1" value="{!frmStoreAddress1}" maxlength="25" size="25" tabindex="30" /></span>
+				                </div>
+				                <div>
+				                	<label> </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreAddress2" value="{!frmStoreAddress2}" maxlength="25" size="25" tabindex="31" /></span>
+				                </div>
+				                <div>
+				                    <label>City: </label>
+				                    <span class="mediumtext"><apex:inputText id="frmStoreCity" value="{!frmStoreCity}" maxlength="25" size="25" tabindex="32" /></span>
+				                </div>
+				                <div>
+				                    <label>State:</label>
+				                    <span class="mediumshorttext"><apex:inputText id="frmStoreState" value="{!frmStoreState}" maxlength="2" size="2" tabindex="33" /></span>
+				                    <label style="width:100px"> Zip:</label>
+				                    <span class="mediumshorttext"><apex:inputText id="frmStoreZip" value="{!frmStoreZip}" maxlength="10" size="10" tabindex="34" /></span>
+				                </div>
+				            </div>
+			            </fieldset>
+			            <fieldset>
+				            <div>
+				                <label>Purchase Price: </label>
+				                <span class="mediumshorttext">$<apex:inputText id="frmPaidAmt" value="{!frmPaidAmt}" maxlength="10" size="10" tabindex="35" /></span>
+				                <label style="width:100px">Purchase Date: </label>
+				                <span class="mediumshorttext"><input type="text" name="purchase_date" id="purchase_date" maxlength="10" size="10" tabindex="36" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2011RF, 'images/warning-icon-red.png')}" alt="error" title="{!frmPurchDateMsg}" styleClass="error-icon" id="frmPurchDateErr" style="{!frmPurchDateMsgStyle}" />
+				                <apex:inputHidden id="frmPurchDate" value="{!frmPurchDate}" />
+				            </div>
+			            </fieldset>
+			            <div>
+			            	<apex:CommandButton action="{!actionCheckMe}" value="{!frmButtonLabel}" styleclass="button" onclick="return checkMe();" />
+			            </div>
+					</apex:form>
+		        </div>
+		    </div>
+		</div>
+	</body>
+</apex:page>

@@ -1,0 +1,700 @@
+<apex:page id="LIPA2012RF" showHeader="false" standardStyleSheets="false" 
+	action="{!initializeSession}" controller="FormLIPA2012RF" cache="false" expires="0">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<title>LIPA 2012 Refrigerator Rebate Form</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript" language="javascript"></script>
+		<script src="{!URLFOR($Resource.LIPA2012, 'js/jquery.tooltip.js')}" type="text/javascript" language="javascript"></script>
+		<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+		<style type="text/css">
+			body { font-family:Arial, Helvetica, sans-serif;  color:#333; background-color:#fff; margin:0px; }
+			div {  }
+			h1 { font-size:16px; font-weight:bold; }
+			p { margin:0px; }
+			#container { width:600px; margin:0px auto; padding:20px 40px; background-color:#2fb457;  }
+			.header { background-color:#fff; height:100px; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px; 
+				border-radius: 5px 5px 5px 5px; }
+			#main { }
+			#content-top { color:#fff; font-size:11px;   }
+			#content-top .highlight { background-color:#fae62e; padding:5px; color:#333; margin:5px 0px; }
+			#content-top #mailto { font-size:13px; }
+			#content-main  { margin-top:20px; background-color:#fff; padding:10px; -moz-border-radius: 5px 5px 5px 5px; -webkit-border-radius: 5px 5px 5px 5px;
+				border-radius: 5px 5px 5px 5px; }
+			#content-main div { margin:10px 0px; }
+			#content-main h2 { font-size:16px; margin:0px 0px 0px 0px; }
+			/* form elements */
+			form { font-size:.875em; }
+			fieldset { border:none; padding:15px 0px 15px 0px; border-top:0px #2fb457 solid; margin:0px; }
+			label { display:inline-block; width:125px; vertical-align:inherit; text-align:right; padding-right:10px; }
+			label.autowidth { width:auto; }
+			form span { display:inline-block; border-bottom:1px #333 solid; margin-right:30px; }
+			form span.noborder, form span .noborder, form .noborder span, form .noborder { border:none; }
+			input[type="text"] {  border:none; border-bottom:0px #333 solid; font-size:1em; width:auto;  }
+			input:focus { background-color:#ccc; }
+			.longtext { width:28em; }
+			.mediumtext { width:18em; }
+			.mediumshorttext { width:9em; }
+			.shorttext { width:3em; }
+			.button  { -moz-border-radius: 3px 3px 3px 3px; background-color: #E8E8E9; border-color: #B5B5B5 #B5B5B5 #7F7F7F; border-style: solid; border-width: 1px; color: #333333;
+				font-size: 0.9em; font-weight: bold; margin: 1px; padding: 2px 3px; text-decoration: none; }
+			#tooltip { position: absolute; 	z-index: 3000; border: 1px solid #111; background-color: #EEEEEB; padding: 5px; opacity: 0.85; font-size:11px;  }
+			#tooltip h3 { font-size:11px; margin:0px; }
+			.error-icon { visibility:visible; position:absolute; margin-left:-20px; }
+			.question-icon { visibility:visible; position:absolute; cursor:pointer; margin-left:0px; }
+			#footer { width:680px; background-color:#fff; margin:0px auto; padding:20px 0px; text-align:right;  }		
+			.alwaysblack {color: black; }
+			#need-help { float:right; padding:5px; margin-top:-5px; background-color:#1783C5; font-weight:bold; color:#fff; font-style:italic; border:none; cursor:pointer; }
+			.lipa-dialog { display:none; }
+			.ui-dialog-titlebar { background-color:#2fb457; background-image:none; color:#fff; border-color:#2fb457 }
+			.ui-dialog-content { padding:1em; }
+			.printonly { display:none; }
+			.ui-widget-overlay { opacity:.8; filter:Alpha(Opacity=80); }
+             #content-main .submitbutton { 
+				background: #296737; /* for non-css3 browsers */
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8DC63F', endColorstr='#527424'); /* for IE */
+				background: -webkit-gradient(linear, left top, left bottom, from(#8DC63F), to(#527424)); /* for webkit browsers */
+				background: -moz-linear-gradient(top,  #8DC63F,  #527424); /* for firefox 3.6+ */ 
+				width:300px; text-align:center; padding:7px; margin:20px 0px;
+				color:#fff; text-decoration:none; font-size:18px; font-weight:normal; z-index:3; display:block;
+				border-radius:10px; -webkit-border-radius:10px; -moz-border-radius:10px;
+				border: 1px solid #527424;
+				cursor:pointer;
+				-moz-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+				-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+				box-shadow: 0 1px 1px rgba(0,0,0,.1) inset;
+				position:relative;
+				text-shadow: 0px -1px 1px #000;
+			}
+			#content-main .submitbutton::after {
+				background: none;
+				border: 3px solid #E2E6CF;
+				-moz-border-radius: 15px;
+				-webkit-border-radius: 15px;
+				border-radius: 15px;
+				content: "";
+				position: absolute;
+				top: -4px;
+				right: -4px;
+				bottom: -4px;
+				left: -4px;
+			}
+			#content-main .submitbutton:hover { background:#527424; }
+			#content-main .submitbutton.disabled, #content-main .submitbutton.disabled:hover { background:#999; cursor:text; border-color:#999; text-shadow:none; }
+		</style>
+		<style type="text/css" media="print">
+			.printonly { display:block !important; }
+			.pagebreak { page-break-after:always; }
+			#checklist { width:600px; margin:2em auto; }
+			#checklist p { margin-bottom: 10px; }
+			#checklist li { list-style:none; margin-bottom:4px; }
+			.error-icon, .question-icon, .button { display:none; }
+			#need-help { display:none; }
+		</style>
+		<script>
+			$(function() {
+				$( "#purchase_date" ).datepicker();
+			});
+			$(document).ready(function(){ 
+				$('.error-icon').tooltip({
+					track: true,
+					delay: 0,
+					showURL: false,
+					showBody: " - ",
+					fade: 250
+				});
+			});
+		</script>
+		<script>
+        	var documentCount = 0;
+			function checkMe() {
+				// be careful in defining local tests - FDC runs rampant on form as written
+				// so DOM ids and structure may be different from expected
+				// transfer purchase date to FDC field
+				document.getElementById("LIPA2012RF:rebateForm:frmPurchDate").value = document.getElementById("purchase_date").value
+                submitButton();
+				return true;
+			}
+			function runOnLoad() {
+				// if 'Other' status, redirect
+				var sobj = document.getElementById("LIPA2012RF:rebateForm:frmStatus");
+				if (sobj.value == 'Other') {
+					var nurl = window.location.href;
+					window.location.href = nurl.replace("?Rebate","_Status?Rebate")+'&FormCode=LIRF2012';
+				}
+				// determine if there is any message to display (e.g. AJAX result)
+				var obj = document.getElementById("LIPA2012RF:rebateForm:frmLoadMessage");
+				if (obj.value.length > 0) alert(obj.value);
+				// determine if there is an account number error/warning, show dialog
+				var eobj = document.getElementById("LIPA2012RF:rebateForm:frmShowInvoice");
+				if (eobj.value == 'Yes') {
+					$('#frmAcctNumExampleDialog').dialog( { modal:true, width:750, });
+				}
+           		doSubmitVia(document.getElementById("LIPA2012RF:rebateForm:submitVia").value);
+				if (document.getElementById("LIPA2012RF:rebateForm:formOpen").value == 'false') {
+					// reservations are not supported, so same actions always
+            		document.getElementById("headertext").style.display = "none";
+            		document.getElementById("subviarow").style.display = "none";
+            		document.getElementById("emailreqrow").style.display = "none";
+            		document.getElementById("subclosedrow").style.display = "block";
+            		document.getElementById("custinfo").style.display = "none";
+            		document.getElementById("mailinfo").style.display = "none";
+            		document.getElementById("emailinfo").style.display = "none";
+            		document.getElementById("surveyinfo").style.display = "none";
+            		document.getElementById("modelinfo").style.display = "none";
+            		document.getElementById("storeinfo").style.display = "none";
+            		document.getElementById("purchinfo").style.display = "none";
+            		document.getElementById("suptdocrow").style.display = "none";
+            		document.getElementById("submitbutton").style.display = "none";
+				}
+				// replace visible date from value exchanged w/server
+				document.getElementById("purchase_date").value = document.getElementById("LIPA2012RF:rebateForm:frmPurchDate").value;
+                mailCheck(document.getElementById("LIPA2012RF:rebateForm:mailSame").checked); // set visible, invisible fields
+                modelCheck(document.getElementById("LIPA2012RF:rebateForm:manualModelRF").checked); // set visible, invisible fields
+                storeCheck(document.getElementById("LIPA2012RF:rebateForm:manualStore").checked); // set visible, invisible fields
+				var rn = document.getElementById("LIPA2012RF:rebateForm:frmRebateNum").innerHTML;
+				if (rn.length < 2) {
+					document.getElementById("refnumdiv").style.display = "none";
+				} else {
+            		document.getElementById("headertext").style.display = "none";
+					document.getElementById("refnumdiv").style.display = "block";
+            		document.getElementById("subviarow").style.display = "none";
+            		document.getElementById("emailreqrow").style.display = "none";
+            		document.getElementById("subclosedrow").style.display = "none";
+            		document.getElementById("suptdocrow").style.display = "none";
+				}
+				if (document.getElementById("LIPA2012RF:rebateForm:frmReadOnly").value == "yes") {
+					document.getElementById("purchase_date").disabled = true;
+                   jQuery('.submitbutton').addClass('disabled');
+				}
+			}
+			function modelCheck(ischecked) {
+				// alert(ischecked);
+				if (ischecked) {
+					document.getElementById("selmandiv").style.display = "none";
+					document.getElementById("selmoddiv").style.display = "none";
+					document.getElementById("manmandiv").style.display = "block";
+					document.getElementById("manmoddiv").style.display = "block";
+				} else {
+					document.getElementById("selmandiv").style.display = "block";
+					document.getElementById("selmoddiv").style.display = "block";
+					document.getElementById("manmandiv").style.display = "none";
+					document.getElementById("manmoddiv").style.display = "none";
+				}
+			}
+			function storeCheck(ischecked) {
+				// alert(ischecked);
+				if (ischecked) {
+					document.getElementById("selstorediv").style.display = "none";
+					document.getElementById("manstorediv").style.display = "block";
+				} else {
+					document.getElementById("selstorediv").style.display = "block";
+					document.getElementById("manstorediv").style.display = "none";
+				}
+			}
+			function mailCheck(ischecked) {
+				// alert(ischecked);
+				if (ischecked) {
+					document.getElementById("manmaildiv").style.display = "none";
+				} else {
+					document.getElementById("manmaildiv").style.display = "block";
+				}
+			}
+            function doSubmitVia(opt) {
+            	// alert(opt);
+            	if (opt == 'Electronic') {
+            		document.getElementById("via_mail").checked = false;
+            		document.getElementById("via_elect").checked = true;
+                    document.getElementById("LIPA2012RF:rebateForm:emailRequest").checked = false; // initialize
+                    if (documentCount == 0) {
+                        document.getElementById("emailreqrow").style.display = "block";
+                    }
+            		document.getElementById("suptdocrow").style.display = "block";
+            	} else {
+            		document.getElementById("via_mail").checked = true;
+            		document.getElementById("via_elect").checked = false;
+            		document.getElementById("emailreqrow").style.display = "none";
+            		document.getElementById("suptdocrow").style.display = "none";
+            	}
+           		document.getElementById("LIPA2012RF:rebateForm:submitVia").value = opt;
+            }
+            function updateDocumentCount(n) {
+                // the upload area is visible if this was called
+                documentCount = n; // if needed later
+                if (n > 0) {
+                    document.getElementById("emailreqrow").style.display = "none";
+                    document.getElementById("LIPA2012RF:rebateForm:emailRequest").checked = false; // just in case
+                } else {
+                    document.getElementById("emailreqrow").style.display = "table-row";
+                }
+            }
+            function requestEmailCheck(ischecked) {
+                if (ischecked) {
+                    document.getElementById("suptdocrow").style.display = "none";
+                } else {
+                    document.getElementById("suptdocrow").style.display = "block";
+                }
+            }
+		</script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				jQuery('#need-help').click(function() {
+					$('#help-dialog').dialog( { modal:true, width:500, });
+				});
+				jQuery('.question-icon').click(function() {
+					$('#frmAcctNumExampleDialog').dialog( { modal:true, width:750, });
+				});
+			});
+		</script>
+	</head>
+	<body onload="runOnLoad();">
+		<div class="printonly pagebreak" id="checklist">
+			<div class="header">
+		    	<img src="{!URLFOR($Resource.LIPA2012, 'images/lipa.gif')}" alt="LIPA" style="float:left;" />
+		    </div>
+		    <div class="text" style="clear:both">
+            	<apex:outputText value="{!checklistContent}" escape="false" />
+				<!-- 		    
+				<p>Thank you for submitting your LIPA 2012 refrigerator rebate online.</p>
+				<p>Have you...</p>
+				<ul>
+					<li><input type="checkbox" readonly="readonly" /> attached a copy of your itemized receipt showing the rebated item? </li>
+					<li><input type="checkbox" readonly="readonly" /> attached a copy of BOTH PAGES of your most recent LIPA bill? </li>
+					<li><input type="checkbox" readonly="readonly" /> submitted your application no later than 12/31/2012</li>
+				</ul>
+				<p>Mail to:</p>
+				<p>LIPA Refrigerator Rebate<br />
+			    P. O. Box 2009<br />
+			    New Hyde Park, NY  11040-9993</p>	
+				 -->
+		    </div>
+		</div>
+		<div id="container">
+			<div class="header">
+		    	<img src="{!URLFOR($Resource.LIPA2012, 'images/lipa.gif')}" alt="LIPA" style="float:left;" />
+		    </div>
+		    <div id="main">
+		    	<div id="content-top">
+		    		<div id="need-help">Need help?</div>
+		        	<h1>The ENERGY STAR $75-$100 MAIL-IN REBATE</h1>
+		            <p>Get $75-$100 back from LIPA on your purchase of an eligible ENERGY STAR qualified
+		            	refrigerator. This rebate is good for purchases made January 1, 2012 through December 
+		            	31, 2012. Limit 2 rebates per LIPA residential electric customer account. To receive 
+		            	your rebate, please fill out this form completely and mail it to the address below.
+		            </p>
+		            <p class="highlight">Please include a copy of your dated sales receipt and/or invoice
+		            	 showing the manufacturer, model number, and price of the ENERGY STAR qualified 
+		            	 refrigerator purchased, and a copy of your recent electric bill. Incomplete 
+		            	 information will delay or disqualify your rebate. 
+		            	 <span style="font-weight:bold">All rebate requests must be postmarked no later 
+		            	 than December 31, 2012.</span>
+		            </p>
+		            <div id="mailto">
+		            	<p style="font-weight:bold">Mail to: LIPA Refrigerator Rebate</p>
+		                <p>P. O. Box 2009</p>
+		                <p>New Hyde Park, NY  11040-9993</p>
+		            </div>
+		            <div id="help-dialog" class="lipa-dialog" title="Need help?">
+		            	For additional information or assistance in completing this online application, please contact our customer care center at 1-877-654-5472.
+		            	We are open from 8 AM to 8 PM, Monday through Friday, and 8 AM to 5 PM on Saturdays, Eastern Time.
+	            	</div>
+		        </div>
+		        <div id="content-main">
+		        	<h2 id="headertext">Fill out completely. All information below is required.
+		        		Your LIPA Account address must match the delivery address for your refrigerator.
+	        		</h2>
+		            <apex:form id="rebateForm">
+                        <apex:actionFunction name="submitButton" action="{!actionCheckMe}" />
+		            	<apex:inputHidden id="frmLoadMessage" value="{!frmLoadMessage}" />
+          				<apex:inputHidden id="frmReadOnly" value="{!frmReadOnly}" />
+   						<apex:inputHidden id="frmShowInvoice" value="{!frmShowInvoice}" />
+   						<apex:inputHidden id="frmStatus" value="{!frmStatus}" />
+                        <apex:inputHidden id="debugText" value="{!debugText}" />
+                        <apex:inputHidden id="formOpen" value="{!formOpen}" />
+                        <apex:inputHidden id="existingType" value="{!existingType}" />
+                        <apex:inputHidden id="submitAs" value="{!formFields['Rebate__c.SubmitAs'].stringValue}" />
+                        <apex:inputHidden id="submitVia" value="{!formFields['Rebate__c.SubmitVia__c'].stringValue}" />
+						<fieldset style="border:none;">
+							<div id="subviarow">
+								<table cellpadding="0" cellspacing="10" border="0" width="100%">
+								   	<tr>
+								    	<td width="5%">
+								    		<input id="via_elect" type="checkbox" onclick="doSubmitVia('Electronic')"/>
+										</td>
+										<td width="95%">
+											<label class="autowidth" for="via_elect" style="text-align:left;"><apex:outputText value="{!viaElectLabel}" escape="false" /></label>
+										</td>
+									</tr>
+									<tr>
+										<td width="5%">
+											<input id="via_mail" type="checkbox" onclick="doSubmitVia('Mail')"/>
+									 	</td>
+									 	<td width="95%">
+									 		<label class="autowidth" for="via_mail" style="text-align:left;"><apex:outputText value="{!viaMailLabel}" escape="false"/></label>
+									 	</td>
+									</tr>
+								</table>
+							</div>
+							<div id="emailreqrow">
+								<table cellpadding="0" cellspacing="10" border="0" width="100%">
+									<tr>
+									 	<td width="5%">
+									 		<apex:inputCheckbox id="emailRequest" value="{!formFields['Rebate__c.EmailRequest__c'].booleanValue}" onclick="requestEmailCheck(this.checked)" />
+									 	</td>
+									 	<td width="95%">
+									 		<apex:outputLabel styleClass="autowidth" style="text-align:left;" for="emailRequest" value="{!formFields['Rebate__c.EmailRequest__c'].fieldLabel}" escape="false" />
+									 	</td>
+									</tr>
+								</table>
+							</div>
+							<div id="subclosedrow" style="display:none;">
+								<span class="text noborder" style="font-weight:bold;">Warning: This rebate program is now closed</span><br />
+								<apex:outputText value="{!frmMessageClosed}" />
+							</div>
+						</fieldset>
+				        <fieldset id="custinfo" style="border:none;">
+	                        <div id="refnumdiv" style="font-weight:bold;">
+	                        	
+	                            <label class="autowidth"><apex:outputText value="{!existingType}" /> Reference #: </label>
+	                            <span class="mediumshorttext noborder">
+	                                <apex:outputText id="frmRebateNum" value="{!frmRebateNum}" styleClass="noborder"/>
+	                            </span>
+	                            <label>Total amount: </label>
+	                        	<apex:outputText value="{!totalAmountSaved}" />
+	                        </div>
+							<div>
+							    <label><apex:outputText value="{!formFields['Contact.AccountNumber__c'].fieldLabel}" escape="false"/></label>
+							    <span class="mediumtext"><apex:inputText value="{!formFields['Contact.AccountNumber__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="14" size="14" tabindex="1" /></span>
+							    <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/question-mark-off.png')}" alt="question" title="Click to view account number location in sample bill." styleClass="error-icon question-icon" id="frmAcctNumExample"  />
+							    <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.AccountNumber__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.AccountNumber__c'].WarnStyle}" />
+							    <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.AccountNumber__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.AccountNumber__c'].ErrorStyle}" />
+							    <div id="frmAcctNumExampleDialog" class="lipa-dialog" title="Account Number Example"><img src="{!URLFOR($Resource.LIPA2012, 'images/lipa_bill.jpg')}" alt="LIPA Bill" /></div>
+							</div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.FirstName'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['Contact.FirstName'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="2" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.FirstName'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.FirstName'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['Contact.FirstName'].ErrorMsg}}" styleClass="error-icon" style="{!formFields['Contact.FirstName'].ErrorStyle}" />
+				            </div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.LastName'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['Contact.LastName'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="3" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.LastName'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.LastName'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.LastName'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.LastName'].ErrorStyle}" />
+				            </div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.ServiceAddress1__c'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['Contact.ServiceAddress1__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="4" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.ServiceAddress1__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceAddress1__c'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceAddress1__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceAddress1__c'].ErrorStyle}" />
+				            </div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.ServiceAddress2__c'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['Contact.ServiceAddress2__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="5" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.ServiceAddress2__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceAddress2__c'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceAddress2__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceAddress2__c'].ErrorStyle}" />
+				            </div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.ServiceCity__c'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['Contact.ServiceCity__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="6" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.ServiceCity__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceCity__c'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceCity__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceCity__c'].ErrorStyle}" />
+				            </div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.ServiceState__c'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumshorttext"><apex:inputText value="{!formFields['Contact.ServiceState__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="2" size="2" tabindex="7" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.ServiceState__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceState__c'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceState__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceState__c'].ErrorStyle}" />
+				                <label style="width:5em;"><apex:outputText value="{!formFields['Contact.ServiceZipcode__c'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumshorttext"><apex:inputText value="{!formFields['Contact.ServiceZipcode__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="10" size="10" tabindex="8" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.ServiceZipcode__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceZipcode__c'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ServiceZipcode__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.ServiceZipcode__c'].ErrorStyle}" />
+				            </div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.HomePhone'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumshorttext"><apex:inputText value="{!formFields['Contact.HomePhone'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="12" size="12" tabindex="9" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.HomePhone'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.HomePhone'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.HomePhone'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.HomePhone'].ErrorStyle}" />
+				                <label style="width:5em"><apex:outputText value="{!formFields['Contact.WorkPhone__c'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumshorttext"><apex:inputText value="{!formFields['Contact.WorkPhone__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="12" size="12" tabindex="10" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.WorkPhone__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.WorkPhone__c'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.WorkPhone__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.WorkPhone__c'].ErrorStyle}" />
+				            </div>
+			            </fieldset>
+			            <fieldset id="mailinfo">
+			            	<div>
+								<apex:inputCheckbox id="mailSame" value="{!formFields['Rebate__c.MailSameFlag'].booleanValue}" disabled="{!disableDE}" style="margin-left: 100px;" tabindex="20" onclick="mailCheck(this.checked)" />
+								<apex:outputLabel for="mailSame" styleClass="autowidth" value="{!formFields['Rebate__c.MailSameFlag'].fieldLabel}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.MailSameFlag'].warnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailSameFlag'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailSameFlag'].errorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailSameFlag'].errorStyle}" />
+			            	</div>
+			            	<div id="manmaildiv">
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.MailingAddress1__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumtext"><apex:inputText value="{!formFields['Rebate__c.MailingAddress1__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="21" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.MailingAddress1__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingAddress1__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingAddress1__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingAddress1__c'].ErrorStyle}" />
+					            </div>
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.MailingAddress2__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumtext"><apex:inputText value="{!formFields['Rebate__c.MailingAddress2__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="22" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.MailingAddress2__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingAddress2__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingAddress2__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingAddress2__c'].ErrorStyle}" />
+					            </div>
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.MailingCity__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumtext"><apex:inputText value="{!formFields['Rebate__c.MailingCity__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="23" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.MailingCity__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingCity__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingCity__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingCity__c'].ErrorStyle}" />
+					            </div>
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.MailingState__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumshorttext"><apex:inputText value="{!formFields['Rebate__c.MailingState__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="2" size="2" tabindex="24" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.MailingState__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingState__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingState__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingState__c'].ErrorStyle}" />
+					                <label style="width:5em;"><apex:outputText value="{!formFields['Rebate__c.MailingZipcode__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumshorttext"><apex:inputText value="{!formFields['Rebate__c.MailingZipcode__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="10" size="10" tabindex="25" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.MailingZipcode__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingZipcode__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.MailingZipcode__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.MailingZipcode__c'].ErrorStyle}" />
+					            </div>
+			            	</div>
+			            </fieldset>
+			            <fieldset id="emailinfo">
+							<div >
+								<label />Your email address is required to receive rebate submission<br/>
+								<label />verification and status updates.
+							</div>
+				            <div>
+				                <label><apex:outputText value="{!formFields['Contact.Email'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['Contact.Email'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="50" size="25" tabindex="30" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Contact.Email'].WarnMsg}" styleClass="error-icon" style="{!formFields['Contact.Email'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.Email'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Contact.Email'].ErrorStyle}" />
+				            </div>
+			            	<div>
+								<apex:inputCheckbox id="recvEmail" value="{!formFields['Contact.ReceiveEmail__c'].booleanValue}" disabled="{!disableDE}" style="margin-left: 100px;" tabindex="31" />
+								<apex:outputLabel for="recvEmail" styleClass="autowidth" value="{!formFields['Contact.ReceiveEmail__c'].fieldLabel}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Contact.ReceiveEmail__c'].warnMsg}" styleClass="error-icon" style="{!formFields['Contact.ReceiveEmail__c'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Contact.ReceiveEmail__c'].errorMsg}" styleClass="error-icon" style="{!formFields['Contact.ReceiveEmail__c'].errorStyle}" />
+			            	</div>
+			            </fieldset>
+			            <fieldset id="surveyinfo">
+			                <label class="autowidth">I have the following appliance(s) in my home:</label>
+				            <div >
+				            	<apex:inputCheckbox id="frmHasDehum" value="{!formFields['RebateSurvey__c.DH'].booleanValue}" disabled="{!disableDE}" style="margin-left: 100px;" tabindex="32" /> 
+								<apex:outputLabel for="frmHasDehum" styleClass="autowidth" value="{!formFields['RebateSurvey__c.DH'].fieldLabel}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateSurvey__c.DH'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.DH'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateSurvey__c.DH'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.DH'].errorStyle}" />
+				            </div>
+				            <div >
+				            	<apex:inputCheckbox id="frmHasWall" value="{!formFields['RebateSurvey__c.RAC_Wall'].booleanValue}" disabled="{!disableDE}" style="margin-left: 100px;" tabindex="33" /> 
+								<apex:outputLabel for="frmHasWall" styleClass="autowidth" value="{!formFields['RebateSurvey__c.RAC_Wall'].fieldLabel}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateSurvey__c.RAC_Wall'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.RAC_Wall'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateSurvey__c.RAC_Wall'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.RAC_Wall'].errorStyle}" />
+				            </div>
+				            <div >
+				            	<apex:inputCheckbox id="frmHasWindow" value="{!formFields['RebateSurvey__c.RAC_Window'].booleanValue}" disabled="{!disableDE}" style="margin-left: 100px;" tabindex="34" /> 
+								<apex:outputLabel for="frmHasWindow" styleClass="autowidth" value="{!formFields['RebateSurvey__c.RAC_Window'].fieldLabel}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateSurvey__c.RAC_Window'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.RAC_Window'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateSurvey__c.RAC_Window'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.RAC_Window'].errorStyle}" />
+				            </div>
+				            <br />
+			                <label class="autowidth">Please tell us about your home:</label>
+			                <div>
+								<label style="width:100px;"><apex:outputText value="{!formFields['RebateSurvey__c.Building Type'].fieldLabel}" /></label>
+								<span class="noborder" style="width:100px;">
+									<apex:selectList value="{!formFields['RebateSurvey__c.Building Type'].stringValue}" size="1" disabled="{!disableDE}" tabindex="35">
+										<apex:selectOptions value="{!dropHouseType}" />
+									</apex:selectList>
+								</span>							
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Building Type'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Building Type'].WarnStyle}" />
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Building Type'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Building Type'].ErrorStyle}" />
+				                <label><apex:outputText value="{!formFields['RebateSurvey__c.HouseUnits'].fieldLabel}" escape="false" /></label>
+				                <span class="shorttext"><apex:inputText value="{!formFields['RebateSurvey__c.HouseUnits'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="10" size="10" tabindex="36" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['RebateSurvey__c.HouseUnits'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.HouseUnits'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateSurvey__c.HouseUnits'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.HouseUnits'].ErrorStyle}" />
+			                </div>
+			                <div>
+								<label style="width:100px;"><apex:outputText value="{!formFields['RebateSurvey__c.Own_Rent'].fieldLabel}" /></label>
+			                    <span class="noborder" style="width:100px;">
+									<apex:selectList value="{!formFields['RebateSurvey__c.Own_Rent'].stringValue}" size="1" disabled="{!disableDE}" tabindex="37">
+										<apex:selectOptions value="{!dropOwnRent}" />
+									</apex:selectList>
+								</span>							
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Own_Rent'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Own_Rent'].WarnStyle}" />
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Own_Rent'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Own_Rent'].ErrorStyle}" />
+								<label><apex:outputText value="{!formFields['RebateSurvey__c.Residence'].fieldLabel}" /></label>
+								<span>
+									<apex:selectList value="{!formFields['RebateSurvey__c.Residence'].stringValue}" size="1" disabled="{!disableDE}" tabindex="38">
+										<apex:selectOptions value="{!dropPriVac}" />
+									</apex:selectList>							
+								</span>
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Residence'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Residence'].WarnStyle}" />
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['RebateSurvey__c.Residence'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateSurvey__c.Residence'].ErrorStyle}" />
+			                </div>
+			            </fieldset>
+			            <fieldset id="modelinfo">
+			            	<div>
+                                Choose the manufacturer and model from the lists below:<br />
+								<span class="noborder" style="margin-left: 100px;"><apex:inputCheckbox id="manualModelRF" value="{!formFields['RebateDetail__c.ManualModelFlag.RF'].booleanValue}" disabled="{!disableDE}" tabindex="41" onclick="modelCheck(this.checked)" /></span>
+								<apex:outputLabel for="manualModelRF" styleClass="autowidth" value="{!formFields['RebateDetail__c.ManualModelFlag.RF'].fieldLabel}" />						
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ManualModelFlag.RF'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.RF'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ManualModelFlag.RF'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ManualModelFlag.RF'].errorStyle}" />
+			            	</div>
+				            <div id="selmandiv" class="noborder">
+                                <label><apex:outputText value="{!formFields['RebateDetail__c.SelManufacturer.RF'].fieldLabel}" /></label>
+                                <span class="mediumshorttext noborder">
+	                                <apex:selectList value="{!formFields['RebateDetail__c.SelManufacturer.RF'].stringValue}" disabled="{!disableDE}" size="1" tabindex="42" >
+	                                    <apex:selectOptions value="{!details['RF'].mfrList}" />
+	                                    <apex:actionSupport action="{!makeModelList}" event="onchange" rerender="selModelIdRF" status="modelStatusRF"/>
+	                                </apex:selectList>
+                                </span>
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.SelManufacturer.RF'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.RF'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.SelManufacturer.RF'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.SelManufacturer.RF'].errorStyle}" />
+                                <span class="noborder">
+                                    <apex:actionStatus id="modelStatusRF" styleClass="noborder" startText=" updating model list ..." stopText="" />                               
+                                </span>
+				            </div>
+				            <div id="selmoddiv" class="noborder">
+                                <label><apex:outputText value="{!formFields['RebateDetail__c.ModelID__c.RF'].fieldLabel}" /></label>
+                                <span class="mediumshorttext">
+	                                <apex:selectList id="selModelIdRF" value="{!formFields['RebateDetail__c.ModelID__c.RF'].stringValue}" disabled="{!disableDE}" size="1" tabindex="43" >
+	                                    <apex:selectOptions value="{!details['RF'].modelList}" />
+	                                </apex:selectList>
+                                </span>
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['RebateDetail__c.ModelID__c.RF'].warnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.RF'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelID__c.RF'].errorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelID__c.RF'].errorStyle}" />
+				            </div>
+				            <div id="manmandiv" style="display:none;">
+				                <label><apex:outputText value="{!formFields['RebateDetail__c.Manufacturer__c.RF'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['RebateDetail__c.Manufacturer__c.RF'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="46" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.RF'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.RF'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.Manufacturer__c.RF'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.Manufacturer__c.RF'].ErrorStyle}" />
+				            </div>
+				            <div id="manmoddiv" style="display:none;">
+				                <label><apex:outputText value="{!formFields['RebateDetail__c.ModelNumber__c.RF'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumtext"><apex:inputText value="{!formFields['RebateDetail__c.ModelNumber__c.RF'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="47" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.RF'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.RF'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.ModelNumber__c.RF'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.ModelNumber__c.RF'].ErrorStyle}" />
+				            </div>
+				        </fieldset>
+			            <fieldset id="storeinfo">
+			            	<div>
+                                Choose the state, then enter the city and choose the store from the list below:<br />
+								<span class="noborder" style="margin-left: 100px;"><apex:inputCheckbox id="manualStore" value="{!formFields['Rebate__c.ManualStoreFlag'].booleanValue}" disabled="{!disableDE}" tabindex="51" onclick="storeCheck(this.checked)" /></span>
+								<apex:outputLabel for="manualStore" styleClass="autowidth" value="{!formFields['Rebate__c.ManualStoreFlag'].fieldLabel}" />						
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.ManualStoreFlag'].warnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.ManualStoreFlag'].warnStyle}" />
+								<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.ManualStoreFlag'].errorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.ManualStoreFlag'].errorStyle}" />
+			            	</div>
+				            <div id="selstorediv">
+								<div>
+	                                <label><apex:outputText value="{!formFields['Rebate__c.SelStoreState'].fieldLabel}" /></label>
+	                                <span class="mediumshorttext noborder">
+		                                <apex:selectList value="{!formFields['Rebate__c.SelStoreState'].stringValue}" disabled="{!disableDE}" size="1" tabindex="52" >
+		                                    <apex:selectOptions value="{!stateList}" />
+		                                    <apex:actionSupport action="{!makeStoreList}" event="onchange" rerender="selStoreId" status="storeStatus"/>
+		                                </apex:selectList>
+	                                </span>
+									<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.SelStoreState'].warnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.SelStoreState'].warnStyle}" />
+									<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.SelStoreState'].errorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.SelStoreState'].errorStyle}" />
+	                                <span class="noborder">
+	                                    <apex:actionStatus id="storeStatus" styleClass="noborder" startText=" updating store list ..." stopText="" />                               
+	                                </span>
+								</div>
+								<div>
+				            		<apex:actionRegion >
+						                <label>Store City: </label>
+						                <span class="mediumtext" >
+						                	<apex:inputText value="{!formFields['Rebate__c.SelStoreCity'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="53">
+						                		<apex:actionSupport action="{!makeStoreList}" rerender="selStoreId,selCityWarn" event="onchange" status="storeStatus" />
+						                	</apex:inputText>
+						                </span>
+						                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.SelStoreCity'].warnMsg}" styleClass="error-icon" id="selCityWarn" style="{!formFields['Rebate__c.SelStoreCity'].warnStyle}" />
+						                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="warning" title="{!formFields['Rebate__c.SelStoreCity'].errorMsg}" styleClass="error-icon" id="selCityErr" style="{!formFields['Rebate__c.SelStoreCity'].errorStyle}" />
+					                </apex:actionRegion>
+								</div>
+								<div>
+	                                <label><apex:outputText value="{!formFields['Rebate__c.StoreID__c'].fieldLabel}" /></label>
+	                                <span class="longtext noborder">
+		                                <apex:selectList id="selStoreId" value="{!formFields['Rebate__c.StoreID__c'].stringValue}" disabled="{!disableDE}" size="1" tabindex="54" style="width: 380px;">
+		                                    <apex:selectOptions value="{!storeList}" />
+		                                </apex:selectList>
+	                                </span>
+									<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-yellow.png')}" alt="warning" title="{!formFields['Rebate__c.StoreID__c'].warnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreID__c'].warnStyle}" />
+									<apex:image value="{!URLFOR($Resource.SGE2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreID__c'].errorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreID__c'].errorStyle}" />
+								</div>
+				            </div>
+				            <div id="manstorediv" style="display:none;">
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.StoreName__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumtext"><apex:inputText value="{!formFields['Rebate__c.StoreName__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="30" size="30" tabindex="55" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.StoreName__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreName__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreName__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreName__c'].ErrorStyle}" />
+					            </div>
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.StoreAddress1__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumtext"><apex:inputText value="{!formFields['Rebate__c.StoreAddress1__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="56" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.StoreAddress1__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreAddress1__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreAddress1__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreAddress1__c'].ErrorStyle}" />
+					            </div>
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.StoreAddress2__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumtext"><apex:inputText value="{!formFields['Rebate__c.StoreAddress2__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="57" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.StoreAddress2__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreAddress2__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreAddress2__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreAddress2__c'].ErrorStyle}" />
+					            </div>
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.StoreCity__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumtext"><apex:inputText value="{!formFields['Rebate__c.StoreCity__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="25" size="25" tabindex="58" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.StoreCity__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreCity__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreCity__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreCity__c'].ErrorStyle}" />
+					            </div>
+					            <div>
+					                <label><apex:outputText value="{!formFields['Rebate__c.StoreState__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumshorttext"><apex:inputText value="{!formFields['Rebate__c.StoreState__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="2" size="2" tabindex="59" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.StoreState__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreState__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreState__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreState__c'].ErrorStyle}" />
+					                <label style="width:100px"><apex:outputText value="{!formFields['Rebate__c.StoreZipcode__c'].fieldLabel}" escape="false" /></label>
+					                <span class="mediumshorttext"><apex:inputText value="{!formFields['Rebate__c.StoreZipcode__c'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="10" size="10" tabindex="60" /></span>
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.StoreZipcode__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreZipcode__c'].WarnStyle}" />
+					                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.StoreZipcode__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.StoreZipcode__c'].ErrorStyle}" />
+					            </div>
+				            </div>
+			            </fieldset>
+			            <fieldset id="purchinfo">
+				            <div>
+				                <label><apex:outputText value="{!formFields['RebateDetail__c.AmountTendered__c.RF'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumshorttext">$<apex:inputText value="{!formFields['RebateDetail__c.AmountTendered__c.RF'].stringValue}" disabled="{!disableDE}" styleClass="alwaysblack" maxlength="7" size="7" tabindex="70" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['RebateDetail__c.AmountTendered__c.RF'].WarnMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.AmountTendered__c.RF'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['RebateDetail__c.AmountTendered__c.RF'].ErrorMsg}" styleClass="error-icon" style="{!formFields['RebateDetail__c.AmountTendered__c.RF'].ErrorStyle}" />
+				                <label style="width:100px;"><apex:outputText value="{!formFields['Rebate__c.PurchaseDate__c'].fieldLabel}" escape="false" /></label>
+				                <span class="mediumshorttext"><input type="text" name="purchase_date" id="purchase_date" class="alwaysblack" maxlength="10" size="10" tabindex="71" /></span>
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-yellow.png')}" alt="error" title="{!formFields['Rebate__c.PurchaseDate__c'].WarnMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.PurchaseDate__c'].WarnStyle}" />
+				                <apex:image value="{!URLFOR($Resource.LIPA2012, 'images/warning-icon-red.png')}" alt="error" title="{!formFields['Rebate__c.PurchaseDate__c'].ErrorMsg}" styleClass="error-icon" style="{!formFields['Rebate__c.PurchaseDate__c'].ErrorStyle}" />
+								<apex:inputHidden id="frmPurchDate" value="{!formFields['Rebate__c.PurchaseDate__c'].stringValue}"  />
+				            </div>
+			            </fieldset>
+						<fieldset id="suptdocrow">
+		                  	<div>
+		                  		You can attach supporting documentation (receipts, etc.) to your electronic rebate application
+		                  		here.  Scans or photographs of the required bill and receipt are accepted.  Just click the Browse 
+		                  		button below and select a file to upload.
+		                  	</div>
+		                  	<div>
+								<iframe id="fileUploadWindow" width="400px" height="100" src="./RebateDocumentUploader?sessionId={!saveSessionID}" />
+		                  	</div>
+						</fieldset>
+                        <div id="submitbutton" class="submitbutton" onclick="checkMe()">
+                        	 {!frmButtonLabel}
+                        </div>
+					</apex:form>
+		        </div>
+		    </div>
+		</div>
+	    <div id="footer">
+			<img src="{!URLFOR($Resource.EFIStandard, 'images/powered_by_efi_sm.png')}" id="efi-logo" alt="Powered by EFI"/>
+        </div>
+	</body>
+</apex:page>

@@ -1,0 +1,33 @@
+<apex:component controller="Email_ActionList" access="Global">
+  <apex:attribute name="rebate" description="The rebate that was submitted" type="Rebate__c" />
+  <apex:attribute name="contact" description="The contact that submitted the rebate" type="Contact"  />
+  
+  <apex:attribute name="clientCode" description="" type="String" assignTo="{!ClientCode}"/>
+  <apex:attribute name="rebateId" description="" type="ID" assignTo="{!rebateId}"/>
+  
+  
+  <table width="100%" bgcolor="white" style="padding:10px">
+    <tr><td width="100%" align="left"><img src="{!LogoUrl}" alt="{!rebate.FormId__r.ClientCode__c}" /></td></tr>
+    <tr><td colspan="2">
+        
+        <div style="font-size:20px; font-weight:bold; color:#fff; background-color:{!rebate.FormId__r.PrimaryColor__c}; padding:5px;margin-top:10px">Your Rebate Application has been Updated</div>
+        <div style="padding-left:10px;padding-right:10px;">
+        <p>Hello {!contact.FirstName},</p>
+        <p>The {!rebate.FormId__r.ClientProgramName__c} application listed below has been recently updated:</p>
+ 
+        <c:Email_showRebate rebateId="{!rebate.Id}" primaryColor="{!rebate.FormId__r.PrimaryColor__c}" />
+        
+        <p>You may check on the status of your rebate at any time by clicking 
+            <a href="{!rebate.FormId__r.StatusURL__c}?FormCode={!rebate.FormId__r.FormCode__c}&RebateNumber={!rebate.RebateNumber__c}&PostalCode={!rebate.MailingZipcode__c}">here</a></p>
+        
+        <p><apex:outputText value="{! BODY }" escape="false" /></p>
+        
+        <c:Email_showFooter ClientCode="{!ClientCode}" FormCode="{!rebate.FormCode__c}" />
+
+      </div>
+    </td></tr>
+    <tr><td width="100%" align="right">
+        <img src="http://c.na12.content.force.com/servlet/servlet.ImageServer?id=015U0000000SGfr&oid=00DU0000000KIG0&lastMod=1351477524000" alt="Powered by EFI" />
+    </td></tr>
+  </table>
+</apex:component>
